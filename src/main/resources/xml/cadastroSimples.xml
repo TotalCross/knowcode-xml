@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/container" android:layout_width="match_parent"
+	android:layout_height="match_parent" android:orientation="vertical"
+	tools:context="com.tonybeltramelli.android_gui.MainActivity">
+
+ <ImageView
+        android:id="@+id/imageCadastro"
+        android:layout_width="330dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/nomeCompleto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_optimizationLevel="chains"
+        app:srcCompat="@images/tcpreto.jpg" 
+		tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="24dp" />
+    <Button
+            android:id="@+id/buttonCadastro"
+            android:layout_width="165dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="32dp"
+            android:text="Registrar"
+            app:layout_constraintBottom_toTopOf="@+id/progressCadastro"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/senhaCadastro"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_optimizationLevel="chains"
+            tools:layout_editor_absoluteX="16dp"
+        	tools:layout_editor_absoluteY="100dp"  />
+     
+     
+
+</LinearLayout>

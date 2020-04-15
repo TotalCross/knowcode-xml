@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="320dp"
+                                                   android:layout_height="570dp"
+                                                   android:background="@drawable/background_form"
+                                                   tools:context=".Activity.LoginActivity">
+
+
+    <Button
+            android:id="@+id/nomeCompleto"
+            android:layout_width="163dp"
+            android:layout_height="57dp"
+            android:layout_x="15dp"
+            android:layout_y="240dp"
+            android:ems="10"
+            android:hint="Nome Completo"
+            android:inputType="textShortMessage"
+            android:padding="8dp"
+            android:text="Nome da Empresa1"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            tools:layout_editor_absoluteX="52dp"
+            tools:layout_editor_absoluteY="38dp" />
+
+    <Button
+            android:id="@+id/nomeCompleto"
+            android:layout_width="273dp"
+            android:layout_height="48dp"
+            android:layout_x="15dp"
+            android:layout_y="288dp"
+            android:ems="10"
+            android:hint="Nome Completo"
+            android:inputType="textShortMessage"
+            android:padding="8dp"
+            android:text="Nome da Empresa2"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            tools:layout_editor_absoluteX="34dp"
+            tools:layout_editor_absoluteY="378dp" />
+
+    <Button
+            android:id="@+id/nomeCompleto"
+            android:layout_width="200dp"
+            android:layout_height="70dp"
+            android:layout_x="15dp"
+            android:layout_y="336dp"
+            android:ems="10"
+            android:hint="Nome Completo"
+            android:inputType="textShortMessage"
+            android:padding="8dp"
+            android:text="Nome da Empresa3"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            tools:layout_editor_absoluteX="74dp"
+            tools:layout_editor_absoluteY="250dp" />
+
+    <Button
+            android:id="@+id/nomeCompleto"
+            android:layout_width="167dp"
+            android:layout_height="36dp"
+            android:layout_x="15dp"
+            android:layout_y="384dp"
+            android:ems="10"
+            android:hint="Nome Completo"
+            android:inputType="textShortMessage"
+            android:padding="8dp"
+            android:text="Nome da Empresa4"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            tools:layout_editor_absoluteX="52dp"
+            tools:layout_editor_absoluteY="462dp" />
+
+    <Button
+            android:id="@+id/nomeCompleto"
+            android:layout_width="185dp"
+            android:layout_height="41dp"
+            android:layout_x="15dp"
+            android:layout_y="432dp"
+            android:ems="10"
+            android:hint="Nome Completo"
+            android:inputType="textShortMessage"
+            android:padding="8dp"
+            android:text="Nome da Empresa5"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            tools:layout_editor_absoluteX="68dp"
+            tools:layout_editor_absoluteY="414dp" />
+
+    <Button
+            android:id="@+id/nomeCompleto"
+            android:layout_width="122dp"
+            android:layout_height="48dp"
+            android:layout_x="0dp"
+            android:layout_y="0dp"
+            android:ems="10"
+            android:hint="Nome Completo"
+            android:inputType="textShortMessage"
+            android:padding="8dp"
+            android:text="Nome da Empresa6"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            tools:layout_editor_absoluteX="99dp"
+            tools:layout_editor_absoluteY="95dp" />
+
+    <Button
+            android:id="@+id/nomeCompleto"
+            android:layout_width="154dp"
+            android:layout_height="69dp"
+            android:layout_x="15dp"
+            android:layout_y="240dp"
+            android:ems="10"
+            android:hint="Nome Completo"
+            android:inputType="textShortMessage"
+            android:padding="8dp"
+            android:text="Nome da Empres7a"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            tools:layout_editor_absoluteX="83dp"
+            tools:layout_editor_absoluteY="160dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

@@ -1,0 +1,51 @@
+
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+>
+    <!--RelativeLayout display the elements at other element's left right position-->
+    <!--Here we positioning elements based on button1 position-->
+    <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Center (Button 1)"
+            android:layout_centerInParent="true"
+    />
+    <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Right Of Button 1"
+            android:layout_toEndOf="@id/button1"
+            android:layout_toRightOf="@id/button1"
+    />
+    <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Left Of Button 1"
+            android:layout_toStartOf="@id/button1"
+            android:layout_toLeftOf="@id/button1"
+    />
+    <Button
+            android:id="@+id/button4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Exact Right"
+            android:layout_centerInParent="true"
+            android:layout_toEndOf="@id/button1"
+            android:layout_toRightOf="@id/button1"
+    />
+    <Button
+            android:id="@+id/button5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Exact Left"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/button1"
+            android:layout_toLeftOf="@id/button1"
+    />
+</RelativeLayout>
