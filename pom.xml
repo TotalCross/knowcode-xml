@@ -7,7 +7,7 @@
 	<name>TCSample</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<totalcross.activation_key>5443444B5AAEEB90306B00E4</totalcross.activation_key>
+		<totalcross.activation_key>{your license here}</totalcross.activation_key>
 		<totalcross.sdkPath>C:\Users\Iaggo\Desktop\6.0.4\TotalCross-6.0.4\TotalCross\</totalcross.sdkPath>
 	</properties>
 	<dependencies>
