@@ -3,6 +3,7 @@
 
 package com.totalcross.knowcode.ui;
 
+import totalcross.sys.InvalidNumberException;
 import totalcross.ui.Container;
 import totalcross.ui.gfx.Color;
 import totalcross.ui.image.ImageException;
@@ -16,7 +17,7 @@ public class XmlScreenLinearLayout extends XmlScreenAbstractLayout {
 	int widthPos = FILL - 10;
 	int heightPos = FILL - 10;
 
-	public void addscreen(NodeSax node) throws totalcross.io.IOException, ImageException {
+	public void addscreen(NodeSax node) throws totalcross.io.IOException, ImageException, InvalidNumberException {
 
 		if (isLayout) {
 			isLayout = false;

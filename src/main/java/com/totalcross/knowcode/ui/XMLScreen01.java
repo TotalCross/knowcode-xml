@@ -8,6 +8,7 @@ import java.util.TreeMap;
 
 import com.totalcross.knowcode.util.Colors;
 
+import totalcross.sys.InvalidNumberException;
 import totalcross.sys.Vm;
 import totalcross.ui.*;
 import totalcross.ui.dialog.MessageBox;
@@ -82,7 +83,7 @@ public class XMLScreen01 extends Container {
 		}
 	}
 
-	public void addscreen(NodeSax node) throws totalcross.io.IOException, ImageException {
+	public void addscreen(NodeSax node) throws totalcross.io.IOException, ImageException, InvalidNumberException {
 		int xLocal = xpos;
 		int yLocal = ypos;
 		int widLocal = widthPos;
@@ -147,7 +148,7 @@ public class XMLScreen01 extends Container {
 		}
 	}
 
-	public Control createInstanceOf(NodeSax nodes) throws totalcross.io.IOException, ImageException {
+	public Control createInstanceOf(NodeSax nodes) throws totalcross.io.IOException, ImageException, InvalidNumberException {
 
 		if (nodes.getAttributeName().contains("Button")) {
 			// return createButton(node);
@@ -236,7 +237,7 @@ public class XMLScreen01 extends Container {
 		return simpleComboBox;
 	}
 
-	private Control createImageView(NodeSax node) throws totalcross.io.IOException, ImageException {
+	private Control createImageView(NodeSax node) throws totalcross.io.IOException, ImageException, InvalidNumberException {
 		ImageControl ic = new ImageControl(
 				new Image(node.getBackgroundImage()).getHwScaledInstance(node.getW(), node.getH()));
 		return ic;
@@ -259,7 +260,7 @@ public class XMLScreen01 extends Container {
 	// return new VBox(layout, alignment);
 	// }
 
-	private Control createButton(NodeSax node) throws totalcross.io.IOException, ImageException {
+	private Control createButton(NodeSax node) throws totalcross.io.IOException, ImageException, InvalidNumberException {
 		Button button = null;
 		String background = node.getBackgroundImage();
 		if (background != null && "".equals(background) == false) {
@@ -367,6 +368,8 @@ public class XMLScreen01 extends Container {
 			} catch (totalcross.io.IOException e) {
 				e.printStackTrace();
 			} catch (ImageException e) {
+				e.printStackTrace();
+			} catch (InvalidNumberException e) {
 				e.printStackTrace();
 			}
 		}

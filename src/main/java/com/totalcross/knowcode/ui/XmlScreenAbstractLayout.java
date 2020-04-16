@@ -4,10 +4,13 @@
 package com.totalcross.knowcode.ui;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.TreeMap;
 
 import com.totalcross.knowcode.util.Colors;
 
+import org.w3c.dom.ls.LSOutput;
+import totalcross.sys.InvalidNumberException;
 import totalcross.sys.Vm;
 import totalcross.ui.Button;
 import totalcross.ui.Check;
@@ -81,9 +84,9 @@ public abstract class XmlScreenAbstractLayout extends Container {
 
 	}
 
-	public abstract void addscreen(NodeSax node) throws totalcross.io.IOException, ImageException;
+	public abstract void addscreen(NodeSax node) throws totalcross.io.IOException, ImageException, InvalidNumberException;
 
-	public Control createInstanceOf(NodeSax nodes) throws totalcross.io.IOException, ImageException {
+	public Control createInstanceOf(NodeSax nodes) throws totalcross.io.IOException, ImageException, InvalidNumberException {
 
 		if (nodes.getAttributeName().contains("Button")) {
 			componentsMap.put(nodes.getId(), createButton(nodes));
@@ -140,7 +143,7 @@ public abstract class XmlScreenAbstractLayout extends Container {
 		return simpleComboBox;
 	}
 
-	private Control createImageView(NodeSax node) throws totalcross.io.IOException, ImageException {
+	private Control createImageView(NodeSax node) throws totalcross.io.IOException, ImageException, InvalidNumberException {
 		ImageControl ic = null;
 		String bg = node.getBackgroundImage();
 		if (bg != null) {
@@ -159,7 +162,7 @@ public abstract class XmlScreenAbstractLayout extends Container {
 		return new VBox(VBox.LAYOUT_FILL, VBox.ALIGNMENT_STRETCH);
 	}
 
-	private Control createButton(NodeSax node) throws totalcross.io.IOException, ImageException {
+	private Control createButton(NodeSax node) throws totalcross.io.IOException, ImageException, InvalidNumberException {
 		Button button = null;
 		String background = node.getBackgroundImage();
 		if (background != null && "".equals(background) == false) {
@@ -259,14 +262,29 @@ public abstract class XmlScreenAbstractLayout extends Container {
 			while (it.next()) {
 				auxNodeSax.inserts(it.getAttributeName(), it.getAttributeValue());
 			}
+
+		}
+		public void tagName(int a,String arg0,AttributeList atts) {
+			// TODO Auto-generated method stub
+			System.out.println("startElementString " + arg0);
+			auxNodeSax.setAttributeName(arg0);
+			auxNodeSax.reset();
+			AttributeList.Iterator it = atts.new Iterator();
+			while (it.next()) {
+				auxNodeSax.inserts(it.getAttributeName(), it.getAttributeValue());
+			}
 			try {
 				addscreen(auxNodeSax);
 			} catch (totalcross.io.IOException e) {
 				e.printStackTrace();
 			} catch (ImageException e) {
 				e.printStackTrace();
+			} catch (InvalidNumberException e) {
+				e.printStackTrace();
 			}
 		}
+
+
 
 		// @Override
 		public void endElementString(String arg0) {
@@ -281,7 +299,7 @@ public abstract class XmlScreenAbstractLayout extends Container {
 		}
 	}
 
-	private void readXml() throws totalcross.io.IOException, ImageException {
+	private void readXml() throws totalcross.io.IOException, ImageException, UnsupportedEncodingException {
 
 		Handler handler = new Handler();
 		XmlReader rdr = new XmlReader();
@@ -290,7 +308,7 @@ public abstract class XmlScreenAbstractLayout extends Container {
 		byte[] xml = Vm.getFile(getPathXml());
 
 		if (xml != null) {
-
+			xml = new String(xml, 0, xml.length, "UTF-8").getBytes("ISO-8859-1");
 			try {
 				rdr.parse(xml, 0, xml.length);
 			} catch (SyntaxException e) {

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   android:background="#000000"
+                                                   tools:context=".MainActivity">
+
+
+
+    <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            app:layout_constraintHeight_percent="0.2"
+            android:textColor="#FFFFFF"
+            android:textSize="110dp"
+            android:background="#000000"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="i.MX Demo Launcher" />
+
+    <ImageView
+            android:id="@+id/inputtext"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/textinput"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:layout_constraintLeft_toLeftOf="parent"
+    />
+    <Button
+            android:id="@+id/Multimidia"
+            android:background="@drawable/multimidia_button"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintHeight_percent="0.12"
+            app:layout_constraintWidth_percent="0.40"
+            android:textColor="#FFFFFF"
+            app:layout_constraintTop_toBottomOf="@+id/inputtext"
+            app:layout_constraintLeft_toLeftOf="parent"
+            tools:ignore="MissingConstraints" />
+
+    <Button
+            android:id="@+id/GPU"
+            app:layout_constraintHeight_percent="0.12"
+            app:layout_constraintWidth_percent="0.40"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:autoSizeTextType="uniform"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/gpu_button"
+            app:layout_constraintTop_toBottomOf="@+id/Multimidia"
+            app:layout_constraintLeft_toLeftOf="parent"
+    />
+    <Button
+            android:id="@+id/TC"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintHeight_percent="0.12"
+            app:layout_constraintWidth_percent="0.40"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/tc_button"
+            app:layout_constraintTop_toBottomOf="@+id/GPU"
+            app:layout_constraintLeft_toLeftOf="parent"
+    />
+    <Button
+            android:id="@+id/Audio"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintWidth_percent="0.40"
+            app:layout_constraintHeight_percent="0.12"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/audi_button"
+            app:layout_constraintTop_toBottomOf="@+id/TC"
+            app:layout_constraintLeft_toLeftOf="parent"
+    />
+    <ImageView
+            android:id="@+id/NXP"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:autoSizeTextType="uniform"
+            android:background="@drawable/nxp"
+            app:layout_constraintHeight_percent="0.793"
+            app:layout_constraintWidth_percent="0.60"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+    />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

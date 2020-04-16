@@ -1,7 +1,6 @@
-// (c) 2020 by TotalCross Global Mobile Platform LTDA
-// SPDX-License-Identifier: GPL-2.0-only
-
 package com.totalcross.knowcode.ui;
+
+import java.io.File;
 
 import com.totalcross.knowcode.util.Colors;
 import com.totalcross.knowcode.util.Constants;
@@ -36,6 +35,7 @@ public class InicialScreen extends Container {
 		String pathLinearXml = "/xml/linearSample.xml";
 		String pathRelativeXml = "/xml/relativeSample.xml";
 		String pathAbsoluteXml = "/xml/absoluteSample.xml";
+		String pathNXP = "/xml/nxpmain.xml";
 
 		Images.loadImage();
 
@@ -49,11 +49,11 @@ public class InicialScreen extends Container {
 		ImageControl logo = new ImageControl(Images.logo_nome_borda);
 		logo.scaleToFit = true;
 		logo.transparentBackground = true;
-		add(logo, CENTER, TOP + UnitsConverter.toPixels(16 + Control.DP), PARENTSIZE + 70, PARENTSIZE + 20);
+		add(logo, CENTER, TOP +  UnitsConverter.toPixels(16 + Control.DP), PARENTSIZE + 70, PARENTSIZE + 20);
 
 		Container cont = new Container();
 		cont.transparentBackground = true;
-		add(cont, LEFT + Constants.BORDER_SPACING, BOTTOM, FILL - Constants.BORDER_SPACING, PARENTSIZE + 65);
+		add(cont, LEFT +  Constants.BORDER_SPACING, BOTTOM, FILL -  Constants.BORDER_SPACING, PARENTSIZE + 65);
 
 		Label lbl = new Label("Choose the Android\n XML to be load");
 		lbl.setFont(Fonts.latoBoldPlus10);
@@ -63,31 +63,40 @@ public class InicialScreen extends Container {
 
 		Button bt01 = new Button("LinearLayout Sample ", Button.BORDER_OUTLINED);
 		bt01.setForeColor(Colors.PRIMARY);
-		cont.add(bt01, CENTER, AFTER + (Constants.COMPONENT_SPACING) * 2, PREFERRED, PREFERRED);
+		cont.add(bt01, CENTER, AFTER + (Constants.COMPONENT_SPACING)*2, PREFERRED, PREFERRED);
 		bt01.addPressListener((e) -> {
-			// XMLScreen01 src1 = new XMLScreen01();
-			// String pathXml = pathLinearXml;
+//			XMLScreen01 src1 = new XMLScreen01();
+//			String pathXml = pathLinearXml;
 			Container src1 = XmlScreenFactory.create(pathLinearXml);
 			MainWindow.getMainWindow().swap(src1);
 		});
 
 		Button bt02 = new Button("AbsoluteLayout Sample ", Button.BORDER_OUTLINED);
 		bt02.setForeColor(Colors.PRIMARY);
-		cont.add(bt02, CENTER, AFTER + (Constants.COMPONENT_SPACING) * 2, PREFERRED, PREFERRED);
+		cont.add(bt02, CENTER, AFTER + (Constants.COMPONENT_SPACING)*2, PREFERRED, PREFERRED);
 		bt02.addPressListener((e) -> {
-			// XMLScreen01 src1 = new XMLScreen01();
-			// String pathXml = "xml2.xml";
+//			XMLScreen01 src1 = new XMLScreen01();
+//			String pathXml = "xml2.xml";
 			Container src1 = XmlScreenFactory.create(pathAbsoluteXml);
 			MainWindow.getMainWindow().swap(src1);
 		});
 
 		Button bt03 = new Button("RelativeLayout Sample ", Button.BORDER_OUTLINED);
 		bt03.setForeColor(Colors.PRIMARY);
-		cont.add(bt03, CENTER, AFTER + (Constants.COMPONENT_SPACING) * 2, PREFERRED, PREFERRED);
+		cont.add(bt03, CENTER, AFTER + (Constants.COMPONENT_SPACING)*2, PREFERRED, PREFERRED);
 		bt03.addPressListener((e) -> {
-			// XMLScreen01 src1 = new XMLScreen01();
+//			XMLScreen01 src1 = new XMLScreen01();
 
 			Container src1 = XmlScreenFactory.create(pathRelativeXml);
+			MainWindow.getMainWindow().swap(src1);
+		});
+		Button bt04 = new Button("NXP", Button.BORDER_OUTLINED);
+		bt04.setForeColor(Colors.PRIMARY);
+		cont.add(bt04, CENTER, AFTER + (Constants.COMPONENT_SPACING)*2, PREFERRED, PREFERRED);
+		bt04.addPressListener((e) -> {
+//			XMLScreen01 src1 = new XMLScreen01();
+
+			Container src1 = XmlScreenFactory.create(pathNXP);
 			MainWindow.getMainWindow().swap(src1);
 		});
 
@@ -101,11 +110,9 @@ public class InicialScreen extends Container {
 		readMore.addPressListener(new PressListener() {
 			@Override
 			public void controlPressed(ControlEvent e) {
-				MessageBox mb = new MessageBox("",
-						"Know Code Application\n\nComputer Vision and \nAndroid XML to Totalcross Parser",
-						new String[] { "Ok" });
+				MessageBox mb = new MessageBox("", "Know Code Application\n\nComputer Vision and \nAndroid XML to Totalcross Parser", new String[] { "Ok" });
 				mb.setTextAlignment(CENTER);
-				mb.setRect(CENTER, CENTER, SCREENSIZE + 70, SCREENSIZE + 50);
+				mb.setRect(CENTER, CENTER, SCREENSIZE+70 , SCREENSIZE+50);
 				mb.setBackForeColors(Colors.ON_P_600, Colors.ON_P_300);
 				mb.popup();
 			}

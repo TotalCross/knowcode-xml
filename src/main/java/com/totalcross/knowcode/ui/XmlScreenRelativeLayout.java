@@ -4,6 +4,8 @@
 package com.totalcross.knowcode.ui;
 
 import java.util.TreeMap;
+
+import totalcross.sys.InvalidNumberException;
 import totalcross.ui.Container;
 import totalcross.ui.Control;
 import totalcross.ui.gfx.Color;
@@ -19,7 +21,7 @@ public class XmlScreenRelativeLayout extends XmlScreenAbstractLayout {
 
 	TreeMap<String, Control> componentsMap = new TreeMap<String, Control>();
 
-	public void addscreen(NodeSax node) throws totalcross.io.IOException, ImageException {
+	public void addscreen(NodeSax node) throws totalcross.io.IOException, ImageException, InvalidNumberException {
 		int xLocal = xpos;
 		int yLocal = ypos;
 		int widLocal = widthPos;

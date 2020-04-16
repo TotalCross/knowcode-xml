@@ -14,6 +14,8 @@ import totalcross.xml.ContentHandler;
 import totalcross.xml.SyntaxException;
 import totalcross.xml.XmlReader;
 
+import java.io.UnsupportedEncodingException;
+
 public class XmlScreenFactory {
 	private String nameLayout = null;
 	static final String[] layouts = { "ConstraintLayout", "LinearLayout", "FrameLayout", "RelativeLayout",
@@ -59,8 +61,18 @@ public class XmlScreenFactory {
 
 		@Override
 		public void startElement(int arg0, AttributeList atts) {
+
+		}
+
+		@Override
+		public void tagName(int a,String arg0,AttributeList atts) {
+			// TODO Auto-generated method stub
+			System.out.println("startElementString " + arg0);
+			auxNodeSax.setAttributeName(arg0);
+			auxNodeSax.reset();
 			AttributeList.Iterator it = atts.new Iterator();
 			while (it.next()) {
+				System.out.println("esse é o atributo:"+it.getAttributeName()+"   "+auxNodeSax.getAttributeName());
 				auxNodeSax.inserts(it.getAttributeName(), it.getAttributeValue());
 			}
 			if (getNameLayout() == null) {
@@ -73,23 +85,9 @@ public class XmlScreenFactory {
 				}
 			}
 		}
-
-		// @Override
-		public void endElementString(String arg0) {
-			// TODO Auto-generated method stub
-			System.out.println("endElementString " + arg0);
-		}
-
-		@Override
-		public void startElementString(String arg0, AttributeList arg1) {
-			// TODO Auto-generated method stub
-			System.out.println("startElementString " + arg0);
-			auxNodeSax.setAttributeName(arg0);
-			auxNodeSax.reset();
-		}
 	}
 
-	private void readXml(String pathXml) throws totalcross.io.IOException, ImageException {
+	private void readXml(String pathXml) throws totalcross.io.IOException, ImageException, UnsupportedEncodingException {
 
 		Handler handler = new Handler();
 		XmlReader rdr = new XmlReader();
@@ -98,7 +96,7 @@ public class XmlScreenFactory {
 		byte[] xml = Vm.getFile(pathXml);
 
 		if (xml != null) {
-
+			xml = new String(xml, 0, xml.length, "UTF-8").getBytes("ISO-8859-1");
 			try {
 				rdr.parse(xml, 0, xml.length);
 			} catch (SyntaxException e) {
