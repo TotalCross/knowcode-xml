@@ -1,5 +1,5 @@
 // (c) 2020 by TotalCross Global Mobile Platform LTDA
-// SPDX-License-Identifier: GPL-2.0-only
+// SPDX-License-Identifier: LGPL-3.0-only
 
 package com.totalcross.knowcode.util;
 

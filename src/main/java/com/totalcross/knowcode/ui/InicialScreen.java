@@ -1,5 +1,5 @@
 // (c) 2020 by TotalCross Global Mobile Platform LTDA
-// SPDX-License-Identifier: GPL-2.0-only
+// SPDX-License-Identifier: LGPL-3.0-only
 
 package com.totalcross.knowcode.ui;
 
@@ -33,9 +33,9 @@ public class InicialScreen extends Container {
 	}
 
 	public void initUI() {
-		String pathLinearXml = "/xml/linearSample.xml";
-		String pathRelativeXml = "/xml/relativeSample.xml";
-		String pathAbsoluteXml = "/xml/absoluteSample.xml";
+		String pathLinearXml = "xml/linearSample.xml";
+		String pathRelativeXml = "xml/relativeSample.xml";
+		String pathAbsoluteXml = "xml/absoluteSample.xml";
 
 		Images.loadImage();
 
