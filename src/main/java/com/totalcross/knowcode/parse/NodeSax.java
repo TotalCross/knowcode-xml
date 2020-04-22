@@ -1,4 +1,4 @@
-package com.totalcross.knowcode.ui;
+package com.totalcross.knowcode.parse;
 
 import static totalcross.ui.Control.AFTER;
 import static totalcross.ui.Control.BEFORE;
@@ -417,15 +417,66 @@ public class NodeSax {
         attributeValue = getValue("android:layout_alignParentLeft");
         if(attributeValue != null) {
             return LEFT;
+
         }
+
         attributeValue = getValue("app:layout_constraintLeft_toLeftOf");
         if( attributeValue!=null)
             if( attributeValue.equals("parent"))
-                return 0;
-        attributeValue = getValue("app:layout_constraintRight_toRightOf");
-        if(attributeValue!=null) {
-            return RIGHT;
+                return LEFT;
+            else {
+                relative = attributeValue;
+                return SAME;
+            }
+        attributeValue = getValue("app:layout_constraintStart_toStartOf");
+        if( attributeValue!=null)
+            if( attributeValue.equals("parent"))
+                return LEFT;
+            else {
+                relative = attributeValue;
+                return SAME;
+            }
+        attributeValue = getValue("app:layout_constraintStart_toEndOf");
+        if( attributeValue!=null)
+            if( attributeValue.equals("parent"))
+                return LEFT;
+            else {
+                relative = attributeValue;
+                return SAME;
+            }
+        attributeValue = getValue("app:layout_constraintLeft_toRightOf");
+        if( attributeValue!=null) {
+            relative = attributeValue;
+            return AFTER;
         }
+        attributeValue = getValue("app:layout_constraintRight_toLeftOf");
+        if( attributeValue!=null) {
+            relative = attributeValue;
+            return BEFORE;
+        }
+        attributeValue = getValue("app:layout_constraintEnd_toStartOf");
+        if( attributeValue!=null) {
+            relative = attributeValue;
+            return BEFORE;
+        }
+        attributeValue = getValue("app:layout_constraintRight_toRightOf");
+        if( attributeValue!=null)
+            if( attributeValue.equals("parent"))
+                return RIGHT;
+            else {
+                relative = attributeValue;
+                return RIGHT_OF;
+            }
+        attributeValue = getValue("app:layout_constraintEnd_toEndOf");
+        if( attributeValue!=null)
+            if( attributeValue.equals("parent"))
+                return RIGHT;
+            else {
+                relative = attributeValue;
+                return RIGHT_OF;
+            }
+
+
 
         attributeValue = getValue("android:layout_alignParentRight");
         if(attributeValue != null) {
@@ -527,13 +578,15 @@ public class NodeSax {
     }
     public int getGravity(){
         attributeValue = getValue("android:gravity");
-        if(attributeValue.equals("left")) {
-            return FILL;
+        if(attributeValue!=null) {
+            if (attributeValue.equals("left")) {
+                return FILL;
+            }
+            if (attributeValue.equals("center"))
+                return CENTER;
+            if (attributeValue.equals("right"))
+                return RIGHT;
         }
-        if(attributeValue.equals("center"))
-            return CENTER;
-        if(attributeValue.equals("right"))
-            return RIGHT;
         return LEFT;
     }
     public boolean isAbsoluteLayout() {
@@ -552,14 +605,38 @@ public class NodeSax {
         attributeValue = getValue("app:layout_constraintTop_toBottomOf");
         if(attributeValue!=null) {
             if(attributeValue.equals("parent"))
-                return 0;
+                return TOP;
             relative = attributeValue;
             return AFTER;
         }
+        attributeValue = getValue("app:layout_constraintTop_toTopOf");
+        if(attributeValue!=null) {
+            if(attributeValue.equals("parent"))
+                return TOP;
+            relative = attributeValue;
+            return SAME;
+        }
+        attributeValue= getValue("app:constraintBottom_toTopOf");
+        if(attributeValue!=null)
+                return BEFORE;
+
         attributeValue= getValue("app:layout_constraintBottom_toBottomOf");
         if(attributeValue!=null)
             if(attributeValue.equals("parent"))
                 return BOTTOM;
+            else{
+                relative = attributeValue;
+                return RIGHT_OF;
+            }
+        attributeValue= getValue("layout_constraintBaseline_toBaselineOf");
+        if(attributeValue!=null)
+            if(attributeValue.equals("parent"))
+                return CENTER_OF;
+            else{
+                relative = attributeValue;
+                return CENTER_OF;
+            }
+
 
         attributeValue = getValue("app:layout_constraintRight_toRightOf");
         if(attributeValue!=null) {

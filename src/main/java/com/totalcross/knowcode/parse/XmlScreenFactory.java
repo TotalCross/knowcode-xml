@@ -1,7 +1,9 @@
 // (c) 2020 by TotalCross Global Mobile Platform LTDA
 // SPDX-License-Identifier: GPL-2.0-only
 
-package com.totalcross.knowcode.ui;
+package com.totalcross.knowcode.parse;
+
+import com.totalcross.knowcode.parse.XmlScreenAbstractLayout;
 
 import com.totalcross.knowcode.util.Colors;
 
@@ -29,7 +31,7 @@ public class XmlScreenFactory {
 				throw new Exception("Layout do xml não consta lista dos conhecidos.");
 			}
 
-			Class clazz = Class.forName("com.totalcross.knowcode.ui.XmlScreen" + xMLScreenFactory.getNameLayout());
+			Class clazz = Class.forName("com.totalcross.knowcode.parse.XmlScreen" + xMLScreenFactory.getNameLayout());
 
 			XmlScreenAbstractLayout container = (XmlScreenAbstractLayout) clazz.newInstance();
 			container.setPathXml(pathXml);

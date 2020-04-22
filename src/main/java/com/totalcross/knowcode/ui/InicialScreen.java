@@ -1,7 +1,6 @@
 package com.totalcross.knowcode.ui;
 
-import java.io.File;
-
+import com.totalcross.knowcode.parse.XmlScreenFactory;
 import com.totalcross.knowcode.util.Colors;
 import com.totalcross.knowcode.util.Constants;
 import com.totalcross.knowcode.util.Fonts;
