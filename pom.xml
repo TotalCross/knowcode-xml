@@ -151,6 +151,7 @@
                         <platform>-linux</platform>
                         <platform>-linux_arm</platform>
                         <platform>-android</platform>
+                        <platform>-win32</platform>
                     </platforms>
                     <activationKey>${totalcross.activation_key}</activationKey>
                     <!--
