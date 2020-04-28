@@ -23,13 +23,13 @@ public class XmlScreenFactory {
 
 	public static Container create(String pathXml) {
 		try {
-			XmlScreenFactory xMLScreenFactory = new XmlScreenFactory();
-			xMLScreenFactory.readXml(pathXml);
-			if (xMLScreenFactory.getNameLayout() == null) {
+			XmlScreenFactory xmlScreenFactory = new XmlScreenFactory();
+			xmlScreenFactory.readXml(pathXml);
+			if (xmlScreenFactory.getNameLayout() == null) {
 				throw new Exception("Layout do xml não consta lista dos conhecidos.");
 			}
 
-			Class clazz = Class.forName("com.totalcross.knowcode.parse.XmlScreen" + xMLScreenFactory.getNameLayout());
+			Class clazz = Class.forName("com.totalcross.knowcode.parse.XmlScreen" + xmlScreenFactory.getNameLayout());
 
 			XmlScreenAbstractLayout container = (XmlScreenAbstractLayout) clazz.newInstance();
 			container.setPathXml(pathXml);

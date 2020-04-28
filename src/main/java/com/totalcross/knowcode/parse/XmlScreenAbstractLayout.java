@@ -8,10 +8,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.TreeMap;
 
 import com.totalcross.knowcode.ui.StartXMLScreen;
-import com.totalcross.knowcode.parse.NodeSax;
 import com.totalcross.knowcode.util.Colors;
 
-import org.w3c.dom.ls.LSOutput;
 import totalcross.sys.InvalidNumberException;
 import totalcross.sys.Vm;
 import totalcross.ui.Button;
@@ -52,21 +50,9 @@ public abstract class XmlScreenAbstractLayout extends Container {
 	public void initUI() {
 		try {
 
-			// centralContainer = new Container();
-			// add(centralContainer,xpos, ypos, widthPos, heightPos);
-
 			readXml();
 			afterInitUI();
-			// Label botao = (Label) getControlByID("botao");
-			// botao.setText("helooo");
-			// FindByID: get a control and change some property
-			// getControlByID("@+id/buttonCadastro").setBackColor(Color.BRIGHT);
-			// getControlByID("@+id/nomeEmpresa").setFont(Fonts.latoBoldMinus1);
-			// getControlByID("@+id/imageCadastro").setVisible(false);
-			// ((Spinner) getControlByID("@+id/progressCadastro")).start();
 
-			// Add the main control to screen
-			// add(firstControl, xpos, ypos, width, height);
 		} catch (IOException | ArrayIndexOutOfBoundsException ea) {
 			ea.printStackTrace();
 		} catch (Exception e) {
@@ -181,7 +167,6 @@ public abstract class XmlScreenAbstractLayout extends Container {
 	private Control createSlider(NodeSax node) {
 		Slider s = new Slider();
 		s.setMaximum(Integer.parseInt(node.getMax()));
-		// s.setUnitIncrement(Integer.parseInt(node.getProgress()));
 		return s;
 	}
 
