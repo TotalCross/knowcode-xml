@@ -7,9 +7,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.TreeMap;
 
-import com.totalcross.knowcode.ui.StartXMLScreen;
-import com.totalcross.knowcode.util.Colors;
-
 import totalcross.sys.InvalidNumberException;
 import totalcross.sys.Vm;
 import totalcross.ui.Button;
@@ -38,7 +35,7 @@ import totalcross.xml.ContentHandler;
 import totalcross.xml.SyntaxException;
 import totalcross.xml.XmlReader;
 
-public abstract class XmlScreenAbstractLayout extends Container {
+public abstract class XmlContainerAbstractLayout extends Container {
 	int layout = 0;
 	private String pathXml;
 
@@ -64,7 +61,7 @@ public abstract class XmlScreenAbstractLayout extends Container {
 		addCustumisation();
 	}
 	
-	public XmlScreenAbstractLayout addCustumisation() {
+	public XmlContainerAbstractLayout addCustumisation() {
 		return this;
 	}
 	
@@ -280,24 +277,8 @@ public abstract class XmlScreenAbstractLayout extends Container {
 			}
 		} else {
 			MessageBox mb = new MessageBox("Message", "XML not found.", new String[] { "Close" });
-			mb.setForeColor(Colors.SURFACE);
 			mb.popup();
 		}
-	}
-
-	public void createBackButton() throws totalcross.io.IOException, ImageException {
-		Button btVoltar = null;
-
-		btVoltar = new Button(new Image("drawable/arrowgray.jpg"), Button.BORDER_ROUND);
-		btVoltar.setForeColor(Colors.BACKGROUND_GRAY_01);
-
-		centralContainer.add(btVoltar, LEFT, BOTTOM);
-		btVoltar.addPressListener((e) -> {
-			StartXMLScreen scr1 = new StartXMLScreen();
-
-			MainWindow.getMainWindow().swap(scr1);
-		});
-
 	}
 
 	public String getPathXml() {

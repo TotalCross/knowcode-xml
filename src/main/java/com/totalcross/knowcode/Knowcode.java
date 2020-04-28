@@ -5,8 +5,6 @@ package com.totalcross.knowcode;
 
 import java.io.IOException;
 
-import com.totalcross.knowcode.ui.StartXMLScreen;
-
 import totalcross.sys.Settings;
 import totalcross.ui.MainWindow;
 import totalcross.ui.image.ImageException;
@@ -24,11 +22,6 @@ public class Knowcode extends MainWindow {
 	}
 
 	public void initUI() {
-		//SplashWindow sp;
-		StartXMLScreen inicial = new StartXMLScreen();
 
-		//sp = new SplashWindow();
-		//sp.popupNonBlocking();
-		swap(inicial);
 	}
 }

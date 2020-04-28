@@ -8,8 +8,6 @@ import totalcross.TotalCrossApplication;
 public class KnowCodeApplication {
 
     public static void main(String[] args) {
-        // TotalCrossApplication.run(Knowcode.class);
-
-        TotalCrossApplication.run(Knowcode.class, "/scr", "1024x600");
+         TotalCrossApplication.run(Knowcode.class);
     }
 }

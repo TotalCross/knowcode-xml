@@ -12,7 +12,7 @@ import totalcross.ui.Control;
 import totalcross.ui.gfx.Color;
 import totalcross.ui.image.ImageException;
 
-public class XmlScreenAbsoluteLayout extends XmlScreenAbstractLayout {
+public class XmlContainerAbsoluteLayout extends XmlContainerAbstractLayout {
 
 	int layout = 0;
 
@@ -91,6 +91,5 @@ public class XmlScreenAbsoluteLayout extends XmlScreenAbstractLayout {
 	@Override
 	public void afterInitUI() throws totalcross.io.IOException, ImageException {
 		super.afterInitUI();
-		createBackButton();
 	}
 }

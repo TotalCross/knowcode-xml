@@ -14,24 +14,22 @@ import totalcross.xml.XmlReader;
 
 import java.io.UnsupportedEncodingException;
 
-import com.totalcross.knowcode.util.Colors;
-
-public class XmlScreenFactory {
+public class XmlContainerFactory {
 	private String nameLayout = null;
 	static final String[] layouts = { "ConstraintLayout", "LinearLayout", "FrameLayout", "RelativeLayout",
 			"AbsolutLayout" };
 
 	public static Container create(String pathXml) {
 		try {
-			XmlScreenFactory xmlScreenFactory = new XmlScreenFactory();
+			XmlContainerFactory xmlScreenFactory = new XmlContainerFactory();
 			xmlScreenFactory.readXml(pathXml);
 			if (xmlScreenFactory.getNameLayout() == null) {
 				throw new Exception("Layout do xml não consta lista dos conhecidos.");
 			}
 
-			Class clazz = Class.forName("com.totalcross.knowcode.parse.XmlScreen" + xmlScreenFactory.getNameLayout());
+			Class clazz = Class.forName("com.totalcross.knowcode.parse.XmlContainer" + xmlScreenFactory.getNameLayout());
 
-			XmlScreenAbstractLayout container = (XmlScreenAbstractLayout) clazz.newInstance();
+			XmlContainerAbstractLayout container = (XmlContainerAbstractLayout) clazz.newInstance();
 			container.setPathXml(pathXml);
 			return container;
 
@@ -103,7 +101,6 @@ public class XmlScreenFactory {
 		} else {
 
 			MessageBox mb = new MessageBox("Message", "XML not found.", new String[] { "Close" });
-			mb.setForeColor(Colors.SURFACE);
 			mb.popup();
 		}
 
