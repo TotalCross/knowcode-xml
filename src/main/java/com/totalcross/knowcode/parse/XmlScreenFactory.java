@@ -3,10 +3,6 @@
 
 package com.totalcross.knowcode.parse;
 
-import com.totalcross.knowcode.parse.XmlScreenAbstractLayout;
-
-import com.totalcross.knowcode.util.Colors;
-
 import totalcross.sys.Vm;
 import totalcross.ui.Container;
 import totalcross.ui.dialog.MessageBox;
@@ -17,6 +13,8 @@ import totalcross.xml.SyntaxException;
 import totalcross.xml.XmlReader;
 
 import java.io.UnsupportedEncodingException;
+
+import com.totalcross.knowcode.util.Colors;
 
 public class XmlScreenFactory {
 	private String nameLayout = null;
@@ -52,7 +50,6 @@ public class XmlScreenFactory {
 
 		@Override
 		public void characters(String arg0) {
-			System.out.println("Characters " + arg0);
 
 		}
 
@@ -69,17 +66,14 @@ public class XmlScreenFactory {
 		@Override
 		public void tagName(int a,String arg0,AttributeList atts) {
 			// TODO Auto-generated method stub
-			System.out.println("startElementString " + arg0);
 			auxNodeSax.setAttributeName(arg0);
 			auxNodeSax.reset();
 			AttributeList.Iterator it = atts.new Iterator();
 			while (it.next()) {
-				System.out.println("esse é o atributo:"+it.getAttributeName()+"   "+auxNodeSax.getAttributeName());
 				auxNodeSax.inserts(it.getAttributeName(), it.getAttributeValue());
 			}
 			if (getNameLayout() == null) {
 				for (int i = 0; i < layouts.length; i++) {
-					System.out.println(auxNodeSax.getAttributeName());
 					if (auxNodeSax.getAttributeName().contains(layouts[i])) {
 						setNameLayout(layouts[i]);
 						break;

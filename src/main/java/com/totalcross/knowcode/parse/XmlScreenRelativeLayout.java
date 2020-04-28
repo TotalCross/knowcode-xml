@@ -62,6 +62,6 @@ public class XmlScreenRelativeLayout extends XmlScreenAbstractLayout {
 	@Override
 	public void afterInitUI() throws totalcross.io.IOException, ImageException {
 		super.afterInitUI();
-		createBackButton();
+		//createBackButton();
 	}
 }

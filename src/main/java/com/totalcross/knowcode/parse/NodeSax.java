@@ -134,10 +134,7 @@ public class NodeSax {
     public String getBackgroundColor(){
         attributeValue = getValue("android:background");
 
-        System.out.println("attributeValue:" + attributeValue);
         String attributeValue2 = getValue("app:srcCompat");
-        System.out.println("attributeValue2:" + attributeValue2);
-        ///
 
         if(attributeValue == null && attributeValue2 == null || "".equals(attributeValue)) {
             return null;
@@ -155,10 +152,7 @@ public class NodeSax {
 
     public String getBackgroundImage(){
         attributeValue = getValue("android:background");
-        System.out.println("attributeValue:" + attributeValue);
         String attributeValue2 = getValue("app:srcCompat");
-        System.out.println("attributeValue2:" + attributeValue2);
-        ///
         if(attributeValue == null && attributeValue2 == null || "".equals(attributeValue)) {
             return attributeValue;
         } else {
@@ -440,7 +434,6 @@ public class NodeSax {
                 }
             }
 
-            System.out.println("y:"+ attributeValue);
             return UnitsConverter.toPixels(Integer.parseInt(attributeValue)+DP);
         }
     }

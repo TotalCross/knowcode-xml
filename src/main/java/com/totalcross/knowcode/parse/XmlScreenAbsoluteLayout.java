@@ -13,15 +13,13 @@ import totalcross.ui.gfx.Color;
 import totalcross.ui.image.ImageException;
 
 public class XmlScreenAbsoluteLayout extends XmlScreenAbstractLayout {
-	// boolean isLayout = true;
+
 	int layout = 0;
 
 	int xpos = LEFT + 5;
 	int ypos = TOP + 10;
 	int widthPos = PARENTSIZE;
 	int heightPos = PARENTSIZE;
-	// int widthPos = FILL;
-	// int heightPos =FILL;
 
 	// FIXME: variaveis posicionamento global - Iaggo
 	int px = LEFT;
@@ -38,7 +36,6 @@ public class XmlScreenAbsoluteLayout extends XmlScreenAbstractLayout {
 	public static final int TABLE_LAYOUT = 7;
 
 	TreeMap<String, Control> componentsMap = new TreeMap<String, Control>();
-	// private Control lastControl = null;
 
 	private Container centralContainer;
 
@@ -49,7 +46,6 @@ public class XmlScreenAbsoluteLayout extends XmlScreenAbstractLayout {
 		int heiLocal = heightPos;
 
 		if (layout == 0) {
-			// isLayout = false;
 			String bckG = node.getBackgroundColor();
 			if (bckG != null) {
 				centralContainer.setBackColor(Color.getRGB(bckG));
@@ -91,7 +87,7 @@ public class XmlScreenAbsoluteLayout extends XmlScreenAbstractLayout {
 
 		}
 	}
-
+	
 	@Override
 	public void afterInitUI() throws totalcross.io.IOException, ImageException {
 		super.afterInitUI();

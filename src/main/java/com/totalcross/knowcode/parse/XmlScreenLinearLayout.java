@@ -5,6 +5,7 @@ package com.totalcross.knowcode.parse;
 
 import totalcross.sys.InvalidNumberException;
 import totalcross.ui.Container;
+import totalcross.ui.Control;
 import totalcross.ui.gfx.Color;
 import totalcross.ui.image.ImageException;
 
@@ -58,8 +59,6 @@ public class XmlScreenLinearLayout extends XmlScreenAbstractLayout {
 				widthPos = node.getW();
 				heightPos = node.getH();
 
-				System.out.println("Node: " + node.getAttributeName());
-
 			}
 			centralContainer.add(createInstanceOf(node), xpos, ypos, widthPos, heightPos, lastControl);
 		}
@@ -69,6 +68,6 @@ public class XmlScreenLinearLayout extends XmlScreenAbstractLayout {
 	@Override
 	public void afterInitUI() throws totalcross.io.IOException, ImageException {
 		super.afterInitUI();
-		createBackButton();
+		//createBackButton();
 	}
 }

@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.TreeMap;
 
-import com.totalcross.knowcode.ui.InicialScreen;
+import com.totalcross.knowcode.ui.StartXMLScreen;
 import com.totalcross.knowcode.parse.NodeSax;
 import com.totalcross.knowcode.util.Colors;
 
@@ -41,20 +41,13 @@ import totalcross.xml.SyntaxException;
 import totalcross.xml.XmlReader;
 
 public abstract class XmlScreenAbstractLayout extends Container {
-	// boolean isLayout = true;
 	int layout = 0;
 	private String pathXml;
-	// int xpos = LEFT+5;
-	// int ypos = TOP+10;
-	// int widthPos = PARENTSIZE;
-	// int heightPos = PARENTSIZE;
 
 	TreeMap<String, Control> componentsMap = new TreeMap<String, Control>();
 	Control lastControl = null;
 
 	Container centralContainer;
-
-	// private int centralLayout=0;
 
 	public void initUI() {
 		try {
@@ -74,7 +67,6 @@ public abstract class XmlScreenAbstractLayout extends Container {
 
 			// Add the main control to screen
 			// add(firstControl, xpos, ypos, width, height);
-			System.out.println();
 		} catch (IOException | ArrayIndexOutOfBoundsException ea) {
 			ea.printStackTrace();
 		} catch (Exception e) {
@@ -83,9 +75,13 @@ public abstract class XmlScreenAbstractLayout extends Container {
 	}
 
 	public void afterInitUI() throws totalcross.io.IOException, ImageException {
-
+		addCustumisation();
 	}
-
+	
+	public XmlScreenAbstractLayout addCustumisation() {
+		return this;
+	}
+	
 	public abstract void addscreen(NodeSax node) throws totalcross.io.IOException, ImageException, InvalidNumberException;
 
 	public Control createInstanceOf(NodeSax nodes) throws totalcross.io.IOException, ImageException, InvalidNumberException {
@@ -237,10 +233,6 @@ public abstract class XmlScreenAbstractLayout extends Container {
 		return new Radio(node.getText());
 	}
 
-	protected Control getControlByID(String a) {
-		return componentsMap.get(a);
-	}
-
 	private class Handler extends ContentHandler {
 		NodeSax auxNodeSax;
 
@@ -250,7 +242,6 @@ public abstract class XmlScreenAbstractLayout extends Container {
 
 		@Override
 		public void characters(String arg0) {
-			System.out.println("Characters " + arg0);
 		}
 
 		@Override
@@ -268,7 +259,6 @@ public abstract class XmlScreenAbstractLayout extends Container {
 		}
 		public void tagName(int a,String arg0,AttributeList atts) {
 			// TODO Auto-generated method stub
-			System.out.println("startElementString " + arg0);
 			auxNodeSax.setAttributeName(arg0);
 			auxNodeSax.reset();
 			AttributeList.Iterator it = atts.new Iterator();
@@ -284,20 +274,6 @@ public abstract class XmlScreenAbstractLayout extends Container {
 			} catch (InvalidNumberException e) {
 				e.printStackTrace();
 			}
-		}
-
-
-
-		// @Override
-		public void endElementString(String arg0) {
-
-		}
-
-		// @Override
-		public void startElementString(String arg0, AttributeList arg1) {
-			System.out.println("startElementString " + arg0);
-			auxNodeSax.setAttributeName(arg0);
-			auxNodeSax.reset();
 		}
 	}
 
@@ -332,7 +308,7 @@ public abstract class XmlScreenAbstractLayout extends Container {
 
 		centralContainer.add(btVoltar, LEFT, BOTTOM);
 		btVoltar.addPressListener((e) -> {
-			InicialScreen scr1 = new InicialScreen();
+			StartXMLScreen scr1 = new StartXMLScreen();
 
 			MainWindow.getMainWindow().swap(scr1);
 		});
@@ -342,7 +318,11 @@ public abstract class XmlScreenAbstractLayout extends Container {
 	public String getPathXml() {
 		return pathXml;
 	}
-
+	
+	public Control getControlByID(String a) {
+		return componentsMap.get(a);
+	}
+	
 	public void setPathXml(String pathXml) {
 		this.pathXml = pathXml;
 	}
