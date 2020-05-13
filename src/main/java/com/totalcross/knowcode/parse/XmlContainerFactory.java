@@ -29,7 +29,7 @@ public class XmlContainerFactory {
 
 			Class clazz = Class.forName("com.totalcross.knowcode.parse.XmlContainer" + xmlScreenFactory.getNameLayout());
 
-			XmlContainerAbstractLayout container = (XmlContainerAbstractLayout) clazz.newInstance();
+			XmlContainerLayouts container = (XmlContainerLayouts) clazz.newInstance();
 			container.setPathXml(pathXml);
 			return container;
 

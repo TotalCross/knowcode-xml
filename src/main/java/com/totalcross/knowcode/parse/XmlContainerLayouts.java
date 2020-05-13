@@ -35,7 +35,7 @@ import totalcross.xml.ContentHandler;
 import totalcross.xml.SyntaxException;
 import totalcross.xml.XmlReader;
 
-public abstract class XmlContainerAbstractLayout extends Container {
+public abstract class XmlContainerLayouts extends Container {
 	int layout = 0;
 	private String pathXml;
 
@@ -61,7 +61,7 @@ public abstract class XmlContainerAbstractLayout extends Container {
 		addCustumisation();
 	}
 	
-	public XmlContainerAbstractLayout addCustumisation() {
+	public XmlContainerLayouts addCustumisation() {
 		return this;
 	}
 	

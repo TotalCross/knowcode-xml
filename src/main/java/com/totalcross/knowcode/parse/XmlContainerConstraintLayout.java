@@ -11,7 +11,7 @@ import totalcross.ui.Control;
 import totalcross.ui.gfx.Color;
 import totalcross.ui.image.ImageException;
 
-public class XmlContainerConstraintLayout extends XmlContainerAbstractLayout {
+public class XmlContainerConstraintLayout extends XmlContainerLayouts {
 	boolean isLayout = true;
 
 	int xpos = LEFT;
