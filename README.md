@@ -11,7 +11,7 @@ Here we have the second block, named KnowCodeXML in an alpha version.
 KnowCodeXML is a library initially running for Android XMLs in its main layouts: ConstraintLayout, LinearLayout, RelativeLayout and AbstractLayout.
 
 You need to import the jar file or configure maven to use KnowcodeXML in your project. 
-After that, you have to import both classes, *XmlContainerFactory* and *XmlContainerLayouts*. These classes are the door to other projects can use Knowcode Library. 
+After that, you have to import both classes, *XmlContainerFactory* and *XmlContainerLayout*. These classes are the door to other projects can use Knowcode Library. 
 
 ![my project KC](https://imgur.com/SCuRBie.png)
 
@@ -20,6 +20,20 @@ Once the layout has been identified, KnowcodeXML calls the abstract class that h
 
 ![class KC](https://imgur.com/uPAkxQt.png)
 
+### Steps to use Knowcode
+* Create a Totalcross Project 
+* Import the .jar file of Knowcode (export .jar of the Knowcode Project)
+* Import classes *XmlContainerFactory.java* and *XmlContainerLayout.java*
+* Instantiate the container of your xml file using *XmlContainerFactory.create*
+* Show your Window =)
+
+		Container cont = XmlContainerFactory.create("embeddedWorldSample.xml"); 
+		MainWindow.getMainWindow().swap(cont);		
+ * To use the components of xml file, use the method *getControlByID* passing like parameter the id of xml file
+ 
+		Control control = ((XmlContainerLayout) container).getControlByID("@+id/btRegister");
+		control.setBackColor(Color.BRIGHT);
+### Sample
 We have some projects on github using this API, like [HelloKnowcode](https://github.com/TotalCross/HelloKnowcode). 
 A Hello World project that just open a XML file, swap this on the screen and add some functionality to the buttons: 
 
