@@ -1,4 +1,4 @@
-#Knowcode - Library to allow developers to run Android XML UI + TotalCross on Linux ARM, iOS, Android and more...
+# Knowcode - Library to allow developers to run Android XML UI + TotalCross on Linux ARM, iOS, Android and more...
 KnowCode is a project that was borned to solve a problem that is: how can developers build their screens faster based on the beautiful images made by designers?
 
 So, there is two main blocks:
@@ -13,12 +13,12 @@ KnowCodeXML is a library initially running for Android XMLs in its main layouts:
 You need to import the jar file or configure maven to use KnowcodeXML in your project. 
 After that, you have to import both classes, XmlContainerFactory and XmlContainerLayouts. These classes are the door to other projects can use Knowcode Library. 
 
-![my project KC][1.1](https://imgur.com/SCuRBie.png)
+![my project KC](https://imgur.com/SCuRBie.png)
 
 The XmlContainerFactory class reads the xml file and realizes which layout to create by reading the xml file until it finds an identification of layout.
 Once the layout has been identified, KnowcodeXML calls the abstract class that has all the common methods for layouts and instantiates one of the layout classes. The image below shows the class structure belonging to the project.
 
-![class KC][1.1](https://imgur.com/uPAkxQt.png)
+![class KC](https://imgur.com/uPAkxQt.png)
 
 We have some projects on github using this API, like [HelloKnowcode](https://github.com/TotalCross/HelloKnowcode). 
 A Hello World project that just open a XML file, swap this on the screen and add some functionality to the buttons: 
@@ -46,10 +46,10 @@ The create method of *XmlContainerFactory* class returns a Container object of t
 The method *getControlByID* of the class *XmlContainerLayouts* returns a Control object created of the XML file. The screen of this file is shown below.
 
 
-![EW Sample][1.1](https://imgur.com/x3HFDFC.png)
+![EW Sample](https://imgur.com/x3HFDFC.png)
 
 
-##Another Samples
+## Another Samples
 
 * [HomeApplianceXML](https://github.com/TotalCross/HomeApplianceXML)
 * [KnowcodeSample](https://github.com/TotalCross/KnowcodeSample)
