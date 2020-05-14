@@ -9,7 +9,7 @@ import totalcross.ui.Control;
 import totalcross.ui.gfx.Color;
 import totalcross.ui.image.ImageException;
 
-public class XmlContainerLinearLayout extends XmlContainerLayouts {
+public class XmlContainerLinearLayout extends XmlContainerLayout {
 	boolean isLayout = true;
 	String orientation = null;
 

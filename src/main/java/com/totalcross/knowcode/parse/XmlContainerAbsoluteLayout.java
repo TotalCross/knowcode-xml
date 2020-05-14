@@ -12,7 +12,7 @@ import totalcross.ui.Control;
 import totalcross.ui.gfx.Color;
 import totalcross.ui.image.ImageException;
 
-public class XmlContainerAbsoluteLayout extends XmlContainerLayouts {
+public class XmlContainerAbsoluteLayout extends XmlContainerLayout {
 
 	int layout = 0;
 
