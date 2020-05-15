@@ -63,12 +63,13 @@ The method *getControlByID* of the class *XmlContainerLayouts* returns a Control
 
 ![EW Sample](https://imgur.com/x3HFDFC.png)
 
-
-## Another Samples
+## More Samples and Tutorials
 
 * [HomeApplianceXML](https://github.com/TotalCross/HomeApplianceXML)
 * [KnowcodeSample](https://github.com/TotalCross/KnowcodeSample)
 * [ToradexLauncherSample](https://github.com/TotalCross/ToradexLauncherSample)
+* [Android XML + Totalcross = Rich UI/UX on Linux ARM](https://www.youtube.com/watch?v=7o3p14wQPsE)
+* [Creating and using your own external Java library for your TotalCross Applications](https://www.youtube.com/watch?v=Cq5yEPTmZWI)
 
 
 
