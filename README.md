@@ -5,21 +5,21 @@ So, there is two main blocks:
 * Computer vision to understand the image and transform it in a XML file
 * Read a XML file, parse to Totalcross and run on Linux ARM, iOS, Android and more...
 
-Here we have the second block, named KnowCodeXML in an alpha version.
+Here we have the second block, named KnowCodeXML.
 
 ## KnowcodeXML
 
-KnowcodeXML is a library that interprets xml files and generates Totalcross screens ready to run on Android, IoS and Linux ARM devices. Today, we are in a alpha version, interpreting  XML files from the main Android layouts: ConstraintLayout, LinearLayout, RelativeLayout and AbstractLayout.
+KnowcodeXML is a library that interprets xml files and generates Totalcross screens ready to run on Android, IoS and Linux ARM devices. We are interpreting  XML files from the main Android layouts: ConstraintLayout, LinearLayout, RelativeLayout and AbstractLayout.
 
 You need to import the jar file or configure maven to use KnowcodeXML in your project. 
 After that, you have to import both classes, *XmlContainerFactory* and *XmlContainerLayout*. These classes are the door to other projects can use Knowcode Library. 
 
-![my project KC](https://imgur.com/QGvfHN6.png)
+![my project KC](https://imgur.com/Mmkp5EX.png)
 
 The *XmlContainerFactory* class reads the xml file and realizes which layout to create by reading the xml file until it finds an identification of layout.
 Once the layout has been identified, KnowcodeXML calls the abstract class that has all the common methods for layouts and instantiates one of the layout classes. The image below shows the class structure belonging to the project.
 
-![class KC](https://imgur.com/uPAkxQt.png)
+![class KC](https://imgur.com/QMkkhnA.png)
 
 ### Steps to use Knowcode
 * Create a Totalcross Project 
