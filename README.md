@@ -8,12 +8,13 @@ So, there is two main blocks:
 Here we have the second block, named KnowCodeXML in an alpha version.
 
 ## KnowcodeXML
-KnowCodeXML is a library initially running for Android XMLs in its main layouts: ConstraintLayout, LinearLayout, RelativeLayout and AbstractLayout.
+
+KnowcodeXML is a library that interprets xml files and generates Totalcross screens ready to run on Android, IoS and Linux ARM devices. Today, we are in a alpha version, interpreting  XML files from the main Android layouts: ConstraintLayout, LinearLayout, RelativeLayout and AbstractLayout.
 
 You need to import the jar file or configure maven to use KnowcodeXML in your project. 
 After that, you have to import both classes, *XmlContainerFactory* and *XmlContainerLayout*. These classes are the door to other projects can use Knowcode Library. 
 
-![my project KC](https://imgur.com/SCuRBie.png)
+![my project KC](https://imgur.com/QGvfHN6.png)
 
 The *XmlContainerFactory* class reads the xml file and realizes which layout to create by reading the xml file until it finds an identification of layout.
 Once the layout has been identified, KnowcodeXML calls the abstract class that has all the common methods for layouts and instantiates one of the layout classes. The image below shows the class structure belonging to the project.
