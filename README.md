@@ -14,7 +14,7 @@ KnowcodeXML is a library that interprets xml files and generates Totalcross scre
 You need to import the jar file or configure maven to use KnowcodeXML in your project. 
 After that, you have to import both classes, *XmlContainerFactory* and *XmlContainerLayout*. These classes are the door to other projects can use Knowcode Library. 
 
-![my project KC](https://imgur.com/Mmkp5EX.png)
+![my project KC](https://imgur.com/1SS6Okw.png)
 
 The *XmlContainerFactory* class reads the xml file and realizes which layout to create by reading the xml file until it finds an identification of layout.
 Once the layout has been identified, KnowcodeXML calls the abstract class that has all the common methods for layouts and instantiates one of the layout classes. The image below shows the class structure belonging to the project.
