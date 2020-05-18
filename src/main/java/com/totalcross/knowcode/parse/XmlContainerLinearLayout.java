@@ -1,13 +1,15 @@
 // (c) 2020 by TotalCross Global Mobile Platform LTDA
 // SPDX-License-Identifier: LGPL-3.0-only
 
-package com.totalcross.knowcode.ui;
+package com.totalcross.knowcode.parse;
 
+import totalcross.sys.InvalidNumberException;
 import totalcross.ui.Container;
+import totalcross.ui.Control;
 import totalcross.ui.gfx.Color;
 import totalcross.ui.image.ImageException;
 
-public class XmlScreenLinearLayout extends XmlScreenAbstractLayout {
+public class XmlContainerLinearLayout extends XmlContainerLayout {
 	boolean isLayout = true;
 	String orientation = null;
 
@@ -16,7 +18,7 @@ public class XmlScreenLinearLayout extends XmlScreenAbstractLayout {
 	int widthPos = FILL - 10;
 	int heightPos = FILL - 10;
 
-	public void addscreen(NodeSax node) throws totalcross.io.IOException, ImageException {
+	public void addscreen(NodeSax node) throws totalcross.io.IOException, ImageException, InvalidNumberException {
 
 		if (isLayout) {
 			isLayout = false;
@@ -57,8 +59,6 @@ public class XmlScreenLinearLayout extends XmlScreenAbstractLayout {
 				widthPos = node.getW();
 				heightPos = node.getH();
 
-				System.out.println("Node: " + node.getAttributeName());
-
 			}
 			centralContainer.add(createInstanceOf(node), xpos, ypos, widthPos, heightPos, lastControl);
 		}
@@ -68,6 +68,6 @@ public class XmlScreenLinearLayout extends XmlScreenAbstractLayout {
 	@Override
 	public void afterInitUI() throws totalcross.io.IOException, ImageException {
 		super.afterInitUI();
-		createBackButton();
+		//createBackButton();
 	}
 }

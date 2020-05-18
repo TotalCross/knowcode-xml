@@ -1,9 +1,7 @@
 // (c) 2020 by TotalCross Global Mobile Platform LTDA
 // SPDX-License-Identifier: LGPL-3.0-only
 
-package com.totalcross.knowcode.ui;
-
-import com.totalcross.knowcode.util.Colors;
+package com.totalcross.knowcode.parse;
 
 import totalcross.sys.Vm;
 import totalcross.ui.Container;
@@ -14,22 +12,24 @@ import totalcross.xml.ContentHandler;
 import totalcross.xml.SyntaxException;
 import totalcross.xml.XmlReader;
 
-public class XmlScreenFactory {
+import java.io.UnsupportedEncodingException;
+
+public class XmlContainerFactory {
 	private String nameLayout = null;
 	static final String[] layouts = { "ConstraintLayout", "LinearLayout", "FrameLayout", "RelativeLayout",
 			"AbsolutLayout" };
 
 	public static Container create(String pathXml) {
 		try {
-			XmlScreenFactory xMLScreenFactory = new XmlScreenFactory();
-			xMLScreenFactory.readXml(pathXml);
-			if (xMLScreenFactory.getNameLayout() == null) {
+			XmlContainerFactory xmlScreenFactory = new XmlContainerFactory();
+			xmlScreenFactory.readXml(pathXml);
+			if (xmlScreenFactory.getNameLayout() == null) {
 				throw new Exception("Layout do xml não consta lista dos conhecidos.");
 			}
 
-			Class clazz = Class.forName("com.totalcross.knowcode.ui.XmlScreen" + xMLScreenFactory.getNameLayout());
+			Class clazz = Class.forName("com.totalcross.knowcode.parse.XmlContainer" + xmlScreenFactory.getNameLayout());
 
-			XmlScreenAbstractLayout container = (XmlScreenAbstractLayout) clazz.newInstance();
+			XmlContainerLayout container = (XmlContainerLayout) clazz.newInstance();
 			container.setPathXml(pathXml);
 			return container;
 
@@ -48,7 +48,6 @@ public class XmlScreenFactory {
 
 		@Override
 		public void characters(String arg0) {
-			System.out.println("Characters " + arg0);
 
 		}
 
@@ -59,13 +58,20 @@ public class XmlScreenFactory {
 
 		@Override
 		public void startElement(int arg0, AttributeList atts) {
+
+		}
+
+		@Override
+		public void tagName(int a,String arg0,AttributeList atts) {
+			// TODO Auto-generated method stub
+			auxNodeSax.setAttributeName(arg0);
+			auxNodeSax.reset();
 			AttributeList.Iterator it = atts.new Iterator();
 			while (it.next()) {
 				auxNodeSax.inserts(it.getAttributeName(), it.getAttributeValue());
 			}
 			if (getNameLayout() == null) {
 				for (int i = 0; i < layouts.length; i++) {
-					System.out.println(auxNodeSax.getAttributeName());
 					if (auxNodeSax.getAttributeName().contains(layouts[i])) {
 						setNameLayout(layouts[i]);
 						break;
@@ -73,23 +79,9 @@ public class XmlScreenFactory {
 				}
 			}
 		}
-
-		// @Override
-		public void endElementString(String arg0) {
-			// TODO Auto-generated method stub
-			System.out.println("endElementString " + arg0);
-		}
-
-		@Override
-		public void startElementString(String arg0, AttributeList arg1) {
-			// TODO Auto-generated method stub
-			System.out.println("startElementString " + arg0);
-			auxNodeSax.setAttributeName(arg0);
-			auxNodeSax.reset();
-		}
 	}
 
-	private void readXml(String pathXml) throws totalcross.io.IOException, ImageException {
+	private void readXml(String pathXml) throws totalcross.io.IOException, ImageException, UnsupportedEncodingException {
 
 		Handler handler = new Handler();
 		XmlReader rdr = new XmlReader();
@@ -98,7 +90,7 @@ public class XmlScreenFactory {
 		byte[] xml = Vm.getFile(pathXml);
 
 		if (xml != null) {
-
+			xml = new String(xml, 0, xml.length, "UTF-8").getBytes("ISO-8859-1");
 			try {
 				rdr.parse(xml, 0, xml.length);
 			} catch (SyntaxException e) {
@@ -109,7 +101,6 @@ public class XmlScreenFactory {
 		} else {
 
 			MessageBox mb = new MessageBox("Message", "XML not found.", new String[] { "Close" });
-			mb.setForeColor(Colors.SURFACE);
 			mb.popup();
 		}
 

@@ -1,25 +1,25 @@
 // (c) 2020 by TotalCross Global Mobile Platform LTDA
 // SPDX-License-Identifier: LGPL-3.0-only
 
-package com.totalcross.knowcode.ui;
+package com.totalcross.knowcode.parse;
 
 import java.util.TreeMap;
 
+
+import totalcross.sys.InvalidNumberException;
 import totalcross.ui.Container;
 import totalcross.ui.Control;
 import totalcross.ui.gfx.Color;
 import totalcross.ui.image.ImageException;
 
-public class XmlScreenAbsoluteLayout extends XmlScreenAbstractLayout {
-	// boolean isLayout = true;
+public class XmlContainerAbsoluteLayout extends XmlContainerLayout {
+
 	int layout = 0;
 
 	int xpos = LEFT + 5;
 	int ypos = TOP + 10;
 	int widthPos = PARENTSIZE;
 	int heightPos = PARENTSIZE;
-	// int widthPos = FILL;
-	// int heightPos =FILL;
 
 	// FIXME: variaveis posicionamento global - Iaggo
 	int px = LEFT;
@@ -36,18 +36,16 @@ public class XmlScreenAbsoluteLayout extends XmlScreenAbstractLayout {
 	public static final int TABLE_LAYOUT = 7;
 
 	TreeMap<String, Control> componentsMap = new TreeMap<String, Control>();
-	// private Control lastControl = null;
 
 	private Container centralContainer;
 
-	public void addscreen(NodeSax node) throws totalcross.io.IOException, ImageException {
+	public void addscreen(NodeSax node) throws totalcross.io.IOException, ImageException, InvalidNumberException {
 		int xLocal = xpos;
 		int yLocal = ypos;
 		int widLocal = widthPos;
 		int heiLocal = heightPos;
 
 		if (layout == 0) {
-			// isLayout = false;
 			String bckG = node.getBackgroundColor();
 			if (bckG != null) {
 				centralContainer.setBackColor(Color.getRGB(bckG));
@@ -89,10 +87,9 @@ public class XmlScreenAbsoluteLayout extends XmlScreenAbstractLayout {
 
 		}
 	}
-
+	
 	@Override
 	public void afterInitUI() throws totalcross.io.IOException, ImageException {
 		super.afterInitUI();
-		createBackButton();
 	}
 }

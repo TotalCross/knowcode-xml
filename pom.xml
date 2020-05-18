@@ -1,36 +1,120 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.totalcross.knowcode</groupId>
-	<artifactId>KnowcodeXML</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>Knowcode XML</name>
-	<description>Computer Vision and Parser XML to Totalcross</description>
 
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.totalcross.knowcode.sample</groupId>
+	<artifactId>Knowcode</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<name>Knowcode</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<totalcross.activation_key>{your license here}</totalcross.activation_key>
+		<totalcross.activation_key>5443444B43554F0ADBF5E97E</totalcross.activation_key>
+		<totalcross.sdkPath>C:\Users\andre\Documents\Totalcross\Git Projects\KC_sdk6\TotalCross6.0.4\TotalCross\</totalcross.sdkPath>
 	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>com.totalcross</groupId>
 			<artifactId>totalcross-sdk</artifactId>
-			<version>5.1.0</version>
+			<version>6.0.3</version>
+			<systemPath>${totalcross.sdkPath}/dist/totalcross-sdk.jar</systemPath>
 			<scope>system</scope>
-			<systemPath>/Users/brunoamuniz/Dropbox/dev/workspace/Toradex_Launcher_Sample/lib/totalcross-sdk.jar</systemPath>
 		</dependency>
-
+		<dependency>
+			<groupId>org.vafer</groupId>
+			<artifactId>jdeb</artifactId>
+			<version>0.7</version>
+			<scope>compile</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>*</artifactId>
+					<groupId>org.bouncycastle</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcpkix-jdk15on</artifactId>
+			<version>1.56</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.googlecode.plist</groupId>
+			<artifactId>dd-plist</artifactId>
+			<version>1.19</version>
+			<scope>compile</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.xerial</groupId>
 			<artifactId>sqlite-jdbc</artifactId>
 			<version>3.8.7</version>
 			<scope>compile</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>de.schlichtherle.truezip</groupId>
+			<artifactId>truezip-file</artifactId>
+			<version>7.5.1</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>de.schlichtherle.truezip</groupId>
+			<artifactId>truezip-driver-zip</artifactId>
+			<version>7.5.1</version>
+			<scope>compile</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>*</artifactId>
+					<groupId>org.bouncycastle</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.2</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.ow2.asm</groupId>
+			<artifactId>asm</artifactId>
+			<version>5.2</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.ow2.asm</groupId>
+			<artifactId>asm-tree</artifactId>
+			<version>5.2</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.harawata</groupId>
+			<artifactId>appdirs</artifactId>
+			<version>1.0.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.coobird</groupId>
+			<artifactId>thumbnailator</artifactId>
+			<version>0.4.8</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.totalcross.annotations</groupId>
+			<artifactId>totalcross-annotations</artifactId>
+			<version>1.0.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.java.dev.jna</groupId>
+			<artifactId>jna-platform</artifactId>
+			<version>4.2.2</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
-
 	<repositories>
 		<repository>
 			<id>totalcross-repo</id>
@@ -38,9 +122,15 @@
 			<url>http://maven.totalcross.com/artifactory/repo1</url>
 		</repository>
 	</repositories>
-
+	<pluginRepositories>
+		<pluginRepository>
+			<id>totalcross-repo</id>
+			<name>ip-172-31-40-140-releases</name>
+			<url>http://maven.totalcross.com/artifactory/repo1</url>
+		</pluginRepository>
+	</pluginRepositories>
 	<build>
-		<finalName>${project.artifactId}</finalName>
+		<finalName>TCSample</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -52,87 +142,44 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>net.orfjackal.retrolambda</groupId>
-				<artifactId>retrolambda-maven-plugin</artifactId>
-				<version>2.5.1</version>
+				<groupId>com.totalcross</groupId>
+				<artifactId>totalcross-maven-plugin</artifactId>
+				<version>1.1</version>
+				<configuration>
+                    <name>TCSample</name>
+                    <platforms>
+                        <platform>-linux</platform>
+                        <platform>-linux_arm</platform>
+                        <platform>-android</platform>
+                        <platform>-win32</platform>
+                    </platforms>
+                    <activationKey>${totalcross.activation_key}</activationKey>
+                    <!--
+                                        For version 4.4.2 and 5.1.4 or later, Apple certificates are no longer required.
+                    -->
+                    <!--
+                                        <certificates>${totalcross.applecertificate}</certificates>
+                    -->
+                    <totalcrossHome>${totalcross.sdkPath}</totalcrossHome>
+                </configuration>
 				<executions>
 					<execution>
+						<id>post-compile</id>
+						<phase>compile</phase>
 						<goals>
-							<goal>process-main</goal>
+							<goal>retrolambda</goal>
 						</goals>
 					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.1.1</version>
-				<executions>
 					<execution>
+						<id>post-package</id>
 						<phase>package</phase>
 						<goals>
-							<goal>java</goal>
+							<goal>package</goal>
 						</goals>
-						<configuration>
-							<mainClass>tc.Deploy</mainClass>
-							<arguments>
-								<argument>${project.build.directory}/${project.build.finalName}.${project.packaging}</argument>
-								<!-- <argument>-win32</argument> -->
-								<argument>-android</argument>
-								<!-- <argument>-ios</argument> -->
-								<argument>/n</argument>
-								<argument>KnowCode XML</argument>
-								<argument>/p</argument>
-								<argument>/r</argument>
-								<argument>${totalcross.activation_key}</argument>
-								<!-- <argument>/m</argument> <argument>{put ios certificate path 
-									here}</argument> -->
-							</arguments>
-						</configuration>
 					</execution>
 				</executions>
+
 			</plugin>
 		</plugins>
 	</build>
-
-	<profiles>
-		<profile>
-			<id>only-eclipse</id>
-			<activation>
-				<property>
-					<name>m2e.version</name>
-				</property>
-			</activation>
-			<build>
-				<pluginManagement>
-					<plugins>
-						<plugin>
-							<groupId>org.eclipse.m2e</groupId>
-							<artifactId>lifecycle-mapping</artifactId>
-							<version>1.0.0</version>
-							<configuration>
-								<lifecycleMappingMetadata>
-									<pluginExecutions>
-										<pluginExecution>
-											<pluginExecutionFilter>
-												<groupId>net.orfjackal.retrolambda</groupId>
-												<artifactId>retrolambda-maven-plugin</artifactId>
-												<versionRange>[2.5.1,)</versionRange>
-												<goals>
-													<goal>process-main</goal>
-												</goals>
-											</pluginExecutionFilter>
-											<action>
-												<execute />
-											</action>
-										</pluginExecution>
-									</pluginExecutions>
-								</lifecycleMappingMetadata>
-							</configuration>
-						</plugin>
-					</plugins>
-				</pluginManagement>
-			</build>
-		</profile>
-	</profiles>
 </project>
