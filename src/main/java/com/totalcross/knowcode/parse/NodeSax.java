@@ -1,3 +1,6 @@
+// (c) 2020 by TotalCross Global Mobile Platform LTDA
+// SPDX-License-Identifier: LGPL-3.0-only
+
 package com.totalcross.knowcode.parse;
 
 import static totalcross.ui.Control.AFTER;
