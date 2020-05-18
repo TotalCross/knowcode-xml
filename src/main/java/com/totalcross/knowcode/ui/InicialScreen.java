@@ -54,11 +54,11 @@ public class InicialScreen extends Container {
 		cont.transparentBackground = true;
 		add(cont, LEFT +  Constants.BORDER_SPACING, BOTTOM, FILL -  Constants.BORDER_SPACING, PARENTSIZE + 65);
 
-		Label lbl = new Label("Choose the Android\n XML to be load");
+		Label lbl = new Label("Choose the Android XML to be load");
 		lbl.setFont(Fonts.latoBoldPlus10);
 		lbl.transparentBackground = true;
 		lbl.setForeColor(Colors.TEXT_ON_P);
-		cont.add(lbl, LEFT, TOP + 15);
+		cont.add(lbl, CENTER, TOP + 15);
 
 		Button bt01 = new Button("LinearLayout Sample ", Button.BORDER_OUTLINED);
 		bt01.setForeColor(Colors.PRIMARY);

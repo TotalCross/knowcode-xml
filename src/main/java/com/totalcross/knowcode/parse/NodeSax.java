@@ -16,17 +16,16 @@ import static totalcross.ui.Control.RIGHT_OF;
 import static totalcross.ui.Control.SAME;
 import static totalcross.ui.Control.TOP;
 
-import java.io.File;
-import java.io.FilenameFilter;
-import java.net.URL;
+//import java.net.URL;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import totalcross.Launcher;
 import totalcross.io.IOException;
 import totalcross.sys.InvalidNumberException;
 import totalcross.sys.Settings;
+import totalcross.sys.Vm;
 import totalcross.ui.image.ImageException;
 import totalcross.util.BigDecimal;
 import totalcross.util.UnitsConverter;
@@ -168,36 +167,80 @@ public class NodeSax {
             }
             if ('@' == attributeValue.charAt(0)) {
                 attributeValue = attributeValue.substring(1);
-
-////	            //Melhorar essa verificação
-//	            if (attributeValue.contains(".png") || attributeValue.contains(".jpg")) {
-//	    			return attributeValue;
-//		        } else {
-//		        	attributeValue += ".png";
-//		        }
             }
+            
+            if (attributeValue.contains(".png") || attributeValue.contains(".jpg")) {
+    			return attributeValue;
+	        } else {
+	        	attributeValue = getImageExtension(attributeValue);
+	        }
         }
-        return getPathImage(attributeValue);
+        return attributeValue;
+        //return getPathImage(attributeValue);
+
     }
 
 
-    public String getPathImage(String path) {
-        String raiz = path.substring(0, path.lastIndexOf("/"));
-        URL url = Thread.currentThread().getContextClassLoader().getResource(raiz);
-        String nomeImage = path.substring(path.lastIndexOf("/") +1);
-        File f = new File(url.getPath());
-        File[] matchingFiles = f.listFiles(new FilenameFilter() {
-            public boolean accept(File dir, String name) {
-                return name.startsWith(nomeImage);
-            }
-        });
-
-        if (matchingFiles != null && matchingFiles.length > 0) {
-            return matchingFiles[0].getPath();
-        } else {
-            return null;
-        }
+//    private String getImageExtension2(String path) {
+//    	File file = null;
+//    	try {
+//    		String [] extensoes = {".jpg", ".png", ".bmp",".jpeg",".gif",
+//    							".JPG", ".PNG", ".BMP", ".JPEG", ".GIF"};
+//    		for (int i = 0; i < extensoes.length; i++) {
+//    			URL url = this.getClass().getClassLoader().getResource(path + extensoes[i]);
+//    	    	file = new File(url.getPath());
+//    	    	if(file.exists()) {
+//    	    		path = file.getPath();
+//    	    		break;
+//    	    	}
+//    		}
+//    	} catch (Exception e) {
+//    		System.out.println(e.getMessage());
+//		} finally {
+//			try {
+//				file.close();
+//			} catch (Exception e) {
+//				e.getStackTrace();
+//			}
+//		}
+//    	
+//    	return path;
+//    }
+    
+    private String getImageExtension(String path) {
+		String [] extensoes = {".jpg", ".png", ".bmp",".jpeg",".gif",
+							".JPG", ".PNG", ".BMP", ".JPEG", ".GIF"};
+		byte[] xml = null;
+		for (int i = 0; i < extensoes.length; i++) {
+			xml = Vm.getFile(path+extensoes[i]);
+	    	
+	    	if(xml != null) {
+	    		return path+extensoes[i];
+	    	}
+		}
+    	
+    	return path;
     }
+    
+//    public String getImageExtension3(String path) {
+//    	try {
+//	        String lastDir = path.substring(0, path.lastIndexOf("/"));
+//	        URL url = getClass().getClassLoader().getResource(lastDir);
+//	        String key = path.concat(".");
+//	        String[] names = File.listFiles(url.getPath(), false); 
+//	        for (String name: names) {
+//	        	if (name.contains(key)) {
+//	        		return name;
+//	        	}
+//	        }
+//	        return null;
+//    	}catch (Exception e) {
+//			// TODO: handle exception
+//    		e.printStackTrace();
+//    		return null;
+//		}
+//    }
+    
     public String getTextColor() {
         attributeValue = getValue("android:textColor");
 
@@ -253,10 +296,11 @@ public class NodeSax {
             if ('@' == attributeValue.charAt(0)) {
                 attributeValue = attributeValue.substring(1);
             }
-            if(attributeValue.contains(".png")||attributeValue.contains(".jpg"))
+            if(attributeValue.contains(".png")||attributeValue.contains(".jpg")) {
                 return attributeValue;
-            attributeValue += ".png";
-            System.out.println(attributeValue);
+            }
+            
+            attributeValue = getImageExtension(attributeValue);
             return attributeValue;
         }
     }
@@ -740,11 +784,10 @@ public class NodeSax {
                 attributeValue = attributeValue.substring(1);
             }
 
-//FIXME: ADICIONAR AQUI UMA VERIFICAÇÃO DE EXTENÇÃO DE IMAGEM
             if (attributeValue.contains(".png") || attributeValue.contains(".jpg")) {
                 return attributeValue;
             } else {
-                attributeValue += ".jpg";
+                attributeValue = getImageExtension(attributeValue); 
             }
         }
         return attributeValue;
