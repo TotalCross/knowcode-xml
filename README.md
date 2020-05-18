@@ -1,23 +1,24 @@
 # Knowcode - Library to allow developers to run Android XML UI + TotalCross on Linux ARM, iOS, Android and more...
-KnowCode is a project that was borned to solve a problem that is: how can developers build their screens faster based on the beautiful images made by designers?
+KnowCode is a project that was born to solve a problem, which is: 
+How can developers build their screens faster based on images made by designers?
 
-So, there is two main blocks:
-* Computer vision to understand the image and transform it in a XML file
+So, there is two main tasks:
+* Computer vision to understand the image and convert it to a XML file
 * Read a XML file, parse to Totalcross and run on Linux ARM, iOS, Android and more...
 
-Here we have the second block, named KnowCodeXML.
+Here we have the second task, named KnowCodeXML.
 
 ## KnowcodeXML
 
-KnowcodeXML is a library that interprets xml files and generates Totalcross screens ready to run on Android, IoS and Linux ARM devices. We are interpreting  XML files from the main Android layouts: ConstraintLayout, LinearLayout, RelativeLayout and AbstractLayout.
+KnowcodeXML is a library that interprets XML files and generates Totalcross screens ready to run on Android, iOS and Linux ARM devices. 
 
-You need to import the jar file or configure maven to use KnowcodeXML in your project. 
-After that, you have to import both classes, *XmlContainerFactory* and *XmlContainerLayout*. These classes are the door to other projects can use Knowcode Library. 
+We support all main Android layouts: ConstraintLayout, LinearLayout, RelativeLayout, and AbstractLayout.
+
+You need to import the jar file or configure maven to use KnowcodeXML in your Totalcross project. After that, you have to import two classes, *XmlContainerFactory* and *XmlContainerLayout*. These classes are the entry points to projects that use Knowcode Library. 
 
 ![my project KC](https://imgur.com/1SS6Okw.png)
 
-The *XmlContainerFactory* class reads the xml file and realizes which layout to create by reading the xml file until it finds an identification of layout.
-Once the layout has been identified, KnowcodeXML calls the abstract class that has all the common methods for layouts and instantiates one of the layout classes. The image below shows the class structure belonging to the project.
+The *XmlContainerFactory* class reads the XML file and defines which layout to create based on the wrapping layout from XML. Once the layout has been identified, KnowcodeXML calls the abstract class that has all the common methods for layouts and instantiates one of the layout classes. The image below shows the class structure belonging to the project.
 
 ![class KC](https://imgur.com/QMkkhnA.png)
 
