@@ -5,7 +5,6 @@ package com.totalcross.knowcode.parse;
 
 import java.util.TreeMap;
 
-
 import totalcross.sys.InvalidNumberException;
 import totalcross.ui.Container;
 import totalcross.ui.Control;
@@ -62,6 +61,6 @@ public class XmlContainerRelativeLayout extends XmlContainerLayout {
 	@Override
 	public void afterInitUI() throws totalcross.io.IOException, ImageException {
 		super.afterInitUI();
-		//createBackButton();
+		// createBackButton();
 	}
 }

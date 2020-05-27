@@ -5,7 +5,6 @@ package com.totalcross.knowcode.parse;
 
 import totalcross.sys.InvalidNumberException;
 import totalcross.ui.Container;
-import totalcross.ui.Control;
 import totalcross.ui.gfx.Color;
 import totalcross.ui.image.ImageException;
 
@@ -68,6 +67,6 @@ public class XmlContainerLinearLayout extends XmlContainerLayout {
 	@Override
 	public void afterInitUI() throws totalcross.io.IOException, ImageException {
 		super.afterInitUI();
-		//createBackButton();
+		// createBackButton();
 	}
 }

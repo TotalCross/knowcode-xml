@@ -17,7 +17,6 @@ import totalcross.ui.Control;
 import totalcross.ui.Edit;
 import totalcross.ui.ImageControl;
 import totalcross.ui.Label;
-import totalcross.ui.MainWindow;
 import totalcross.ui.ProgressBar;
 import totalcross.ui.Radio;
 import totalcross.ui.Slider;
@@ -60,14 +59,16 @@ public abstract class XmlContainerLayout extends Container {
 	public void afterInitUI() throws totalcross.io.IOException, ImageException {
 		addCustumisation();
 	}
-	
+
 	public XmlContainerLayout addCustumisation() {
 		return this;
 	}
-	
-	public abstract void addscreen(NodeSax node) throws totalcross.io.IOException, ImageException, InvalidNumberException;
 
-	public Control createInstanceOf(NodeSax nodes) throws totalcross.io.IOException, ImageException, InvalidNumberException {
+	public abstract void addscreen(NodeSax node)
+			throws totalcross.io.IOException, ImageException, InvalidNumberException;
+
+	public Control createInstanceOf(NodeSax nodes)
+			throws totalcross.io.IOException, ImageException, InvalidNumberException {
 
 		if (nodes.getAttributeName().contains("Button")) {
 			componentsMap.put(nodes.getId(), createButton(nodes));
@@ -124,7 +125,8 @@ public abstract class XmlContainerLayout extends Container {
 		return simpleComboBox;
 	}
 
-	private Control createImageView(NodeSax node) throws totalcross.io.IOException, ImageException, InvalidNumberException {
+	private Control createImageView(NodeSax node)
+			throws totalcross.io.IOException, ImageException, InvalidNumberException {
 		ImageControl ic = null;
 		String bg = node.getBackgroundImage();
 		if (bg != null) {
@@ -143,7 +145,8 @@ public abstract class XmlContainerLayout extends Container {
 		return new VBox(VBox.LAYOUT_FILL, VBox.ALIGNMENT_STRETCH);
 	}
 
-	private Control createButton(NodeSax node) throws totalcross.io.IOException, ImageException, InvalidNumberException {
+	private Control createButton(NodeSax node)
+			throws totalcross.io.IOException, ImageException, InvalidNumberException {
 		Button button = null;
 		String background = node.getBackgroundImage();
 		if (background != null && "".equals(background) == false) {
@@ -168,7 +171,7 @@ public abstract class XmlContainerLayout extends Container {
 	}
 
 	private Control createLabel(NodeSax node) {
-		Label label = new Label(node.getText(),node.getGravity());
+		Label label = new Label(node.getText(), node.getGravity());
 		String bg = node.getBackgroundColor();
 		String color = node.getTextColor();
 		boolean txStyleBold = node.getTextStyleBold();
@@ -239,7 +242,8 @@ public abstract class XmlContainerLayout extends Container {
 			}
 
 		}
-		public void tagName(int a,String arg0,AttributeList atts) {
+
+		public void tagName(int a, String arg0, AttributeList atts) {
 			// TODO Auto-generated method stub
 			auxNodeSax.setAttributeName(arg0);
 			auxNodeSax.reset();
@@ -284,11 +288,11 @@ public abstract class XmlContainerLayout extends Container {
 	public String getPathXml() {
 		return pathXml;
 	}
-	
+
 	public Control getControlByID(String a) {
 		return componentsMap.get(a);
 	}
-	
+
 	public void setPathXml(String pathXml) {
 		this.pathXml = pathXml;
 	}

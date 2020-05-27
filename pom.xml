@@ -1,14 +1,14 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.totalcross.knowcode.sample</groupId>
+	<groupId>com.totalcross.knowcode.parse</groupId>
 	<artifactId>Knowcode</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>Knowcode</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<totalcross.activation_key>5443444B43554F0ADBF5E97E</totalcross.activation_key>
-		<totalcross.sdkPath>C:\Users\andre\Documents\Totalcross\Git Projects\KC_sdk6\TotalCross6.0.4\TotalCross\</totalcross.sdkPath>
+		<totalcross.sdkPath>/Users/brunoamuniz/Downloads/totalcross_develop/</totalcross.sdkPath>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -130,7 +130,7 @@
 		</pluginRepository>
 	</pluginRepositories>
 	<build>
-		<finalName>TCSample</finalName>
+		<finalName>KnowCode</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -146,20 +146,8 @@
 				<artifactId>totalcross-maven-plugin</artifactId>
 				<version>1.1</version>
 				<configuration>
-                    <name>TCSample</name>
-                    <platforms>
-                        <platform>-linux</platform>
-                        <platform>-linux_arm</platform>
-                        <platform>-android</platform>
-                        <platform>-win32</platform>
-                    </platforms>
+                    <name>KnowCodeLib</name>
                     <activationKey>${totalcross.activation_key}</activationKey>
-                    <!--
-                                        For version 4.4.2 and 5.1.4 or later, Apple certificates are no longer required.
-                    -->
-                    <!--
-                                        <certificates>${totalcross.applecertificate}</certificates>
-                    -->
                     <totalcrossHome>${totalcross.sdkPath}</totalcrossHome>
                 </configuration>
 				<executions>

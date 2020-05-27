@@ -27,7 +27,8 @@ public class XmlContainerFactory {
 				throw new Exception("Layout do xml não consta lista dos conhecidos.");
 			}
 
-			Class clazz = Class.forName("com.totalcross.knowcode.parse.XmlContainer" + xmlScreenFactory.getNameLayout());
+			Class clazz = Class
+					.forName("com.totalcross.knowcode.parse.XmlContainer" + xmlScreenFactory.getNameLayout());
 
 			XmlContainerLayout container = (XmlContainerLayout) clazz.newInstance();
 			container.setPathXml(pathXml);
@@ -62,7 +63,7 @@ public class XmlContainerFactory {
 		}
 
 		@Override
-		public void tagName(int a,String arg0,AttributeList atts) {
+		public void tagName(int a, String arg0, AttributeList atts) {
 			// TODO Auto-generated method stub
 			auxNodeSax.setAttributeName(arg0);
 			auxNodeSax.reset();
@@ -81,7 +82,8 @@ public class XmlContainerFactory {
 		}
 	}
 
-	private void readXml(String pathXml) throws totalcross.io.IOException, ImageException, UnsupportedEncodingException {
+	private void readXml(String pathXml)
+			throws totalcross.io.IOException, ImageException, UnsupportedEncodingException {
 
 		Handler handler = new Handler();
 		XmlReader rdr = new XmlReader();
