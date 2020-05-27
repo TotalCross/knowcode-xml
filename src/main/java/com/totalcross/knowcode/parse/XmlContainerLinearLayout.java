@@ -1,25 +1,44 @@
-// (c) 2020 by TotalCross Global Mobile Platform LTDA
-// SPDX-License-Identifier: LGPL-3.0-only
-
+/********************************************************************************* 
+ * (c) 2020 by TotalCross Global Mobile Platform LTDA
+ * SPDX-License-Identifier: LGPL-3.0-only
+  *********************************************************************************/
 package com.totalcross.knowcode.parse;
 
 import totalcross.sys.InvalidNumberException;
+
 import totalcross.ui.Container;
-import totalcross.ui.Control;
 import totalcross.ui.gfx.Color;
 import totalcross.ui.image.ImageException;
+
+/**
+ * XmlContainerLinearLayout is responsible to parse a LinearLayout Android XML to a Container Totalcross.
+ * <p>
+ * This class specialize the super class XmlContainerLayout and it's responsible to create all Controls 
+ * from the XML components of a LinearLayout.
+ * LinearLayout is a view group that aligns all children in a single direction, vertically or horizontally.
+ * <p>
+ * XmlContainerLinearLayout is instantiated automatically, the XmlContainerFactory class reads the type of XML layout and 
+ * instantiates the corresponding layout class.
+ */
 
 public class XmlContainerLinearLayout extends XmlContainerLayout {
 	boolean isLayout = true;
 	String orientation = null;
 
-	int xpos = LEFT + 10;
-	int ypos = TOP + 15;
-	int widthPos = FILL - 10;
-	int heightPos = FILL - 10;
-
+	int xpos = LEFT;
+	int ypos = TOP;
+	int widthPos = FILL;
+	int heightPos = FILL;
+	
+	/**
+	 * Responsible to add all components of a XML file on Container
+	 * This method is call by <code>tagName</code> on the super class {@link XmlContainerLayout} 
+	 * who make the read of each tag of XML file
+	 * @param node
+	 * 		a node of a XML file
+	 *  */
 	public void addscreen(NodeSax node) throws totalcross.io.IOException, ImageException, InvalidNumberException {
-
+		
 		if (isLayout) {
 			isLayout = false;
 			centralContainer = new Container();

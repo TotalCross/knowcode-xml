@@ -1,9 +1,8 @@
-// (c) 2020 by TotalCross Global Mobile Platform LTDA
-// SPDX-License-Identifier: LGPL-3.0-only
-
+/********************************************************************************* 
+ * (c) 2020 by TotalCross Global Mobile Platform LTDA
+ * SPDX-License-Identifier: LGPL-3.0-only
+  *********************************************************************************/
 package com.totalcross.knowcode.parse;
-
-import java.util.TreeMap;
 
 import totalcross.sys.InvalidNumberException;
 import totalcross.ui.Container;
@@ -11,21 +10,33 @@ import totalcross.ui.Control;
 import totalcross.ui.gfx.Color;
 import totalcross.ui.image.ImageException;
 
+/**
+ * XmlContainerConstraintLayout is responsible to parse a ConstraintLayout Android XML to a Container Totalcross.
+ * <p>
+ * This class works together with the abstract class XmlContainerLayout and it is responsible to create all Controls 
+ * from the XML components.
+ * ConstraintLayout can work with relative positioning components, where the positioning of the component depends 
+ * on the screen size, or absolute positioning components, where the component's location is fixed on the screen 
+ * <p>
+ * this class is instantiated automatically, the XmlContainerFactory class reads the type of xml layout and 
+ * instantiates the corresponding layout class according to the nomenclature of the main tag.
+ */
+
 public class XmlContainerConstraintLayout extends XmlContainerLayout {
 	boolean isLayout = true;
 
-	int xpos = LEFT;
-	int ypos = TOP;
-	int widthPos = PARENTSIZE;
-	int heightPos = PARENTSIZE;
-
-	TreeMap<String, Control> componentsMap = new TreeMap<String, Control>();
-
+	/**
+	 * Responsible to add all components of a XML file on Container
+	 * This method is call by <code>tagName</code> on the super class {@link XmlContainerLayout} 
+	 * who make the read of each tag of XML file
+	 * @param node
+	 * 		a node of a XML file
+	 *  */
 	public void addscreen(NodeSax node) throws totalcross.io.IOException, ImageException, InvalidNumberException {
-		int xLocal = xpos;
-		int yLocal = ypos;
-		int widLocal = widthPos;
-		int heiLocal = heightPos;
+		int xLocal = LEFT;
+		int yLocal = TOP;
+		int widLocal = PARENTSIZE;
+		int heiLocal = PARENTSIZE;
 
 		if (isLayout) {
 			isLayout = false;
