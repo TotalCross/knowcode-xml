@@ -1,15 +1,25 @@
-// (c) 2020 by TotalCross Global Mobile Platform LTDA
-// SPDX-License-Identifier: LGPL-3.0-only
-
+/********************************************************************************* 
+ * (c) 2020 by TotalCross Global Mobile Platform LTDA
+ * SPDX-License-Identifier: LGPL-3.0-only
+  *********************************************************************************/
 package com.totalcross.knowcode.parse;
-
-import java.util.TreeMap;
 
 import totalcross.sys.InvalidNumberException;
 import totalcross.ui.Container;
 import totalcross.ui.Control;
 import totalcross.ui.gfx.Color;
 import totalcross.ui.image.ImageException;
+
+/**
+ * XmlContainerRelativeLayout is responsible to parse a RelativeLayout Android XML to a Container Totalcross.
+ * <p>
+ * This class works together with the abstract class XmlContainerLayout and it's responsible to create all Controls 
+ * from the XML components.
+ * RelativeLayout is a view group that displays child views in relative positions. 
+ * <p>
+ * XmlContainerRelativeLayout is instantiated automatically, the XmlContainerFactory class reads the type of XML layout and 
+ * instantiates the corresponding layout class.
+ */
 
 public class XmlContainerRelativeLayout extends XmlContainerLayout {
 	boolean isLayout = true;
@@ -19,8 +29,13 @@ public class XmlContainerRelativeLayout extends XmlContainerLayout {
 	int widthPos = PARENTSIZE;
 	int heightPos = PARENTSIZE;
 
-	TreeMap<String, Control> componentsMap = new TreeMap<String, Control>();
-
+	/**
+	 * Responsible to add all components of a XML file on Container
+	 * This method is call by <code>tagName</code> on the super class {@link XmlContainerLayout} 
+	 * who make the read of each tag of XML file
+	 * @param node
+	 * 		a node of a XML file
+	 *  */
 	public void addscreen(NodeSax node) throws totalcross.io.IOException, ImageException, InvalidNumberException {
 		int xLocal = xpos;
 		int yLocal = ypos;
@@ -56,11 +71,5 @@ public class XmlContainerRelativeLayout extends XmlContainerLayout {
 			return getControlByID(node.getRelative());
 		} else
 			return lastControl;
-	}
-
-	@Override
-	public void afterInitUI() throws totalcross.io.IOException, ImageException {
-		super.afterInitUI();
-		// createBackButton();
 	}
 }

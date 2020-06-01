@@ -1,6 +1,7 @@
-// (c) 2020 by TotalCross Global Mobile Platform LTDA
-// SPDX-License-Identifier: LGPL-3.0-only
-
+/********************************************************************************* 
+ * (c) 2020 by TotalCross Global Mobile Platform LTDA
+ * SPDX-License-Identifier: LGPL-3.0-only
+  *********************************************************************************/
 package com.totalcross.knowcode.parse;
 
 import java.io.IOException;
@@ -34,20 +35,44 @@ import totalcross.xml.ContentHandler;
 import totalcross.xml.SyntaxException;
 import totalcross.xml.XmlReader;
 
+/**
+ * XmlContainerLayout is a super class that abstracts the common methods to specialized classes of layout. 
+ * <p>
+ * It uses SAX is a standard interface for event-based XML parsing with the {@link XmlReader} class, 
+ * used to read HTML or XML documents, reporting events to handlers {@link ContentHandler}
+ * <p>
+ * Here is an example of create a new Totalcross Container Screen from a XML file.
+ * {@link XmlContainerFactory} read the XML file and instantiate the specialized class of XmlContainerLayout:
+ * <pre>
+ *	public void initUI(){
+ *		Container container = XmlContainerFactory.create("linearSample.xml");
+ *		MainWindow.getMainWindow().swap(container);
+ *		Control control = ((XmlContainerLayout) container).getControlByID("@+id/btRegister");
+		control.setFont(Fonts.latoBoldDefaultSize);  
+ *	}
+ * </pre>
+ */
 public abstract class XmlContainerLayout extends Container {
 	int layout = 0;
 	private String pathXml;
 
+	/* Treemap that saves the components of the XML file (String id, Control control)*/
 	TreeMap<String, Control> componentsMap = new TreeMap<String, Control>();
+	
+	/* Control responsible to save the last control of map*/
 	Control lastControl = null;
 
 	Container centralContainer;
-
+	
+	CustomInitUI custom = null;
+	
+	/* Init UI after read the XML file and configure all controls and containers*/
 	public void initUI() {
 		try {
-
 			readXml();
-			afterInitUI();
+			if (custom != null) {
+				custom.postInitUI(this);
+			}
 
 		} catch (IOException | ArrayIndexOutOfBoundsException ea) {
 			ea.printStackTrace();
@@ -55,21 +80,35 @@ public abstract class XmlContainerLayout extends Container {
 			e.printStackTrace();
 		}
 	}
-
-	public void afterInitUI() throws totalcross.io.IOException, ImageException {
-		addCustumisation();
+	
+	/**
+	 *  */
+	public void setCustomInitUI(CustomInitUI customization) {
+		this.custom = customization;
 	}
-
-	public XmlContainerLayout addCustumisation() {
-		return this;
-	}
-
-	public abstract void addscreen(NodeSax node)
+	
+	/** 
+	 * Abstract method that add all components of a XML file on Container
+	 * Must be implemented by the child classes
+	 * @exception totalcross.io.IOException
+	 * @throws ImageException
+	 * @param node
+	 * 		XML node
+	 * */
+	public abstract void addscreen(NodeSax node) 
 			throws totalcross.io.IOException, ImageException, InvalidNumberException;
 
-	public Control createInstanceOf(NodeSax nodes)
+	/** 
+	 * Responsible to create the instances of XML components and put on a TreeMap  
+	 * The TreeMap saves the id of XML component and its associated Control object
+	 * @param nodes
+	 * 		node of a XML file
+	 * @return control of id
+	 * @throws totalcross.io.IOException
+	 * @exception ImageException
+	 * */
+	public Control createInstanceOf(NodeSax nodes) 
 			throws totalcross.io.IOException, ImageException, InvalidNumberException {
-
 		if (nodes.getAttributeName().contains("Button")) {
 			componentsMap.put(nodes.getId(), createButton(nodes));
 			lastControl = componentsMap.get(componentsMap.lastKey());
@@ -140,10 +179,10 @@ public abstract class XmlContainerLayout extends Container {
 		}
 		return ic;
 	}
-
-	public Container createInstanceOfLinearLayout(NodeSax node) {
-		return new VBox(VBox.LAYOUT_FILL, VBox.ALIGNMENT_STRETCH);
-	}
+//
+//	public Container createInstanceOfLinearLayout(NodeSax node) {
+//		return new VBox(VBox.LAYOUT_FILL, VBox.ALIGNMENT_STRETCH);
+//	}
 
 	private Control createButton(NodeSax node)
 			throws totalcross.io.IOException, ImageException, InvalidNumberException {
@@ -225,26 +264,38 @@ public abstract class XmlContainerLayout extends Container {
 			auxNodeSax = new NodeSax();
 		}
 
+		/* Does nothing */
 		@Override
 		public void characters(String arg0) {
+			
 		}
 
+		/* Does nothing */
 		@Override
 		public void endElement(int arg0) {
 
 		}
 
+		/* Does nothing */
 		@Override
 		public void startElement(int arg0, AttributeList atts) {
-			AttributeList.Iterator it = atts.new Iterator();
-			while (it.next()) {
-				auxNodeSax.inserts(it.getAttributeName(), it.getAttributeValue());
-			}
-
+		
 		}
 
-		public void tagName(int a, String arg0, AttributeList atts) {
-			// TODO Auto-generated method stub
+		/**
+		 * Name of the tag.
+		 *
+		 * <p>The XmlReader will invoke this method at the beginning of every
+		 * element in the XML document. All of the element's content will be
+		 * reported in order. </p>
+		 * @param tag
+		 *           tag identifier for this element
+		 * @param tagName
+		 *           tag name
+		 * @param atts
+		 * 		   attribute list
+		 */
+		public void tagName(int a,String arg0,AttributeList atts) {
 			auxNodeSax.setAttributeName(arg0);
 			auxNodeSax.reset();
 			AttributeList.Iterator it = atts.new Iterator();
@@ -285,14 +336,31 @@ public abstract class XmlContainerLayout extends Container {
 		}
 	}
 
+	/** Get the XML Path
+	 * @return path of XML
+	 * */
 	public String getPathXml() {
 		return pathXml;
 	}
-
+	
+	/** Get the Control of a given id from a component of XML file 
+	 * @return Control object of this ID
+	 * */
 	public Control getControlByID(String a) {
 		return componentsMap.get(a);
 	}
-
+	
+	/** Get the TreeMap with all Controls of the XML file
+	 * @return Controls of XML
+	 * */
+	public TreeMap<String, Control> getControls() {
+		return componentsMap;
+	}
+	
+	/** Set the path of XML file
+	 * @param pathXml
+	 * 		path of XML file
+	 * */
 	public void setPathXml(String pathXml) {
 		this.pathXml = pathXml;
 	}

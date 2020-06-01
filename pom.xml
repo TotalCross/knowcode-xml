@@ -8,7 +8,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<totalcross.activation_key>5443444B43554F0ADBF5E97E</totalcross.activation_key>
-		<totalcross.sdkPath>/Users/brunoamuniz/Downloads/totalcross_develop/</totalcross.sdkPath>
+		<totalcross.sdkPath>C:\Users\andre\Documents\Totalcross\Git Projects\KC_sdk6\TotalCross6.0.4\TotalCross\</totalcross.sdkPath>
 	</properties>
 	<dependencies>
 		<dependency>
