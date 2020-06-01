@@ -81,12 +81,5 @@ public class XmlContainerLinearLayout extends XmlContainerLayout {
 			}
 			centralContainer.add(createInstanceOf(node), xpos, ypos, widthPos, heightPos, lastControl);
 		}
-
-	}
-
-	@Override
-	public void afterInitUI() throws totalcross.io.IOException, ImageException {
-		super.afterInitUI();
-		//createBackButton();
 	}
 }

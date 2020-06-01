@@ -64,11 +64,15 @@ public abstract class XmlContainerLayout extends Container {
 
 	Container centralContainer;
 	
+	CustomInitUI custom = null;
+	
 	/* Init UI after read the XML file and configure all controls and containers*/
 	public void initUI() {
 		try {
 			readXml();
-			afterInitUI();
+			if (custom != null) {
+				custom.postInitUI(this);
+			}
 
 		} catch (IOException | ArrayIndexOutOfBoundsException ea) {
 			ea.printStackTrace();
@@ -76,13 +80,11 @@ public abstract class XmlContainerLayout extends Container {
 			e.printStackTrace();
 		}
 	}
-
-	public void afterInitUI() throws totalcross.io.IOException, ImageException {
-		addCustumisation();
-	}
 	
-	public XmlContainerLayout addCustumisation() {
-		return this;
+	/**
+	 *  */
+	public void setCustomInitUI(CustomInitUI customization) {
+		this.custom = customization;
 	}
 	
 	/** 
@@ -331,14 +333,31 @@ public abstract class XmlContainerLayout extends Container {
 		}
 	}
 
+	/** Get the XML Path
+	 * @return path of XML
+	 * */
 	public String getPathXml() {
 		return pathXml;
 	}
 	
+	/** Get the Control of a given id from a component of XML file 
+	 * @return Control object of this ID
+	 * */
 	public Control getControlByID(String a) {
 		return componentsMap.get(a);
 	}
 	
+	/** Get the TreeMap with all Controls of the XML file
+	 * @return Controls of XML
+	 * */
+	public TreeMap<String, Control> getControls() {
+		return componentsMap;
+	}
+	
+	/** Set the path of XML file
+	 * @param pathXml
+	 * 		path of XML file
+	 * */
 	public void setPathXml(String pathXml) {
 		this.pathXml = pathXml;
 	}

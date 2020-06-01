@@ -14,7 +14,6 @@ import totalcross.io.IOException;
 import totalcross.sys.InvalidNumberException;
 import totalcross.sys.Settings;
 import totalcross.sys.Vm;
-import totalcross.ui.Control;
 import totalcross.ui.image.ImageException;
 import totalcross.util.BigDecimal;
 import totalcross.util.UnitsConverter;

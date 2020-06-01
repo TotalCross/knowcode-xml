@@ -38,9 +38,11 @@ public class XmlContainerFactory {
 	 * Responsible for create the specialized layout Container
 	 * @param pathXml
 	 * 		the path of xml file
+	 * @param cust
+	 * 		CustomInitUI object
 	 * @return container of the layout
 	 *  */
-	public static Container create(String pathXml) {
+	public static Container create(String pathXml, CustomInitUI cust) {
 		try {
 			XmlContainerFactory xmlScreenFactory = new XmlContainerFactory();
 			xmlScreenFactory.readXml(pathXml);
@@ -52,12 +54,23 @@ public class XmlContainerFactory {
 
 			XmlContainerLayout container = (XmlContainerLayout) clazz.newInstance();
 			container.setPathXml(pathXml);
+			container.setCustomInitUI(cust);
 			return container;
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	/**
+	 * Responsible for create the specialized layout Container without CustomInitUI customization
+	 * @param pathXml
+	 * 		the path of xml file
+	 * @return container of the layout
+	 *  */
+	public static Container create(String pathXml) {
+		return create(pathXml, null);
 	}
 
 	private class Handler extends ContentHandler {

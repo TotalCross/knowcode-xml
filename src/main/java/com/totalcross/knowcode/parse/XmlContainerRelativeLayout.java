@@ -72,10 +72,4 @@ public class XmlContainerRelativeLayout extends XmlContainerLayout {
 		} else
 			return lastControl;
 	}
-
-	@Override
-	public void afterInitUI() throws totalcross.io.IOException, ImageException {
-		super.afterInitUI();
-		//createBackButton();
-	}
 }
