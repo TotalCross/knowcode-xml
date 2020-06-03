@@ -209,18 +209,18 @@ public abstract class XmlContainerLayout extends Container {
 		return s;
 	}
 
-	private Control createLabel(NodeSax node) {
+	private Control createLabel(NodeSax node) throws InvalidNumberException {
 		Label label = new Label(node.getText(), node.getGravity());
 		String bg = node.getBackgroundColor();
 		String color = node.getTextColor();
 		boolean txStyleBold = node.getTextStyleBold();
-		String txSize = node.getTextsize();
+
 
 		if (bg != null)
 			label.setBackForeColors(Color.getRGB(bg), Color.getRGB(color));
 
-		if (txStyleBold != false && txSize != null)
-			label.setFont(Font.getFont(txStyleBold, UnitsConverter.toPixels(Integer.parseInt(txSize) + DP)));
+		if (txStyleBold != false && node.getTextsize() != 0)
+			label.setFont(Font.getFont(txStyleBold, node.getTextsize()));
 
 		return label;
 
