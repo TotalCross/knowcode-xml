@@ -437,7 +437,7 @@ public class NodeSax {
                 return PREFERRED;
             }
             if (attributeValue.equals("match_parent") || attributeValue.equals("fill_parent")) {
-                return Settings.screenHeight;
+                return Settings.screenWidth;
             }
             if (attributeValue.equals("0dp")) {
                 return FIT;
@@ -938,8 +938,9 @@ public class NodeSax {
                 if (attributeValue.contains("dp")) {
                     attributeValue = attributeValue.replace("dp", "");
                 }
+		      wp = UnitsConverter.toPixels(Integer.parseInt(attributeValue) + DP);
             }
-            wp = UnitsConverter.toPixels(Integer.parseInt(attributeValue) + DP);
+          
 
         }
         wp =  Settings.screenWidth/ wp ;
@@ -951,13 +952,14 @@ public class NodeSax {
             attributeValue = getValue("android:layout_height");
             if (attributeValue != null) {
                 if (attributeValue.equals("match_parent") || attributeValue.equals("fill_parent")) {
-                    hp = Settings.screenWidth;
+                    hp = Settings.screenHeight;
                 } else {
                     if (attributeValue.contains("dp")) {
                         attributeValue = attributeValue.replace("dp", "");
                     }
+			 hp = UnitsConverter.toPixels(Integer.parseInt(attributeValue) + DP);
                 }
-                hp = UnitsConverter.toPixels(Integer.parseInt(attributeValue) + DP);
+               
 
             }
          hp =  Settings.screenHeight / hp ;
