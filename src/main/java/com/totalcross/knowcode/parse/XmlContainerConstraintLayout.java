@@ -45,7 +45,8 @@ public class XmlContainerConstraintLayout extends XmlContainerLayout {
 			yLocal = TOP + node.getPaddingTop();
 			widLocal = FILL - node.getPaddingRight();
 			heiLocal = FILL - node.getPaddingBottom();
-
+			node.setWp();
+			node.setHp();
 			centralContainer = new Container();
 
 			add(centralContainer, xLocal, yLocal, widLocal, heiLocal);

@@ -28,6 +28,7 @@ public class NodeSax {
     private String attributeName = new String();
     private String id;
     private String relative;
+    private float wp =0,hp=0;
 
     /** Creates a NodeSax object
      * @exception ImageException
@@ -103,18 +104,18 @@ public class NodeSax {
     /** Get attribute value of tag <code>"android:textSize"</code>
      * @return attribute value of tag
      * */
-    public String getTextsize() {
+    public int getTextsize() throws InvalidNumberException {
 
         attributeValue = getValue("android:textSize");
 
         if (attributeValue == null || "".equals(attributeValue)) {
-            return null;
+            return 0;
         } else {
             if (attributeValue.contains("dp")) {
                 attributeValue = attributeValue.replace("dp", "");
             }
         }
-        return attributeValue;
+        return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue) + DP)).multiply(BigDecimal.valueOf(hp)).intValue();
         // return UnitsConverter.toPixels(Integer.parseInt(attributeValue)+ DP);
     }
     
@@ -330,7 +331,7 @@ public class NodeSax {
                 }
             }
         }
-        return UnitsConverter.toPixels(Integer.parseInt(attributeValue) + DP);
+        return  new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue))).multiply(BigDecimal.valueOf(hp)).intValue();
     }
 
     /** Get attribute value of tag <code>"app:srcCompat"</code>
@@ -419,7 +420,7 @@ public class NodeSax {
      * and <code>"app:layout_constraintWidth_percent"</code>
      * @return width value converted to Pixel
      * */
-    public int getW() {
+    public int getW() throws InvalidNumberException {
         attributeValue = getValue("app:layout_constraintWidth_percent");
         if (attributeValue != null)
             try {
@@ -436,7 +437,7 @@ public class NodeSax {
                 return PREFERRED;
             }
             if (attributeValue.equals("match_parent") || attributeValue.equals("fill_parent")) {
-                return Settings.screenWidth;
+                return Settings.screenHeight;
             }
             if (attributeValue.equals("0dp")) {
                 return FIT;
@@ -446,7 +447,7 @@ public class NodeSax {
                 }
             }
         }
-        return UnitsConverter.toPixels(Integer.parseInt(attributeValue) + DP);
+        return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue))).multiply(BigDecimal.valueOf(wp)).intValue();
     }
 
     /** Get attribute value of tag <code>"android:layout_width"</code>
@@ -551,7 +552,7 @@ public class NodeSax {
      * <code>"android:layout_editor_absoluteX"</code>
      * @return totalcross positioning constant
      * */
-    public int getRelativeX() {
+    public int getRelativeX() throws InvalidNumberException {
         attributeValue = getValue("android:layout_alignParentLeft");
         if (attributeValue != null) {
             return LEFT;
@@ -654,6 +655,7 @@ public class NodeSax {
             relative = attributeValue;
             return SAME;
         }
+
         attributeValue = getValue("android:layout_alignEnd");
         if (attributeValue != null) {
             relative = attributeValue;
@@ -693,7 +695,7 @@ public class NodeSax {
                 attributeValue = attributeValue.replace("dp", "");
             }
         }
-        return UnitsConverter.toPixels(Integer.parseInt(attributeValue) + DP);
+        return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue))).multiply(BigDecimal.valueOf(wp)).intValue();
     }
 
     
@@ -718,7 +720,7 @@ public class NodeSax {
      * <code>"android:layout_centerInParent"</code>	 
      * <code>"tools:layout_editor_absoluteY"</code>	 
      * @return totalcross positioning constant
-     * */    public int getRelativeY() {
+     * */    public int getRelativeY() throws InvalidNumberException {
         attributeValue = getValue("app:layout_constraintTop_toBottomOf");
         if (attributeValue != null) {
             if (attributeValue.equals("parent"))
@@ -816,7 +818,8 @@ public class NodeSax {
                 attributeValue = attributeValue.replace("dp", "");
             }
         }
-        return UnitsConverter.toPixels(Integer.parseInt(attributeValue) + DP);
+
+        return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue))).multiply(BigDecimal.valueOf(hp)).intValue();
     }
 
     /** Get Layout Gravity based on tag <code>"android:layout_gravity"</code>
@@ -923,6 +926,42 @@ public class NodeSax {
     public void setId(String id) {
         this.id = id;
     }
+
+    /** set parameter width to try to resize a predefined screen size
+     * */
+    public void setWp() throws InvalidNumberException {
+        attributeValue = getValue("android:layout_width");
+        if (attributeValue != null) {
+            if (attributeValue.equals("match_parent") || attributeValue.equals("fill_parent")) {
+                wp = Settings.screenWidth;
+            } else {
+                if (attributeValue.contains("dp")) {
+                    attributeValue = attributeValue.replace("dp", "");
+                }
+            }
+            wp = UnitsConverter.toPixels(Integer.parseInt(attributeValue) + DP);
+
+        }
+        wp =  Settings.screenWidth/ wp ;
+        System.out.println(wp);
+    }
+    /** set parameter height to try to resize a predefined screen size
+     * */
+    public void setHp() throws InvalidNumberException {
+            attributeValue = getValue("android:layout_height");
+            if (attributeValue != null) {
+                if (attributeValue.equals("match_parent") || attributeValue.equals("fill_parent")) {
+                    hp = Settings.screenWidth;
+                } else {
+                    if (attributeValue.contains("dp")) {
+                        attributeValue = attributeValue.replace("dp", "");
+                    }
+                }
+                hp = UnitsConverter.toPixels(Integer.parseInt(attributeValue) + DP);
+
+            }
+         hp =  Settings.screenHeight / hp ;
+        }
 
     /** Set attribute name of a tag 
      * @param attributeName
