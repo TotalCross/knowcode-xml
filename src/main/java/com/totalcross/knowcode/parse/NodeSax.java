@@ -80,11 +80,18 @@ public class NodeSax {
     /** Get attribute value of tag <code>"android:textStyle"</code>
      * @return attribute value of tag
      * */
-    public String getStyle() {
+    public String getTextStyle() {
         if (getValue("android:textStyle") == null) {
             return "normal";
         }
         return getValue("android:textStyle");
+    }
+
+    /** Get attribute value of tag <code>"style"</code>
+     * @return attribute value of tag
+     * */
+    public String getStyle() {
+        return getValue("style");
     }
 
     /** Get attribute value of tag <code>"android:id"</code>
