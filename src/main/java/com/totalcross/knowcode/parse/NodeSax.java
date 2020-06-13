@@ -944,7 +944,6 @@ public class NodeSax {
 
         }
         wp =  Settings.screenWidth/ wp ;
-        System.out.println(wp);
     }
     /** set parameter height to try to resize a predefined screen size
      * */
