@@ -193,7 +193,7 @@ public abstract class XmlContainerLayout extends Container {
 		} else {
 			background = node.getBackgroundColor();
 			button = new Button(node.getText());
-			button.setBackColor(Color.getRGB(background));
+		//	button.setBackColor(Color.getRGB(background));
 		}
 
 		return button;
@@ -228,7 +228,6 @@ public abstract class XmlContainerLayout extends Container {
 
 	private Control createProgressBar(NodeSax node) {
 		if (node.getStyle() == null || node.getStyle().contains("Horizontal")) {
-
 			ProgressBar bar = new ProgressBar(0, Integer.parseInt(node.getMax()));
 			bar.setValue(Integer.parseInt(node.getProgress()));
 			return bar;
