@@ -80,18 +80,14 @@ public class NodeSax {
     /** Get attribute value of tag <code>"android:textStyle"</code>
      * @return attribute value of tag
      * */
-    public String getTextStyle() {
+    public String getStyle() {
+        if(getValue("style")!=null)
+            return getValue("style");
         if (getValue("android:textStyle") == null) {
             return "normal";
         }
-        return getValue("android:textStyle");
-    }
 
-    /** Get attribute value of tag <code>"style"</code>
-     * @return attribute value of tag
-     * */
-    public String getStyle() {
-        return getValue("style");
+        return getValue("android:textStyle");
     }
 
     /** Get attribute value of tag <code>"android:id"</code>
@@ -754,7 +750,7 @@ public class NodeSax {
                 return BOTTOM;
             else {
                 relative = attributeValue;
-                return RIGHT_OF;
+                return BOTTOM_OF;
             }
         
         attributeValue = getValue("layout_constraintBaseline_toBaselineOf");
@@ -945,12 +941,12 @@ public class NodeSax {
                 if (attributeValue.contains("dp")) {
                     attributeValue = attributeValue.replace("dp", "");
                 }
-		      wp = UnitsConverter.toPixels(Integer.parseInt(attributeValue) + DP);
+                wp = UnitsConverter.toPixels(Integer.parseInt(attributeValue) + DP);
             }
-          
 
         }
         wp =  Settings.screenWidth/ wp ;
+
     }
     /** set parameter height to try to resize a predefined screen size
      * */
@@ -963,9 +959,9 @@ public class NodeSax {
                     if (attributeValue.contains("dp")) {
                         attributeValue = attributeValue.replace("dp", "");
                     }
-			 hp = UnitsConverter.toPixels(Integer.parseInt(attributeValue) + DP);
+                    hp = UnitsConverter.toPixels(Integer.parseInt(attributeValue) + DP);
                 }
-               
+
 
             }
          hp =  Settings.screenHeight / hp ;

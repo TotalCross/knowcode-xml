@@ -9,6 +9,7 @@ import totalcross.ui.Container;
 import totalcross.ui.Control;
 import totalcross.ui.gfx.Color;
 import totalcross.ui.image.ImageException;
+import totalcross.util.BigDecimal;
 
 /**
  * XmlContainerConstraintLayout is responsible to parse a ConstraintLayout Android XML to a Container Totalcross.
@@ -52,14 +53,14 @@ public class XmlContainerConstraintLayout extends XmlContainerLayout {
 			add(centralContainer, xLocal, yLocal, widLocal, heiLocal);
 		} else if (node.getAttributeName().equals("Switch")) {
 			node.setAttributeName("TextView");
-			node.setId(node.getId() + "l");
-			centralContainer.add(createInstanceOf(node), node.getRelativeX(), node.getRelativeY(), node.getW(),
-					node.getH());
+			centralContainer.add(createInstanceOf(node), node.getRelativeX(), node.getRelativeY(), PREFERRED, PREFERRED);
 			node.setAttributeName("Switch");
-			centralContainer.add(createInstanceOf(node), AFTER, node.getRelativeY(), node.getW(), node.getH());
-		} else {
-			centralContainer.add(createInstanceOf(node), node.getRelativeX(), node.getRelativeY(), node.getW(),
-					node.getH(), getRelativeControl(node));
+			centralContainer.add(createInstanceOf(node), node.getRelativeX()+node.getW()-32, CENTER_OF, PREFERRED, PREFERRED);
+		} else if (node.getAttributeName().equals("ProgressBar")&& node.getStyle() == null || node.getStyle().contains("Horizontal")) {
+			centralContainer.add(createInstanceOf(node), node.getRelativeX(), new BigDecimal(node.getRelativeY()).add(BigDecimal.valueOf((node.getH()/2)-2)).intValue (), node.getW(), 5+DP, getRelativeControl(node));
+		}
+		else{
+			centralContainer.add(createInstanceOf(node), node.getRelativeX(), node.getRelativeY(), node.getW(), node.getH(), getRelativeControl(node));
 		}
 	}
 
