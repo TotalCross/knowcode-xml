@@ -5,6 +5,7 @@
 package com.totalcross.knowcode.parse;
 
 import totalcross.sys.InvalidNumberException;
+import totalcross.sys.Settings;
 import totalcross.ui.Container;
 import totalcross.ui.Control;
 import totalcross.ui.gfx.Color;
@@ -57,7 +58,7 @@ public class XmlContainerConstraintLayout extends XmlContainerLayout {
 			node.setAttributeName("Switch");
 			centralContainer.add(createInstanceOf(node), node.getRelativeX()+node.getW()-32, CENTER_OF, PREFERRED, PREFERRED);
 		} else if (node.getAttributeName().equals("ProgressBar")&& node.getStyle() == null || node.getStyle().contains("Horizontal")) {
-			centralContainer.add(createInstanceOf(node), node.getRelativeX(), new BigDecimal(node.getRelativeY()).add(BigDecimal.valueOf((node.getH()/2)-2)).intValue (), node.getW(), 5+DP, getRelativeControl(node));
+			centralContainer.add(createInstanceOf(node), node.getRelativeX(), new BigDecimal(node.getRelativeY()).add(BigDecimal.valueOf(((float)node.getH()/2.0-((((float)Settings.screenHeight/200.0))*Float.parseFloat(node.getScaleY()))))).intValue (), node.getW(), (int) ((((float)Settings.screenHeight/100.0)) *Float.parseFloat(node.getScaleY()))+DP, getRelativeControl(node));
 		}
 		else{
 			centralContainer.add(createInstanceOf(node), node.getRelativeX(), node.getRelativeY(), node.getW(), node.getH(), getRelativeControl(node));

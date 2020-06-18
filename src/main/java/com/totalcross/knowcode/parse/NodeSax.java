@@ -861,6 +861,16 @@ public class NodeSax {
     public String getText() {
         return getValue("android:text");
     }
+    /** Get text based on tag <code>"android:text"</code>
+     * @return value of the tag
+     * */
+    public String getScaleY() {
+        attributeValue = getValue("android:scaleY");
+        if (attributeValue == null || "".equals(attributeValue)) {
+            return "1";
+        }
+        return attributeValue;
+    }
 
     /** Get source of a image based on tag <code>"android:src"</code>
      * @return value of the tag
