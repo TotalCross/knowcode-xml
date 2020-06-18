@@ -861,7 +861,7 @@ public class NodeSax {
     public String getText() {
         return getValue("android:text");
     }
-    /** Get text based on tag <code>"android:text"</code>
+    /** Get text based on tag <code>"android:scaleY"</code>
      * @return value of the tag
      * */
     public String getScaleY() {
