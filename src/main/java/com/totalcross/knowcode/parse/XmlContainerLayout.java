@@ -155,12 +155,10 @@ public abstract class XmlContainerLayout extends Container {
 	}
 
 	private Control createSpinner(NodeSax node) throws totalcross.io.IOException, ImageException {
-		String[] items = { "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten" };
-
 		ComboBox.usePopupMenu = false;
-		ComboBox simpleComboBox = new ComboBox(items);
-		simpleComboBox.caption = "Teste Combo";
-
+		ComboBox simpleComboBox = new ComboBox();
+		if(node.getBackgroundColor()!=null)
+			simpleComboBox.setBackColor(Color.getRGB(node.getBackgroundColor()));
 		return simpleComboBox;
 	}
 
@@ -177,6 +175,7 @@ public abstract class XmlContainerLayout extends Container {
 				// ic.scaleToFit = true;
 			}
 		}
+		ic.transparentBackground=true;
 		return ic;
 	}
 //
@@ -188,12 +187,14 @@ public abstract class XmlContainerLayout extends Container {
 			throws totalcross.io.IOException, ImageException, InvalidNumberException {
 		Button button = null;
 		String background = node.getBackgroundImage();
-		if (background != null && "".equals(background) == false) {
-			button = new Button(new Image(node.getBackgroundImage()).getHwScaledInstance(node.getW(), node.getH()));
+		if (background != null && "".equals(background) == false && background.charAt(0)!='#') {
+			button = new Button(new Image(node.getBackgroundImage()).getHwScaledInstance(node.getW(), node.getH()),Button.BORDER_NONE);
+			button.transparentBackground=true;
+			//button.effect=null;
 		} else {
 			background = node.getBackgroundColor();
 			button = new Button(node.getText());
-		//	button.setBackColor(Color.getRGB(background));
+		    button.setBackColor(Color.getRGB(background));
 		}
 
 		return button;
@@ -215,11 +216,12 @@ public abstract class XmlContainerLayout extends Container {
 		String color = node.getTextColor();
 		boolean txStyleBold = node.getTextStyleBold();
 
+		label.setBackForeColors(Color.getRGB(bg), Color.getRGB(color));
+		if (bg == null)
+			label.transparentBackground=true;
 
-		if (bg != null)
-			label.setBackForeColors(Color.getRGB(bg), Color.getRGB(color));
 
-		if (txStyleBold != false && node.getTextsize() != 0)
+		if (txStyleBold && node.getTextsize() != 0)
 			label.setFont(Font.getFont(txStyleBold, node.getTextsize()));
 
 		return label;
