@@ -29,14 +29,14 @@ KnowcodeXML is a library that interprets Android XML files and generates Totalcr
     </dependency>
 * Now, let's import our xml file and show the window in the initUI method of the MainWindow class of your project
 	
-	import com.totalcross.knowcode.parse.XmlContainerFactory;
-	public class HelloKnowcode extends MainWindow {
-		@Override
-		public void initUI() {
-			Container cont = XmlContainerFactory.create("simplescreen.xml");
-			MainWindow.getMainWindow().swap(cont);
-		}
-	}
+    import com.totalcross.knowcode.parse.XmlContainerFactory;
+    public class HelloKnowcode extends MainWindow {
+        @Override
+        public void initUI() {
+            Container cont = XmlContainerFactory.create("simplescreen.xml");
+            MainWindow.getMainWindow().swap(cont);
+        }
+    }
 	
  * To change the components of xml file, use the method *getControlByID* passing like parameter the id of xml file
  
