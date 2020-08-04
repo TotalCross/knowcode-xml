@@ -13,70 +13,74 @@ KnowcodeXML is a library that interprets Android XML files and generates Totalcr
 * Create a Totalcross Project 
 	You can create a simple hello world project like [Hello World project](https://learn.totalcross.com/documentation/get-started/install#create-a-hello-world-project)
 * Use TotalCross sdk 6.1 or highter and add the dependency on file pom.xml
-
-  <dependency>
+```xml
+<dependency>
     <groupId>com.totalcross</groupId>
     <artifactId>totalcross-sdk</artifactId>
     <version>6.1.0</version>
-  </dependency>
-	
-* Add KnowcodeXML dependency
+</dependency>
+```
 
-    <dependency>
-        <groupId>com.totalcross.knowcode</groupId>
-        <artifactId>KnowCodeXML</artifactId>
-        <version>1.1</version>
-    </dependency>
+* Add KnowcodeXML dependency
+```xml
+<dependency>
+    <groupId>com.totalcross.knowcode</groupId>
+    <artifactId>KnowCodeXML</artifactId>
+    <version>1.1</version>
+</dependency>
+```
+
 * Now, let's import our xml file and show the window in the initUI method of the MainWindow class of your project
-	
-    import com.totalcross.knowcode.parse.XmlContainerFactory;
-    public class HelloKnowcode extends MainWindow {
-        @Override
-        public void initUI() {
-            Container cont = XmlContainerFactory.create("simplescreen.xml");
-            MainWindow.getMainWindow().swap(cont);
-        }
+```java
+import com.totalcross.knowcode.parse.XmlContainerFactory;
+public class HelloKnowcode extends MainWindow {
+    @Override
+    public void initUI() {
+        Container cont = XmlContainerFactory.create("simplescreen.xml");
+        MainWindow.getMainWindow().swap(cont);
     }
+}
+ ```
 	
  * To change the components of xml file, use the method *getControlByID* passing like parameter the id of xml file
- 
-	import com.totalcross.knowcode.parse.XmlContainerLayout;
-	import com.totalcross.knowcode.parse.XmlContainerFactory;
-	public class HelloKnowcode extends MainWindow {
-		@Override
-		public void initUI() {
-			Container cont = XmlContainerFactory.create("simplescreen.xml");
-			MainWindow.getMainWindow().swap(cont);
-			Control control = ((XmlContainerLayout) container).getControlByID("@+id/btRegister");
-			control.setBackColor(Color.BRIGHT);
-		}
-	}
-
- * If you have to add some component or make some change before swap the window, use the CustomInitUI Interface
-
-    import com.totalcross.knowcode.parse.XmlContainerLayout;
-    import com.totalcross.knowcode.parse.CustomInitUI;
-    import com.totalcross.knowcode.parse.XmlContainerFactory;
-    public class HelloKnowcode extends MainWindow {
-    	@Override
-		public void initUI() {
-			Container cont = XmlContainerFactory.create("simplescreen.xml");	
-			XmlContainerLayout xmlContainerLayout = (XmlContainerLayout)cont;
-				
-			xmlContainerLayout.setCustomInitUI(new CustomInitUI() {
-				public void postInitUI(XmlContainerLayout contLayout) {
-					Button btCancel = new Button("Cancel");
-					btCancel.setBackColor(Color.BRIGHT);
-					Control btRegister = contLayout.getControlByID("@+id/btRegister");
-					btRegister.setBackColor(Color.BRIGHT);
-					int posBtCancel = btRegister.getY()+btRegister.getHeight();
-				
-					contLayout.add(btCancel, Container.CENTER, posBtCancel+2, Container.PARENTSIZE, Container.PREFERRED);
-				}
-			});
+ ```java
+import com.totalcross.knowcode.parse.XmlContainerLayout;
+import com.totalcross.knowcode.parse.XmlContainerFactory;
+public class HelloKnowcode extends MainWindow {
+	@Override
+	public void initUI() {
+		Container cont = XmlContainerFactory.create("simplescreen.xml");
 		MainWindow.getMainWindow().swap(cont);
+		Control control = ((XmlContainerLayout) container).getControlByID("@+id/btRegister");
+		control.setBackColor(Color.BRIGHT);
 	}
-	
+}
+```
+ * If you have to add some component or make some change before swap the window, use the CustomInitUI Interface
+```java
+import com.totalcross.knowcode.parse.XmlContainerLayout;
+import com.totalcross.knowcode.parse.CustomInitUI;
+import com.totalcross.knowcode.parse.XmlContainerFactory;
+public class HelloKnowcode extends MainWindow {
+@Override
+	public void initUI() {
+		Container cont = XmlContainerFactory.create("simplescreen.xml");
+		XmlContainerLayout xmlContainerLayout = (XmlContainerLayout)cont;
+
+		xmlContainerLayout.setCustomInitUI(new CustomInitUI() {
+			public void postInitUI(XmlContainerLayout contLayout) {
+				Button btCancel = new Button("Cancel");
+				btCancel.setBackColor(Color.BRIGHT);
+				Control btRegister = contLayout.getControlByID("@+id/btRegister");
+				btRegister.setBackColor(Color.BRIGHT);
+				int posBtCancel = btRegister.getY()+btRegister.getHeight();
+
+				contLayout.add(btCancel, Container.CENTER, posBtCancel+2, Container.PARENTSIZE, Container.PREFERRED);
+			}
+		});
+	MainWindow.getMainWindow().swap(cont);
+}
+```
 ## How KnowcodeXML works
 We support all main Android layouts: ConstraintLayout, LinearLayout and RelativeLayout.
 
@@ -94,32 +98,32 @@ We have some projects on github using this API, like [HomeApplianceXML](https://
 
 The create method of *XmlContainerFactory* class returns a Container object of the layout to put on the window with swap method.
 The method *getControlByID* of the class *XmlContainerLayouts* returns a Control object created of the XML file.
-		
-		public void initUI() {
-			XmlContainerLayout xmlCont = (XmlContainerLayout) XmlContainerFactory.create("xml/homeApplianceXML2.xml");
-			swap(xmlCont);
-	
-			Button plus = (Button) xmlCont.getControlByID("@+id/plus");
-			...
-			
-			plus.addPressListener(new PressListener() {
-				@Override
-				public void controlPressed(ControlEvent e) {
-					// TODO
-					try {
-						String tempString = insideTempLabel.getText();
-						int temp;
-						temp = Convert.toInt(tempString);
-						insideTempLabel.setText(Convert.toString(++temp));
-	
-					} catch (InvalidNumberException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}
-			});
-		}
+```java
+public void initUI() {
+    XmlContainerLayout xmlCont = (XmlContainerLayout) XmlContainerFactory.create("xml/homeApplianceXML2.xml");
+    swap(xmlCont);
 
+    Button plus = (Button) xmlCont.getControlByID("@+id/plus");
+    ...
+
+    plus.addPressListener(new PressListener() {
+        @Override
+        public void controlPressed(ControlEvent e) {
+            // TODO
+            try {
+                String tempString = insideTempLabel.getText();
+                int temp;
+                temp = Convert.toInt(tempString);
+                insideTempLabel.setText(Convert.toString(++temp));
+
+            } catch (InvalidNumberException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+        }
+    });
+}
+```
 ## More Samples and Tutorials
 
 * [HelloKnowcode](https://github.com/TotalCross/HelloKnowcode)
