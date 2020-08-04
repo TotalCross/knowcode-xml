@@ -37,6 +37,7 @@ KnowcodeXML is a library that interprets Android XML files and generates Totalcr
 			MainWindow.getMainWindow().swap(cont);
 		}
 	}
+	
  * To change the components of xml file, use the method *getControlByID* passing like parameter the id of xml file
  
 	import com.totalcross.knowcode.parse.XmlContainerLayout;
@@ -56,7 +57,6 @@ KnowcodeXML is a library that interprets Android XML files and generates Totalcr
 	import com.totalcross.knowcode.parse.XmlContainerLayout;
 	import com.totalcross.knowcode.parse.CustomInitUI;
 	import com.totalcross.knowcode.parse.XmlContainerFactory;
-	
 	public class HelloKnowcode extends MainWindow {
 		@Override
 		public void initUI() {
@@ -76,6 +76,7 @@ KnowcodeXML is a library that interprets Android XML files and generates Totalcr
 			});
 		MainWindow.getMainWindow().swap(cont);
 	}
+	
 ## How KnowcodeXML works
 We support all main Android layouts: ConstraintLayout, LinearLayout and RelativeLayout.
 
@@ -121,6 +122,7 @@ The method *getControlByID* of the class *XmlContainerLayouts* returns a Control
 
 ## More Samples and Tutorials
 
+* [HelloKnowcode](https://github.com/TotalCross/HelloKnowcode)
 * [HomeApplianceXML](https://github.com/TotalCross/HomeApplianceXML)
 * [KnowcodeSample](https://github.com/TotalCross/KnowcodeSample)
 * [ToradexLauncherSample](https://github.com/TotalCross/ToradexLauncherSample)
