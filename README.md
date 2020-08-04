@@ -14,11 +14,11 @@ KnowcodeXML is a library that interprets Android XML files and generates Totalcr
 	You can create a simple hello world project like [Hello World project](https://learn.totalcross.com/documentation/get-started/install#create-a-hello-world-project)
 * Use TotalCross sdk 6.1 or highter and add the dependency on file pom.xml
 
-    <dependency>
-        <groupId>com.totalcross</groupId>
-        <artifactId>totalcross-sdk</artifactId>
-        <version>6.1.0</version>
-    </dependency>
+  <dependency>
+    <groupId>com.totalcross</groupId>
+    <artifactId>totalcross-sdk</artifactId>
+    <version>6.1.0</version>
+  </dependency>
 	
 * Add KnowcodeXML dependency
 
