@@ -15,18 +15,18 @@ KnowcodeXML is a library that interprets Android XML files and generates Totalcr
 * Use TotalCross sdk 6.1 or highter and add the dependency on file pom.xml
 
     <dependency>
-    	<groupId>com.totalcross</groupId>
-    	<artifactId>totalcross-sdk</artifactId>
-    	<version>6.1.0</version>
+        <groupId>com.totalcross</groupId>
+        <artifactId>totalcross-sdk</artifactId>
+        <version>6.1.0</version>
     </dependency>
 	
 * Add KnowcodeXML dependency
 
-	<dependency>
-		<groupId>com.totalcross.knowcode</groupId>
-		<artifactId>KnowCodeXML</artifactId>
-		<version>1.1</version>
-	</dependency>
+    <dependency>
+        <groupId>com.totalcross.knowcode</groupId>
+        <artifactId>KnowCodeXML</artifactId>
+        <version>1.1</version>
+    </dependency>
 * Now, let's import our xml file and show the window in the initUI method of the MainWindow class of your project
 	
 	import com.totalcross.knowcode.parse.XmlContainerFactory;
