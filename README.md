@@ -54,11 +54,11 @@ KnowcodeXML is a library that interprets Android XML files and generates Totalcr
 
  * If you have to add some component or make some change before swap the window, use the CustomInitUI Interface
 
-	import com.totalcross.knowcode.parse.XmlContainerLayout;
-	import com.totalcross.knowcode.parse.CustomInitUI;
-	import com.totalcross.knowcode.parse.XmlContainerFactory;
-	public class HelloKnowcode extends MainWindow {
-		@Override
+    import com.totalcross.knowcode.parse.XmlContainerLayout;
+    import com.totalcross.knowcode.parse.CustomInitUI;
+    import com.totalcross.knowcode.parse.XmlContainerFactory;
+    public class HelloKnowcode extends MainWindow {
+    	@Override
 		public void initUI() {
 			Container cont = XmlContainerFactory.create("simplescreen.xml");	
 			XmlContainerLayout xmlContainerLayout = (XmlContainerLayout)cont;
