@@ -9,9 +9,10 @@ So, there is two main tasks:
 Here we have the second task, named KnowCodeXML.
 KnowcodeXML is a library that interprets Android XML files and generates Totalcross screens ready to run on Android, iOS and Linux ARM devices.
 
-### Steps to use Knowcode
+## How to Install Knowcode on your Project
 * Create a Totalcross Project 
-	You can create a simple hello world project like [Hello World project](https://learn.totalcross.com/documentation/get-started/install#create-a-hello-world-project)
+	You can create a simple hello world project like [Hello World project](https://learn.totalcross.com/documentation/get-started/install#create-a-hello-world-project).
+	If you does not have the enviroment setup, follow this changes [Install TotalCross](https://learn.totalcross.com/documentation/get-started/install#install-the-totalcross-plugin)
 * Use TotalCross sdk 6.1 or highter and add the dependency on file pom.xml
 ```xml
 <dependency>
@@ -29,8 +30,12 @@ KnowcodeXML is a library that interprets Android XML files and generates Totalcr
     <version>1.1</version>
 </dependency>
 ```
+* So, that's it! Now let's start to use!
 
-* Now, let's import our xml file and show the window in the initUI method of the MainWindow class of your project
+## Create a Hello World Project
+
+* Put the xml file on your folder resources (src/main/resources). Here we have a simple xml of [login screen](https://github.com/TotalCross/HelloKnowcode/blob/master/src/main/resources/simpleScreen.xml).
+* Import the class *XmlContainerFactory* on the *MainWindow* class and make this changes on *initUI* method
 ```java
 import com.totalcross.knowcode.parse.XmlContainerFactory;
 public class HelloKnowcode extends MainWindow {
@@ -41,22 +46,26 @@ public class HelloKnowcode extends MainWindow {
     }
 }
  ```
-	
- * To change the components of xml file, use the method *getControlByID* passing like parameter the id of xml file
+ * Run the project, we can see the screen! 
+
+## Make changes on your screen
+
+ * To change the components of xml file, use the method *getControlByID* passing like parameter the id of xml file. Here we just change the button color to ilustrate.
  ```java
 import com.totalcross.knowcode.parse.XmlContainerLayout;
 import com.totalcross.knowcode.parse.XmlContainerFactory;
 public class HelloKnowcode extends MainWindow {
 	@Override
 	public void initUI() {
-		Container cont = XmlContainerFactory.create("simplescreen.xml");
+		Container cont = XmlContainerFactory.create("simpleScreen.xml");
 		MainWindow.getMainWindow().swap(cont);
 		Control control = ((XmlContainerLayout) container).getControlByID("@+id/btRegister");
 		control.setBackColor(Color.BRIGHT);
 	}
 }
 ```
- * If you have to add some component or make some change before swap the window, use the CustomInitUI Interface
+
+ * If you have to add some components on the screen or make some change before swap the window, use the CustomInitUI Interface
 ```java
 import com.totalcross.knowcode.parse.XmlContainerLayout;
 import com.totalcross.knowcode.parse.CustomInitUI;
@@ -64,7 +73,7 @@ import com.totalcross.knowcode.parse.XmlContainerFactory;
 public class HelloKnowcode extends MainWindow {
 @Override
 	public void initUI() {
-		Container cont = XmlContainerFactory.create("simplescreen.xml");
+		Container cont = XmlContainerFactory.create("simpleScreen.xml");
 		XmlContainerLayout xmlContainerLayout = (XmlContainerLayout)cont;
 
 		xmlContainerLayout.setCustomInitUI(new CustomInitUI() {
@@ -81,6 +90,8 @@ public class HelloKnowcode extends MainWindow {
 	MainWindow.getMainWindow().swap(cont);
 }
 ```
+* Build the project like any other TotalCross project. See [here](https://learn.totalcross.com/documentation/get-started/install#package-your-application)
+  
 ## How KnowcodeXML works
 We support all main Android layouts: ConstraintLayout, LinearLayout and RelativeLayout.
 
