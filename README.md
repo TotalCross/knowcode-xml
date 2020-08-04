@@ -11,7 +11,7 @@ KnowcodeXML is a library that interprets Android XML files and generates Totalcr
 
 ## How to Install Knowcode on your Project
 * Create a Totalcross Project 
-	You can create a simple hello world project like [Hello World project](https://learn.totalcross.com/documentation/get-started/install#create-a-hello-world-project).
+  * You can create a simple hello world project like [Hello World project](https://learn.totalcross.com/documentation/get-started/install#create-a-hello-world-project).
 	If you does not have the enviroment setup, follow this changes [Install TotalCross](https://learn.totalcross.com/documentation/get-started/install#install-the-totalcross-plugin)
 * Use TotalCross sdk 6.1 or highter and add the dependency on file pom.xml
 ```xml
