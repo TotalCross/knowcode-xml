@@ -13,7 +13,7 @@ KnowcodeXML is a library that interprets Android XML files and generates Totalcr
 * Create a Totalcross Project 
   * You can create a simple hello world project like [Hello World project](https://learn.totalcross.com/documentation/get-started/install#create-a-hello-world-project).
 	If you does not have the enviroment setup, follow this changes [Install TotalCross](https://learn.totalcross.com/documentation/get-started/install#install-the-totalcross-plugin)
-* Use TotalCross sdk 6.1 or highter and add the dependency on file pom.xml
+* Use TotalCross sdk 6.1 or higher and add the dependency on file pom.xml
 ```xml
 <dependency>
     <groupId>com.totalcross</groupId>
@@ -27,8 +27,14 @@ KnowcodeXML is a library that interprets Android XML files and generates Totalcr
 <dependency>
     <groupId>com.totalcross.knowcode</groupId>
     <artifactId>KnowCodeXML</artifactId>
-    <version>1.1</version>
+    <version>1.11</version>
 </dependency>
+```
+* Put totalcross-maven-plugin version 1.1.6-202008042150 or highter
+```xml
+<groupId>com.totalcross</groupId>
+<artifactId>totalcross-maven-plugin</artifactId>
+<version>1.1.6-202008042150</version>
 ```
 * So, that's it! Now let's start to use!
 
