@@ -30,7 +30,7 @@ KnowcodeXML is a library that interprets Android XML files and generates Totalcr
     <version>1.11</version>
 </dependency>
 ```
-* Put totalcross-maven-plugin version 1.1.6-202008042150 or highter
+* Put totalcross-maven-plugin version 1.1.6-202008042150 or higher
 ```xml
 <groupId>com.totalcross</groupId>
 <artifactId>totalcross-maven-plugin</artifactId>
