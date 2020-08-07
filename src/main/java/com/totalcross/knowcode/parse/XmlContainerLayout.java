@@ -74,8 +74,10 @@ public abstract class XmlContainerLayout extends Container {
 				custom.postInitUI(this);
 			}
 
-		} catch (IOException | ArrayIndexOutOfBoundsException ea) {
+		} catch (ArrayIndexOutOfBoundsException ea) {
 			ea.printStackTrace();
+		} catch (IOException ei) {
+			ei.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -201,7 +203,9 @@ public abstract class XmlContainerLayout extends Container {
 	}
 
 	private Control createSwitch(NodeSax node) {
-		return new Switch();
+		Switch s = new Switch();
+
+		return s;
 	}
 
 	private Control createSlider(NodeSax node) {
@@ -220,8 +224,7 @@ public abstract class XmlContainerLayout extends Container {
 		if (bg == null)
 			label.transparentBackground=true;
 
-
-		if (txStyleBold && node.getTextsize() != 0)
+		if (node.getTextsize() != 0)
 			label.setFont(Font.getFont(txStyleBold, node.getTextsize()));
 
 		return label;
