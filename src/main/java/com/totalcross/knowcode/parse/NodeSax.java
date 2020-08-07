@@ -118,8 +118,7 @@ public class NodeSax {
                 attributeValue = attributeValue.replace("dp", "");
             }
         }
-        System.out.println(new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue)-5 + DP)).multiply(BigDecimal.valueOf(hp)).intValue());
-        return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue)-5 + DP)).multiply(BigDecimal.valueOf(hp)).intValue();
+        return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue) + DP)).multiply(BigDecimal.valueOf(hp)).intValue();
         // return UnitsConverter.toPixels(Integer.parseInt(attributeValue)+ DP);
     }
     
@@ -854,18 +853,8 @@ public class NodeSax {
         }
         return LEFT;
     }
-    /** Get wp
-     * @return value of wp
-     * */
-    public float getWp(){
-        return wp;
-    }
-    /** Get hp
-     * @return value of hp
-     * */
-    public float getHp(){
-        return hp;
-    }
+
+
     /** Get text based on tag <code>"android:text"</code>
      * @return value of the tag
      * */
@@ -877,16 +866,6 @@ public class NodeSax {
      * */
     public String getScaleY() {
         attributeValue = getValue("android:scaleY");
-        if (attributeValue == null || "".equals(attributeValue)) {
-            return "1";
-        }
-        return attributeValue;
-    }
-    /** Get text based on tag <code>"android:scaleY"</code>
-     * @return value of the tag
-     * */
-    public String getScaleX() {
-        attributeValue = getValue("android:scaleX");
         if (attributeValue == null || "".equals(attributeValue)) {
             return "1";
         }

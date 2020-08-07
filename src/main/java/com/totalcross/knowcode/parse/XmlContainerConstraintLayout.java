@@ -8,9 +8,6 @@ import totalcross.sys.InvalidNumberException;
 import totalcross.sys.Settings;
 import totalcross.ui.Container;
 import totalcross.ui.Control;
-import totalcross.ui.Label;
-import totalcross.ui.Switch;
-import totalcross.ui.font.Font;
 import totalcross.ui.gfx.Color;
 import totalcross.ui.image.ImageException;
 import totalcross.util.BigDecimal;
@@ -53,23 +50,14 @@ public class XmlContainerConstraintLayout extends XmlContainerLayout {
 			node.setWp();
 			node.setHp();
 			centralContainer = new Container();
-			System.out.println(node.getAttributeName());
+
 			add(centralContainer, xLocal, yLocal, widLocal, heiLocal);
 		} else if (node.getAttributeName().equals("Switch")) {
 			node.setAttributeName("TextView");
-			Control s = createInstanceOf(node);
-			centralContainer.add(s, node.getRelativeX(), node.getRelativeY(), PREFERRED, PREFERRED);
-			if(!node.getScaleX().equals("1") && !node.getScaleY().equals("1")) {
-				s.setRect(node.getRelativeX() + node.getW() - ((int) ((((float) 58) * ((float) 1 + Float.parseFloat(node.getScaleY()) / (float) 2))*node.getWp())), CENTER_OF, ((int) ((((float) 40) * Float.parseFloat(node.getScaleY()))*node.getHp())) + DP, ((int) ((((float) 24) * Float.parseFloat(node.getScaleY()))*node.getHp())) + DP);
-				s.setFont(Font.getFont(node.getTextStyleBold(), ((int)((float)14*Float.parseFloat(node.getScaleY())))));
-			}
-				node.setAttributeName("Switch");
-			 s =  createInstanceOf(node);
-			centralContainer.add(s, node.getRelativeX()+node.getW()-((int) (((float)48)*node.getWp())), CENTER_OF, ((int) (((float)42)*node.getWp()))+DP, ((int) (((float)24)*node.getHp()))+DP);
-			if(!node.getScaleX().equals("1") && !node.getScaleY().equals("1"))
-			s.setRect(node.getRelativeX()+node.getW()-(int)(((float)48+( (((float)8)*(Float.parseFloat(node.getScaleY())/(float)2))))*node.getWp()), CENTER_OF, ((int) ((((float)40)*Float.parseFloat(node.getScaleY()))*node.getWp()))+DP, ((int) ((((float)24)*Float.parseFloat(node.getScaleY()))*node.getHp()))+DP);
+			centralContainer.add(createInstanceOf(node), node.getRelativeX(), node.getRelativeY(), PREFERRED, PREFERRED);
+			node.setAttributeName("Switch");
+			centralContainer.add(createInstanceOf(node), node.getRelativeX()+node.getW()-32, CENTER_OF, PREFERRED, PREFERRED);
 		} else if (node.getAttributeName().equals("ProgressBar")&& node.getStyle() == null || node.getStyle().contains("Horizontal")) {
-
 			centralContainer.add(createInstanceOf(node), node.getRelativeX(), new BigDecimal(node.getRelativeY()).add(BigDecimal.valueOf(((float)node.getH()/2.0-((((float)Settings.screenHeight/200.0))*Float.parseFloat(node.getScaleY()))))).intValue (), node.getW(), (int) ((((float)Settings.screenHeight/100.0)) *Float.parseFloat(node.getScaleY()))+DP, getRelativeControl(node));
 		}
 		else{
