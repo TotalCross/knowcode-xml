@@ -19,7 +19,7 @@ import totalcross.util.BigDecimal;
 import totalcross.util.UnitsConverter;
 
 /**
- * NodeSax access the nodes and attributes of the XML file. 
+ * NodeSax access the nodes and attributes of the XML file.
  * Each method reads a specific tag and return its value.
  */
 public class NodeSax {
@@ -28,28 +28,34 @@ public class NodeSax {
     private String attributeName = new String();
     private String id;
     private String relative;
-    private float wp =0,hp=0;
+    private float wp = 0, hp = 0;
 
-    /** Creates a NodeSax object
-     * @exception ImageException
+    /**
+     * Creates a NodeSax object
+     *
+     * @throws ImageException
      * @throws IOException
-     * */
+     */
     public NodeSax() throws IOException, ImageException {
     }
 
-    /** Get the attribute name of tag
+    /**
+     * Get the attribute name of tag
+     *
      * @return attribute value of tag
-     * */
+     */
     public String getAttributeName() {
         return attributeName;
     }
 
-    /** Get relative position set by <code>getRelativeX()</code> and <code>getRelativeY()</code>
+    /**
+     * Get relative position set by <code>getRelativeX()</code> and <code>getRelativeY()</code>
+     *
      * @return attribute value of tags related to relative positioning
-     * */
-    public String getRelative(){
-        if(relative != null && !relative.contains("@+")){
-            relative = relative.replace("@","@+");
+     */
+    public String getRelative() {
+        if (relative != null && !relative.contains("@+")) {
+            relative = relative.replace("@", "@+");
         }
         return relative;
     }
@@ -58,9 +64,11 @@ public class NodeSax {
         return attributesMap.get(a);
     }
 
-    /** Get attribute value of tag <code>"android:max"</code>
+    /**
+     * Get attribute value of tag <code>"android:max"</code>
+     *
      * @return attribute value of tag
-     * */
+     */
     public String getMax() {
         if (getValue("android:max") == null) {
             return "100";
@@ -68,20 +76,24 @@ public class NodeSax {
         return getValue("android:max");
     }
 
-    /** Get attribute value of tag <code>"android:progress"</code>
+    /**
+     * Get attribute value of tag <code>"android:progress"</code>
+     *
      * @return attribute value of tag
-     * */
+     */
     public String getProgress() {
-        if(getValue("android:progress") == null)
+        if (getValue("android:progress") == null)
             return "0";
         return getValue("android:progress");
     }
 
-    /** Get attribute value of tag <code>"android:textStyle"</code>
+    /**
+     * Get attribute value of tag <code>"android:textStyle"</code>
+     *
      * @return attribute value of tag
-     * */
+     */
     public String getStyle() {
-        if(getValue("style")!=null)
+        if (getValue("style") != null)
             return getValue("style");
         if (getValue("android:textStyle") == null) {
             return "normal";
@@ -90,9 +102,11 @@ public class NodeSax {
         return getValue("android:textStyle");
     }
 
-    /** Get attribute value of tag <code>"android:id"</code>
+    /**
+     * Get attribute value of tag <code>"android:id"</code>
+     *
      * @return attribute value of tag
-     * */
+     */
     public String getId() {
 
         if (id == null) {
@@ -104,9 +118,11 @@ public class NodeSax {
         return attributeValue;
     }
 
-    /** Get attribute value of tag <code>"android:textSize"</code>
+    /**
+     * Get attribute value of tag <code>"android:textSize"</code>
+     *
      * @return attribute value of tag
-     * */
+     */
     public int getTextsize() throws InvalidNumberException {
 
         attributeValue = getValue("android:textSize");
@@ -117,14 +133,19 @@ public class NodeSax {
             if (attributeValue.contains("dp")) {
                 attributeValue = attributeValue.replace("dp", "");
             }
+            if (attributeValue.contains("sp")) {
+                attributeValue = attributeValue.replace("sp", "");
+            }
         }
-        return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue)-5 + DP)).multiply(BigDecimal.valueOf(hp)).intValue();
-        // return UnitsConverter.toPixels(Integer.parseInt(attributeValue)+ DP);
+        return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue) - 5 + DP)).multiply(BigDecimal.valueOf(hp)).intValue();
+
     }
 
-    /** Get attribute value of tag <code>"android:textStyle"</code>
+    /**
+     * Get attribute value of tag <code>"android:textStyle"</code>
+     *
      * @return attribute value of tag
-     * */
+     */
     public boolean getTextStyleBold() {
         attributeValue = getValue("android:textStyle");
         if (attributeValue == null || "".equals(attributeValue)) {
@@ -137,9 +158,11 @@ public class NodeSax {
         }
     }
 
-    /** Get attribute value of tag <code>"android:background"</code> to color background
+    /**
+     * Get attribute value of tag <code>"android:background"</code> to color background
+     *
      * @return attribute value of tag
-     * */
+     */
     public String getBackgroundColor() {
         attributeValue = getValue("android:background");
 
@@ -158,9 +181,11 @@ public class NodeSax {
         return attributeValue;
     }
 
-    /** Get attribute value of tag <code>"android:background"</code> to image background
+    /**
+     * Get attribute value of tag <code>"android:background"</code> to image background
+     *
      * @return attribute value of tag
-     * */
+     */
     public String getBackgroundImage() {
         attributeValue = getValue("android:background");
         String attributeValue2 = getValue("app:srcCompat");
@@ -181,118 +206,30 @@ public class NodeSax {
             }
         }
         return attributeValue;
-        // return getPathImage(attributeValue);
+
     }
 
-    // private String getImageExtension2(String path) {
-    // File file = null;
-    // try {
-    // String [] extensoes = {".jpg", ".png", ".bmp",".jpeg",".gif",
-    // ".JPG", ".PNG", ".BMP", ".JPEG", ".GIF"};
-    // for (int i = 0; i < extensoes.length; i++) {
-    // URL url = this.getClass().getClassLoader().getResource(path + extensoes[i]);
-    // file = new File(url.getPath());
-    // if(file.exists()) {
-    // path = file.getPath();
-    // break;
-    // }
-    // }
-    // } catch (Exception e) {
-    // System.out.println(e.getMessage());
-    // } finally {
-    // try {
-    // file.close();
-    // } catch (Exception e) {
-    // e.getStackTrace();
-    // }
-    // }
-    //
-    // return path;
-    // }
-
-    // public String getImageExtension3(String path) {
-    // try {
-    // String lastDir = path.substring(0, path.lastIndexOf("/"));
-    // URL url = getClass().getClassLoader().getResource(lastDir);
-    // String key = path.concat(".");
-    // String[] names = File.listFiles(url.getPath(), false);
-    // for (String name: names) {
-    // if (name.contains(key)) {
-    // return name;
-    // }
-    // }
-    // return null;
-    // }catch (Exception e) {
-    // // TODO: handle exception
-    // e.printStackTrace();
-    // return null;
-    // }
-    // }
-    //return getPathImage(attributeValue);
-
-//    private String getImageExtension2(String path) {
-//    	File file = null;
-//    	try {
-//    		String [] extensoes = {".jpg", ".png", ".bmp",".jpeg",".gif",
-//    							".JPG", ".PNG", ".BMP", ".JPEG", ".GIF"};
-//    		for (int i = 0; i < extensoes.length; i++) {
-//    			URL url = this.getClass().getClassLoader().getResource(path + extensoes[i]);
-//    	    	file = new File(url.getPath());
-//    	    	if(file.exists()) {
-//    	    		path = file.getPath();
-//    	    		break;
-//    	    	}
-//    		}
-//    	} catch (Exception e) {
-//    		System.out.println(e.getMessage());
-//		} finally {
-//			try {
-//				file.close();
-//			} catch (Exception e) {
-//				e.getStackTrace();
-//			}
-//		}
-//
-//    	return path;
-//    }
-
     private String getImageExtension(String path) {
-        String [] extensoes = {".jpg", ".png", ".bmp",".jpeg",".gif",
+        String[] extensoes = {".jpg", ".png", ".bmp", ".jpeg", ".gif",
                 ".JPG", ".PNG", ".BMP", ".JPEG", ".GIF"};
         byte[] xml = null;
         for (int i = 0; i < extensoes.length; i++) {
-            xml = Vm.getFile(path+extensoes[i]);
+            xml = Vm.getFile(path + extensoes[i]);
 
-            if(xml != null) {
-                return path+extensoes[i];
+            if (xml != null) {
+                return path + extensoes[i];
             }
         }
 
         return path;
     }
 
-//    private String getImageExtension3(String path) {
-//    	try {
-//	        String lastDir = path.substring(0, path.lastIndexOf("/"));
-//	        URL url = getClass().getClassLoader().getResource(lastDir);
-//	        String key = path.concat(".");
-//	        String[] names = File.listFiles(url.getPath(), false);
-//	        for (String name: names) {
-//	        	if (name.contains(key)) {
-//	        		return name;
-//	        	}
-//	        }
-//	        return null;
-//    	}catch (Exception e) {
-//			// TODO: handle exception
-//    		e.printStackTrace();
-//    		return null;
-//		}
-//    }
 
-    /** Get attribute value of tag <code>"android:textColor"</code>
+    /**
+     * Get attribute value of tag <code>"android:textColor"</code>
+     *
      * @return attribute value of tag
-     * */
+     */
     public String getTextColor() {
         attributeValue = getValue("android:textColor");
 
@@ -305,9 +242,12 @@ public class NodeSax {
             return attributeValue;
         }
     }
-    /** Get attribute value of tag <code>"android:indeterminateTint"</code>
+
+    /**
+     * Get attribute value of tag <code>"android:indeterminateTint"</code>
+     *
      * @return attribute value of tag
-     * */
+     */
     public String getTintColor() {
         attributeValue = getValue("android:indeterminateTint");
 
@@ -321,11 +261,13 @@ public class NodeSax {
         }
     }
 
-    /** Get the height value converted to Pixel, checks the following tags <code>"android:layout_height"</code>
+    /**
+     * Get the height value converted to Pixel, checks the following tags <code>"android:layout_height"</code>
      * and <code>"app:layout_constraintHeight_percent"</code>
-     * @throws InvalidNumberException
+     *
      * @return height value converted to Pixel
-     * */
+     * @throws InvalidNumberException
+     */
     public int getH() throws InvalidNumberException {
         attributeValue = getValue("app:layout_constraintHeight_percent");
         if (attributeValue != null)
@@ -349,12 +291,14 @@ public class NodeSax {
                 }
             }
         }
-        return  new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue))).multiply(BigDecimal.valueOf(hp)).intValue();
+        return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue))).multiply(BigDecimal.valueOf(hp)).intValue();
     }
 
-    /** Get attribute value of tag <code>"app:srcCompat"</code>
+    /**
+     * Get attribute value of tag <code>"app:srcCompat"</code>
+     *
      * @return attribute value of tag
-     * */
+     */
     public String getSrcCompat() {
         attributeValue = getValue("app:srcCompat");
 
@@ -373,9 +317,11 @@ public class NodeSax {
         }
     }
 
-    /** Get attribute value of tag <code>"android:paddingTop"</code>
+    /**
+     * Get attribute value of tag <code>"android:paddingTop"</code>
+     *
      * @return attribute value of tag
-     * */
+     */
     public int getPaddingTop() {
         attributeValue = getValue("android:paddingTop");
         if (attributeValue == null) {
@@ -388,9 +334,11 @@ public class NodeSax {
     }
 
 
-    /** Get attribute value of tag <code>"android:paddingBottom"</code>
+    /**
+     * Get attribute value of tag <code>"android:paddingBottom"</code>
+     *
      * @return attribute value of tag
-     * */
+     */
     public int getPaddingBottom() {
         attributeValue = getValue("android:paddingBottom");
         if (attributeValue == null) {
@@ -402,9 +350,11 @@ public class NodeSax {
         return UnitsConverter.toPixels(Integer.parseInt(attributeValue) + DP);
     }
 
-    /** Get attribute value of tag <code>"android:paddingRight"</code>
+    /**
+     * Get attribute value of tag <code>"android:paddingRight"</code>
+     *
      * @return attribute value of tag
-     * */
+     */
     public int getPaddingRight() {
         attributeValue = getValue("android:paddingRight");
         if (attributeValue == null) {
@@ -416,10 +366,12 @@ public class NodeSax {
         return UnitsConverter.toPixels(Integer.parseInt(attributeValue) + DP);
     }
 
-    /** Get attribute value of tag <code>"android:paddingLeft"</code>
+    /**
+     * Get attribute value of tag <code>"android:paddingLeft"</code>
+     *
      * @return attribute value of tag
-     * */
-    public int getPaddingLeft(){
+     */
+    public int getPaddingLeft() {
         attributeValue = getValue("android:paddingLeft");
         if (attributeValue == null) {
             return 0;
@@ -430,14 +382,13 @@ public class NodeSax {
         return UnitsConverter.toPixels(Integer.parseInt(attributeValue) + DP);
     }
 
-    // public String getOrient() {
-    // return orient;
-    // }
 
-    /** Get the width value converted to Pixel, checks the following tags <code>"android:layout_width"</code>
+    /**
+     * Get the width value converted to Pixel, checks the following tags <code>"android:layout_width"</code>
      * and <code>"app:layout_constraintWidth_percent"</code>
+     *
      * @return width value converted to Pixel
-     * */
+     */
     public int getW() throws InvalidNumberException {
         attributeValue = getValue("app:layout_constraintWidth_percent");
         if (attributeValue != null)
@@ -468,9 +419,11 @@ public class NodeSax {
         return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue))).multiply(BigDecimal.valueOf(wp)).intValue();
     }
 
-    /** Get attribute value of tag <code>"android:layout_width"</code>
+    /**
+     * Get attribute value of tag <code>"android:layout_width"</code>
+     *
      * @return attribute value of tag
-     * */
+     */
     public String getLayout_width() {
         attributeValue = getValue("android:layout_width");
         if (attributeValue == null || "".equals(attributeValue)) {
@@ -479,9 +432,11 @@ public class NodeSax {
         return attributeValue;
     }
 
-    /** Get attribute value of tag <code>"android:layout_height"</code>
+    /**
+     * Get attribute value of tag <code>"android:layout_height"</code>
+     *
      * @return attribute value of tag
-     * */
+     */
     public String getLayout_height() {
         attributeValue = getValue("android:layout_height");
         if (attributeValue == null || "".equals(attributeValue)) {
@@ -490,9 +445,11 @@ public class NodeSax {
         return attributeValue;
     }
 
-    /** Get value of x axis converted to Pixel of tag <code>"tools:layout_editor_absoluteX"</code>
+    /**
+     * Get value of x axis converted to Pixel of tag <code>"tools:layout_editor_absoluteX"</code>
+     *
      * @return attribute value of tag converted to Pixel
-     * */
+     */
     public int getAbsoluteX() {
         attributeValue = getValue("tools:layout_editor_absoluteX");
 
@@ -509,9 +466,11 @@ public class NodeSax {
         }
     }
 
-    /** Get value of y axis converted to Pixel of tag <code>"tools:layout_editor_absoluteY"</code>
+    /**
+     * Get value of y axis converted to Pixel of tag <code>"tools:layout_editor_absoluteY"</code>
+     *
      * @return attribute value of tag converted to Pixel
-     * */
+     */
     public int getAbsoluteY() {
         attributeValue = getValue("tools:layout_editor_absoluteY");
 
@@ -531,9 +490,11 @@ public class NodeSax {
         }
     }
 
-    /** Get orientation based on tag <code>"android:orientation"</code>
+    /**
+     * Get orientation based on tag <code>"android:orientation"</code>
+     *
      * @return attribute value of tag
-     * */
+     */
     public String getOrientation() {
         attributeValue = getValue("android:orientation");
 
@@ -545,7 +506,8 @@ public class NodeSax {
         }
     }
 
-    /** Get the relative positioning of x axis.
+    /**
+     * Get the relative positioning of x axis.
      * Checks the following tags:
      * <code>"android:layout_alignParentLeft"</code>
      * <code>"app:layout_constraintLeft_toLeftOf"</code>
@@ -568,40 +530,38 @@ public class NodeSax {
      * <code>"android:layout_centerInParent"</code>
      * <code>"android:layout_centerHorizontal"</code>
      * <code>"android:layout_editor_absoluteX"</code>
+     *
      * @return totalcross positioning constant
-     * */
+     */
     public int getRelativeX() throws InvalidNumberException {
         attributeValue = getValue("android:layout_alignParentLeft");
         if (attributeValue != null) {
             return LEFT;
         }
         attributeValue = getValue("app:layout_constraintLeft_toLeftOf");
-        if( attributeValue != null) {
-            if( attributeValue.equals("parent")) {
+        if (attributeValue != null) {
+            if (attributeValue.equals("parent")) {
                 return LEFT;
-            }
-            else {
+            } else {
                 relative = attributeValue;
                 return SAME;
             }
         }
         attributeValue = getValue("app:layout_constraintStart_toStartOf");
 
-        if( attributeValue != null) {
-            if( attributeValue.equals("parent")) {
+        if (attributeValue != null) {
+            if (attributeValue.equals("parent")) {
                 return LEFT;
-            }
-            else {
+            } else {
                 relative = attributeValue;
                 return SAME;
             }
         }
         attributeValue = getValue("app:layout_constraintStart_toEndOf");
-        if( attributeValue != null) {
-            if( attributeValue.equals("parent")) {
+        if (attributeValue != null) {
+            if (attributeValue.equals("parent")) {
                 return LEFT;
-            }
-            else {
+            } else {
                 relative = attributeValue;
                 return SAME;
             }
@@ -622,21 +582,19 @@ public class NodeSax {
             return BEFORE;
         }
         attributeValue = getValue("app:layout_constraintRight_toRightOf");
-        if( attributeValue != null) {
-            if( attributeValue.equals("parent")) {
+        if (attributeValue != null) {
+            if (attributeValue.equals("parent")) {
                 return RIGHT;
-            }
-            else {
+            } else {
                 relative = attributeValue;
                 return RIGHT_OF;
             }
         }
         attributeValue = getValue("app:layout_constraintEnd_toEndOf");
-        if( attributeValue!=null) {
-            if( attributeValue.equals("parent")) {
+        if (attributeValue != null) {
+            if (attributeValue.equals("parent")) {
                 return RIGHT;
-            }
-            else {
+            } else {
                 relative = attributeValue;
                 return RIGHT_OF;
             }
@@ -706,7 +664,7 @@ public class NodeSax {
         if (attributeValue == null) {
             return LEFT;
         }
-        if(attributeValue.equals("wrap_content")) {
+        if (attributeValue.equals("wrap_content")) {
             return PREFERRED;
         } else {
             if (attributeValue.contains("dp")) {
@@ -717,7 +675,8 @@ public class NodeSax {
     }
 
 
-    /** Get the relative positioning of y axis.
+    /**
+     * Get the relative positioning of y axis.
      * Checks the following tags:
      * <code>"app:layout_constraintTop_toBottomOf"</code>
      * <code>"app:layout_constraintTop_toTopOf"</code>
@@ -737,8 +696,10 @@ public class NodeSax {
      * <code>"android:layout_toStartOf"</code>
      * <code>"android:layout_centerInParent"</code>
      * <code>"tools:layout_editor_absoluteY"</code>
+     *
      * @return totalcross positioning constant
-     * */    public int getRelativeY() throws InvalidNumberException {
+     */
+    public int getRelativeY() throws InvalidNumberException {
         attributeValue = getValue("app:layout_constraintTop_toBottomOf");
         if (attributeValue != null) {
             if (attributeValue.equals("parent"))
@@ -828,10 +789,9 @@ public class NodeSax {
         if (attributeValue == null) {
             return TOP;
         }
-        if(attributeValue.equals("wrap_content")) {
+        if (attributeValue.equals("wrap_content")) {
             return PREFERRED;
-        }
-        else {
+        } else {
             if (attributeValue.contains("dp")) {
                 attributeValue = attributeValue.replace("dp", "");
             }
@@ -840,24 +800,28 @@ public class NodeSax {
         return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue))).multiply(BigDecimal.valueOf(hp)).intValue();
     }
 
-    /** Get Layout Gravity based on tag <code>"android:layout_gravity"</code>
+    /**
+     * Get Layout Gravity based on tag <code>"android:layout_gravity"</code>
+     *
      * @return value of tag
-     * */
+     */
     public String getLayout_gravity() {
         attributeValue = getValue("android:layout_gravity");
-        if(attributeValue == null || "".equals(attributeValue)) {
+        if (attributeValue == null || "".equals(attributeValue)) {
             return null;
         } else {
             return attributeValue;
         }
     }
 
-    /** Get gravity based on tag <code>"android:gravity"</code>
+    /**
+     * Get gravity based on tag <code>"android:gravity"</code>
+     *
      * @return constant of position
-     * */
-    public int getGravity(){
+     */
+    public int getGravity() {
         attributeValue = getValue("android:gravity");
-        if(attributeValue!=null) {
+        if (attributeValue != null) {
             if (attributeValue.equals("left")) {
                 return FILL;
             }
@@ -868,27 +832,39 @@ public class NodeSax {
         }
         return LEFT;
     }
-    /** Get wp
+
+    /**
+     * Get wp
+     *
      * @return value of wp
-     * */
-    public float getWp(){
+     */
+    public float getWp() {
         return wp;
     }
-    /** Get hp
+
+    /**
+     * Get hp
+     *
      * @return value of hp
-     * */
-    public float getHp(){
+     */
+    public float getHp() {
         return hp;
     }
-    /** Get text based on tag <code>"android:text"</code>
+
+    /**
+     * Get text based on tag <code>"android:text"</code>
+     *
      * @return value of the tag
-     * */
+     */
     public String getText() {
         return getValue("android:text");
     }
-    /** Get text based on tag <code>"android:scaleY"</code>
+
+    /**
+     * Get text based on tag <code>"android:scaleY"</code>
+     *
      * @return value of the tag
-     * */
+     */
     public String getScaleY() {
         attributeValue = getValue("android:scaleY");
         if (attributeValue == null || "".equals(attributeValue)) {
@@ -896,9 +872,12 @@ public class NodeSax {
         }
         return attributeValue;
     }
-    /** Get text based on tag <code>"android:scaleY"</code>
+
+    /**
+     * Get text based on tag <code>"android:scaleY"</code>
+     *
      * @return value of the tag
-     * */
+     */
     public String getScaleX() {
         attributeValue = getValue("android:scaleX");
         if (attributeValue == null || "".equals(attributeValue)) {
@@ -907,9 +886,11 @@ public class NodeSax {
         return attributeValue;
     }
 
-    /** Get source of a image based on tag <code>"android:src"</code>
+    /**
+     * Get source of a image based on tag <code>"android:src"</code>
+     *
      * @return value of the tag
-     * */
+     */
     public String getSrc() {
         attributeValue = getValue("android:src");
 
@@ -929,9 +910,11 @@ public class NodeSax {
         return attributeValue;
     }
 
-    /** Get information of the tag <code>"android:hint"</code>
+    /**
+     * Get information of the tag <code>"android:hint"</code>
+     *
      * @return value of the tag
-     * */
+     */
     public String getHint() {
         attributeValue = getValue("android:hint");
         if (attributeValue == null || "".equals(attributeValue)) {
@@ -940,15 +923,19 @@ public class NodeSax {
         return attributeValue;
     }
 
-    /** Clear the attributesMap HashMap of the XML component*/
-    public void reset(){
+    /**
+     * Clear the attributesMap HashMap of the XML component
+     */
+    public void reset() {
         attributesMap.clear();
     }
 
-    /** Get information if it is absolute layout based on tags <code>"tools:layout_editor_absoluteX"</code> and
+    /**
+     * Get information if it is absolute layout based on tags <code>"tools:layout_editor_absoluteX"</code> and
      * <code>"tools:layout_editor_absoluteY"</code>
+     *
      * @return true or false
-     * */
+     */
     public boolean isAbsoluteLayout() {
         if (getValue("tools:layout_editor_absoluteX") != null
                 || getValue("tools:layout_editor_absoluteY") != null) {
@@ -957,26 +944,28 @@ public class NodeSax {
         return false;
     }
 
-    /** Inserts a item in a attributesMap HashMap
-     * @param name
-     * 		name of tag
-     * @param value
-     * 		value of tag
-     * */
-    public void inserts(String name,String value){
+    /**
+     * Inserts a item in a attributesMap HashMap
+     *
+     * @param name  name of tag
+     * @param value value of tag
+     */
+    public void inserts(String name, String value) {
         attributesMap.put(name, value);
     }
 
-    /** Set the id of a tag
-     * @param id
-     * 	id of XML component
-     * */
+    /**
+     * Set the id of a tag
+     *
+     * @param id id of XML component
+     */
     public void setId(String id) {
         this.id = id;
     }
 
-    /** set parameter width to try to resize a predefined screen size
-     * */
+    /**
+     * set parameter width to try to resize a predefined screen size
+     */
     public void setWp() throws InvalidNumberException {
         attributeValue = getValue("android:layout_width");
         if (attributeValue != null) {
@@ -986,15 +975,17 @@ public class NodeSax {
                 if (attributeValue.contains("dp")) {
                     attributeValue = attributeValue.replace("dp", "");
                 }
-                wp = UnitsConverter.toPixels(Integer.parseInt(attributeValue));
+                wp = UnitsConverter.toPixels(Integer.parseInt(attributeValue) + DP);
             }
 
         }
-        wp =  Settings.screenWidth/ wp ;
+        wp = Settings.screenWidth / wp;
 
     }
-    /** set parameter height to try to resize a predefined screen size
-     * */
+
+    /**
+     * set parameter height to try to resize a predefined screen size
+     */
     public void setHp() throws InvalidNumberException {
         attributeValue = getValue("android:layout_height");
         if (attributeValue != null) {
@@ -1004,30 +995,32 @@ public class NodeSax {
                 if (attributeValue.contains("dp")) {
                     attributeValue = attributeValue.replace("dp", "");
                 }
-                hp = UnitsConverter.toPixels(Integer.parseInt(attributeValue));
+                hp = UnitsConverter.toPixels(Integer.parseInt(attributeValue) + DP);
             }
 
 
         }
-        hp =  Settings.screenHeight / hp ;
+        hp = Settings.screenHeight / hp;
     }
 
-    /** Set attribute name of a tag
-     * @param attributeName
-     * 		attribute name
-     * */
+    /**
+     * Set attribute name of a tag
+     *
+     * @param attributeName attribute name
+     */
     public void setAttributeName(String attributeName) {
         this.attributeName = attributeName;
     }
 
 
-    /** Show all elements of attributesMap HashMap, with the Key like a tag name and attribute of it*/
-    public void showAll(){
+    /**
+     * Show all elements of attributesMap HashMap, with the Key like a tag name and attribute of it
+     */
+    public void showAll() {
         Set<String> chaves = attributesMap.keySet();
-        for (String chave : chaves)
-        {
-            if(chave != null)
-                System.out.println("Key: "+chave+ " Attribute: " +attributesMap.get(chave));
+        for (String chave : chaves) {
+            if (chave != null)
+                System.out.println("Key: " + chave + " Attribute: " + attributesMap.get(chave));
         }
     }
 
