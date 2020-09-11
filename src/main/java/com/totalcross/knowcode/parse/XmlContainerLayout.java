@@ -1,7 +1,7 @@
 /********************************************************************************* 
  * (c) 2020 by TotalCross Global Mobile Platform LTDA
  * SPDX-License-Identifier: LGPL-3.0-only
-  *********************************************************************************/
+ *********************************************************************************/
 package com.totalcross.knowcode.parse;
 
 import java.io.IOException;
@@ -9,6 +9,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.TreeMap;
 
 import totalcross.sys.InvalidNumberException;
+import totalcross.sys.Settings;
 import totalcross.sys.Vm;
 import totalcross.ui.Button;
 import totalcross.ui.Check;
@@ -48,7 +49,7 @@ import totalcross.xml.XmlReader;
  *		Container container = XmlContainerFactory.create("linearSample.xml");
  *		MainWindow.getMainWindow().swap(container);
  *		Control control = ((XmlContainerLayout) container).getControlByID("@+id/btRegister");
-		control.setFont(Fonts.latoBoldDefaultSize);  
+ control.setFont(Fonts.latoBoldDefaultSize);
  *	}
  * </pre>
  */
@@ -58,14 +59,14 @@ public abstract class XmlContainerLayout extends Container {
 
 	/* Treemap that saves the components of the XML file (String id, Control control)*/
 	TreeMap<String, Control> componentsMap = new TreeMap<String, Control>();
-	
+
 	/* Control responsible to save the last control of map*/
 	Control lastControl = null;
 
 	Container centralContainer;
-	
+
 	CustomInitUI custom = null;
-	
+
 	/* Init UI after read the XML file and configure all controls and containers*/
 	public void initUI() {
 		try {
@@ -74,22 +75,22 @@ public abstract class XmlContainerLayout extends Container {
 				custom.postInitUI(this);
 			}
 
-		} catch (ArrayIndexOutOfBoundsException ea) {
-			ea.printStackTrace();
 		} catch (IOException ei) {
 			ei.printStackTrace();
+		} catch ( ArrayIndexOutOfBoundsException ea) {
+			ea.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 *  */
 	public void setCustomInitUI(CustomInitUI customization) {
 		this.custom = customization;
 	}
-	
-	/** 
+
+	/**
 	 * Abstract method that add all components of a XML file on Container
 	 * Must be implemented by the child classes
 	 * @exception totalcross.io.IOException
@@ -97,11 +98,11 @@ public abstract class XmlContainerLayout extends Container {
 	 * @param node
 	 * 		XML node
 	 * */
-	public abstract void addscreen(NodeSax node) 
+	public abstract void addscreen(NodeSax node)
 			throws totalcross.io.IOException, ImageException, InvalidNumberException;
 
-	/** 
-	 * Responsible to create the instances of XML components and put on a TreeMap  
+	/**
+	 * Responsible to create the instances of XML components and put on a TreeMap
 	 * The TreeMap saves the id of XML component and its associated Control object
 	 * @param nodes
 	 * 		node of a XML file
@@ -109,7 +110,7 @@ public abstract class XmlContainerLayout extends Container {
 	 * @throws totalcross.io.IOException
 	 * @exception ImageException
 	 * */
-	public Control createInstanceOf(NodeSax nodes) 
+	public Control createInstanceOf(NodeSax nodes)
 			throws totalcross.io.IOException, ImageException, InvalidNumberException {
 		if (nodes.getAttributeName().contains("Button")) {
 			componentsMap.put(nodes.getId(), createButton(nodes));
@@ -196,16 +197,14 @@ public abstract class XmlContainerLayout extends Container {
 		} else {
 			background = node.getBackgroundColor();
 			button = new Button(node.getText());
-		    button.setBackColor(Color.getRGB(background));
+			button.setBackColor(Color.getRGB(background));
 		}
 
 		return button;
 	}
 
 	private Control createSwitch(NodeSax node) {
-		Switch s = new Switch();
-
-		return s;
+		return new Switch();
 	}
 
 	private Control createSlider(NodeSax node) {
@@ -219,14 +218,19 @@ public abstract class XmlContainerLayout extends Container {
 		String bg = node.getBackgroundColor();
 		String color = node.getTextColor();
 		boolean txStyleBold = node.getTextStyleBold();
-
+		txStyleBold = false;
+        label.autoSplit = true;
 		label.setBackForeColors(Color.getRGB(bg), Color.getRGB(color));
 		if (bg == null)
 			label.transparentBackground=true;
-
-		if (node.getTextsize() != 0)
-			label.setFont(Font.getFont(txStyleBold, node.getTextsize()));
-
+		if (node.getTextsize() != 0) {
+			if (Settings.platform.equals("Android"))
+				label.setFont(Font.getFont(txStyleBold, (int) ((float) (node.getTextsize()) / 2.65)));
+			else
+				label.setFont(Font.getFont(txStyleBold, node.getTextsize()));
+		}
+		else
+			label.setFont(Font.getFont(txStyleBold,label.FONTSIZE));
 		return label;
 
 	}
@@ -237,7 +241,9 @@ public abstract class XmlContainerLayout extends Container {
 			bar.setValue(Integer.parseInt(node.getProgress()));
 			return bar;
 		} else {
-			return new Spinner();
+			Spinner spinner = new Spinner();
+			spinner.setBackForeColors(Color.getRGB("000000"),Color.getRGB(node.getTintColor()));
+			return spinner;
 		}
 	}
 
@@ -271,7 +277,7 @@ public abstract class XmlContainerLayout extends Container {
 		/* Does nothing */
 		@Override
 		public void characters(String arg0) {
-			
+
 		}
 
 		/* Does nothing */
@@ -283,7 +289,7 @@ public abstract class XmlContainerLayout extends Container {
 		/* Does nothing */
 		@Override
 		public void startElement(int arg0, AttributeList atts) {
-		
+
 		}
 
 		/**
@@ -346,21 +352,21 @@ public abstract class XmlContainerLayout extends Container {
 	public String getPathXml() {
 		return pathXml;
 	}
-	
-	/** Get the Control of a given id from a component of XML file 
+
+	/** Get the Control of a given id from a component of XML file
 	 * @return Control object of this ID
 	 * */
 	public Control getControlByID(String a) {
 		return componentsMap.get(a);
 	}
-	
+
 	/** Get the TreeMap with all Controls of the XML file
 	 * @return Controls of XML
 	 * */
 	public TreeMap<String, Control> getControls() {
 		return componentsMap;
 	}
-	
+
 	/** Set the path of XML file
 	 * @param pathXml
 	 * 		path of XML file
