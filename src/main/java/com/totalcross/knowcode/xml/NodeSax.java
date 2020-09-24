@@ -2,7 +2,7 @@
  * (c) 2020 by TotalCross Global Mobile Platform LTDA
  * SPDX-License-Identifier: LGPL-3.0-only
  *********************************************************************************/
-package com.totalcross.knowcode.parse;
+package com.totalcross.knowcode.xml;
 
 import static totalcross.ui.Control.*;
 
@@ -24,11 +24,12 @@ import totalcross.util.UnitsConverter;
  */
 public class NodeSax {
     private Map<String, String> attributesMap = new HashMap<String, String>();
-    private String attributeValue;
-    private String attributeName = new String();
-    private String id;
-    private String relative;
-    private float wp = 0, hp = 0;
+    protected String attributeValue;
+    protected String attributeName = new String();
+    protected String id;
+    protected String relative;
+    protected float wp = 0, hp = 0;
+    NodeSax node = new NodeSax();
 
     /**
      * Creates a NodeSax object
@@ -37,6 +38,14 @@ public class NodeSax {
      * @throws IOException
      */
     public NodeSax() throws IOException, ImageException {
+    }
+    
+    /** Creates a NodeSax object for the others NodeSax childrens
+     * @exception ImageException
+     * @throws IOException
+     * */
+    public NodeSax(NodeSax n) throws IOException, ImageException {
+        this.node = n.node;
     }
 
     /**
@@ -48,19 +57,7 @@ public class NodeSax {
         return attributeName;
     }
 
-    /**
-     * Get relative position set by <code>getRelativeX()</code> and <code>getRelativeY()</code>
-     *
-     * @return attribute value of tags related to relative positioning
-     */
-    public String getRelative() {
-        if (relative != null && !relative.contains("@+")) {
-            relative = relative.replace("@", "@+");
-        }
-        return relative;
-    }
-
-    private String getValue(String a) {
+    protected String getValue(String a) {
         return attributesMap.get(a);
     }
 
@@ -506,299 +503,10 @@ public class NodeSax {
         }
     }
 
-    /**
-     * Get the relative positioning of x axis.
-     * Checks the following tags:
-     * <code>"android:layout_alignParentLeft"</code>
-     * <code>"app:layout_constraintLeft_toLeftOf"</code>
-     * <code>"app:layout_constraintStart_toStartOf"</code>
-     * <code>"app:layout_constraintStart_toEndOf"</code>
-     * <code>"app:layout_constraintLeft_toRightOf"</code>
-     * <code>"app:layout_constraintEnd_toStartOf"</code>
-     * <code>"app:layout_constraintRight_toRightOf"</code>
-     * <code>"app:layout_constraintEnd_toEndOf"</code>
-     * <code>"android:layout_alignParentRight"</code>
-     * <code>"android:layout_alignParentEnd"</code>
-     * <code>"android:layout_alignParentStart"</code>
-     * <code>"android:layout_toEndOf"</code>
-     * <code>"android:layout_alignRight"</code>
-     * <code>"android:layout_alignLeft"</code>
-     * <code>"android:layout_alignEnd"</code>
-     * <code>"android:layout_toLeftof"</code>
-     * <code>"android:layout_toRightOf"</code>
-     * <code>"android:layout_toStartOf"</code>
-     * <code>"android:layout_centerInParent"</code>
-     * <code>"android:layout_centerHorizontal"</code>
-     * <code>"android:layout_editor_absoluteX"</code>
-     *
-     * @return totalcross positioning constant
-     */
-    public int getRelativeX() throws InvalidNumberException {
-        attributeValue = getValue("android:layout_alignParentLeft");
-        if (attributeValue != null) {
-            return LEFT;
-        }
-        attributeValue = getValue("app:layout_constraintLeft_toLeftOf");
-        if (attributeValue != null) {
-            if (attributeValue.equals("parent")) {
-                return LEFT;
-            } else {
-                relative = attributeValue;
-                return SAME;
-            }
-        }
-        attributeValue = getValue("app:layout_constraintStart_toStartOf");
-
-        if (attributeValue != null) {
-            if (attributeValue.equals("parent")) {
-                return LEFT;
-            } else {
-                relative = attributeValue;
-                return SAME;
-            }
-        }
-        attributeValue = getValue("app:layout_constraintStart_toEndOf");
-        if (attributeValue != null) {
-            if (attributeValue.equals("parent")) {
-                return LEFT;
-            } else {
-                relative = attributeValue;
-                return SAME;
-            }
-        }
-        attributeValue = getValue("app:layout_constraintLeft_toRightOf");
-        if (attributeValue != null) {
-            relative = attributeValue;
-            return AFTER;
-        }
-        attributeValue = getValue("app:layout_constraintRight_toLeftOf");
-        if (attributeValue != null) {
-            relative = attributeValue;
-            return BEFORE;
-        }
-        attributeValue = getValue("app:layout_constraintEnd_toStartOf");
-        if (attributeValue != null) {
-            relative = attributeValue;
-            return BEFORE;
-        }
-        attributeValue = getValue("app:layout_constraintRight_toRightOf");
-        if (attributeValue != null) {
-            if (attributeValue.equals("parent")) {
-                return RIGHT;
-            } else {
-                relative = attributeValue;
-                return RIGHT_OF;
-            }
-        }
-        attributeValue = getValue("app:layout_constraintEnd_toEndOf");
-        if (attributeValue != null) {
-            if (attributeValue.equals("parent")) {
-                return RIGHT;
-            } else {
-                relative = attributeValue;
-                return RIGHT_OF;
-            }
-        }
-        attributeValue = getValue("android:layout_alignParentRight");
-        if (attributeValue != null) {
-            return RIGHT;
-        }
-        attributeValue = getValue("android:layout_alignParentEnd");
-        if (attributeValue != null) {
-            return RIGHT;
-        }
-        attributeValue = getValue("android:layout_alignParentStart");
-        if (attributeValue != null) {
-            return LEFT;
-        }
-        attributeValue = getValue("android:layout_toEndOf");
-        if (attributeValue != null) {
-            relative = attributeValue;
-            return AFTER;
-        }
-        attributeValue = getValue("android:layout_alignRight");
-        if (attributeValue != null) {
-            relative = attributeValue;
-            return RIGHT_OF;
-        }
-        attributeValue = getValue("android:layout_alignLeft");
-        if (attributeValue != null) {
-            relative = attributeValue;
-            return SAME;
-        }
-        attributeValue = getValue("android:layout_alignLeft");
-        if (attributeValue != null) {
-            relative = attributeValue;
-            return SAME;
-        }
-
-        attributeValue = getValue("android:layout_alignEnd");
-        if (attributeValue != null) {
-            relative = attributeValue;
-            return RIGHT_OF;
-        }
-        attributeValue = getValue("android:layout_toLeftof");
-        if (attributeValue != null) {
-            relative = attributeValue;
-            return BEFORE;
-        }
-        attributeValue = getValue("android:layout_toRightOf");
-        if (attributeValue != null) {
-            relative = attributeValue;
-            return AFTER;
-        }
-        attributeValue = getValue("android:layout_toStartOf");
-        if (attributeValue != null) {
-            relative = attributeValue;
-            return BEFORE;
-        }
-        attributeValue = getValue("android:layout_centerInParent");
-        if (attributeValue != null) {
-            return CENTER;
-        }
-        attributeValue = getValue("android:layout_centerHorizontal");
-        if (attributeValue != null) {
-            return CENTER;
-        }
-        attributeValue = getValue("tools:layout_editor_absoluteX");
-        if (attributeValue == null) {
-            return LEFT;
-        }
-        if (attributeValue.equals("wrap_content")) {
-            return PREFERRED;
-        } else {
-            if (attributeValue.contains("dp")) {
-                attributeValue = attributeValue.replace("dp", "");
-            }
-        }
-        return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue))).multiply(BigDecimal.valueOf(wp)).intValue();
-    }
+    
 
 
-    /**
-     * Get the relative positioning of y axis.
-     * Checks the following tags:
-     * <code>"app:layout_constraintTop_toBottomOf"</code>
-     * <code>"app:layout_constraintTop_toTopOf"</code>
-     * <code>"app:constraintBottom_toTopOf"</code>
-     * <code>"app:layout_constraintBottom_toBottomOf"</code>
-     * <code>"app:layout_constraintBaseline_toBaselineOf"</code>
-     * <code>"app:layout_constraintRight_toRightOf"</code>
-     * <code>"android:layout_alignBaseline"</code>
-     * <code>"android:layout_alignTop"</code>
-     * <code>"android:layout_alignBottom"</code>
-     * <code>"android:layout_below"</code>
-     * <code>"android:layout_above"</code>
-     * <code>"android:layout_alignParentTop"</code>
-     * <code>"android:layout_alignParentBottom"</code>
-     * <code>"android:layout_centerVertical"</code>
-     * <code>"android:layout_toRightOf"</code>
-     * <code>"android:layout_toStartOf"</code>
-     * <code>"android:layout_centerInParent"</code>
-     * <code>"tools:layout_editor_absoluteY"</code>
-     *
-     * @return totalcross positioning constant
-     */
-    public int getRelativeY() throws InvalidNumberException {
-        attributeValue = getValue("app:layout_constraintTop_toBottomOf");
-        if (attributeValue != null) {
-            if (attributeValue.equals("parent"))
-                return TOP;
-            relative = attributeValue;
-            return AFTER;
-        }
-
-        attributeValue = getValue("app:layout_constraintTop_toTopOf");
-        if (attributeValue != null) {
-            if (attributeValue.equals("parent"))
-                return TOP;
-            relative = attributeValue;
-            return SAME;
-        }
-
-        attributeValue = getValue("app:constraintBottom_toTopOf");
-        if (attributeValue != null)
-            return BEFORE;
-
-        attributeValue = getValue("app:layout_constraintBottom_toBottomOf");
-        if (attributeValue != null)
-            if (attributeValue.equals("parent"))
-                return BOTTOM;
-            else {
-                relative = attributeValue;
-                return BOTTOM_OF;
-            }
-
-        attributeValue = getValue("layout_constraintBaseline_toBaselineOf");
-        if (attributeValue != null)
-            if (attributeValue.equals("parent"))
-                return CENTER_OF;
-            else {
-                relative = attributeValue;
-                return CENTER_OF;
-            }
-
-        attributeValue = getValue("app:layout_constraintRight_toRightOf");
-        if (attributeValue != null) {
-            if (attributeValue.equals("parent"))
-                return Settings.screenWidth - getW();
-            return RIGHT;
-        }
-        attributeValue = getValue("android:layout_alignBaseline");
-        if (attributeValue != null) {
-            relative = attributeValue;
-            return CENTER_OF;
-        }
-        attributeValue = getValue("android:layout_alignTop");
-        if (attributeValue != null) {
-            relative = attributeValue;
-            return SAME;
-        }
-        attributeValue = getValue("android:layout_alignBottom");
-        if (attributeValue != null) {
-            relative = attributeValue;
-            return BOTTOM_OF;
-        }
-        attributeValue = getValue("android:layout_below");
-        if (attributeValue != null) {
-            relative = attributeValue;
-            return AFTER;
-        }
-        attributeValue = getValue("android:layout_above");
-        if (attributeValue != null) {
-            relative = attributeValue;
-            return BEFORE;
-        }
-        attributeValue = getValue("android:layout_alignParentTop");
-        if (attributeValue != null) {
-            return TOP;
-        }
-        attributeValue = getValue("android:layout_alignParentBottom");
-        if (attributeValue != null) {
-            return BOTTOM;
-        }
-        attributeValue = getValue("android:layout_centerVertical");
-        if (attributeValue != null) {
-            return CENTER;
-        }
-        attributeValue = getValue("android:layout_centerInParent");
-        if (attributeValue != null) {
-            return CENTER;
-        }
-        attributeValue = getValue("tools:layout_editor_absoluteY");
-        if (attributeValue == null) {
-            return TOP;
-        }
-        if (attributeValue.equals("wrap_content")) {
-            return PREFERRED;
-        } else {
-            if (attributeValue.contains("dp")) {
-                attributeValue = attributeValue.replace("dp", "");
-            }
-        }
-
-        return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue))).multiply(BigDecimal.valueOf(hp)).intValue();
-    }
+    
 
     /**
      * Get Layout Gravity based on tag <code>"android:layout_gravity"</code>
@@ -997,12 +705,317 @@ public class NodeSax {
                 }
                 hp = UnitsConverter.toPixels(Integer.parseInt(attributeValue) + DP);
             }
-
-
         }
         hp = Settings.screenHeight / hp;
     }
+    
+    
+    /**
+     * Get the relative positioning of x axis.
+     * Checks the following tags:
+     * <code>"android:layout_alignParentLeft"</code>
+     * <code>"app:layout_constraintLeft_toLeftOf"</code>
+     * <code>"app:layout_constraintStart_toStartOf"</code>
+     * <code>"app:layout_constraintStart_toEndOf"</code>
+     * <code>"app:layout_constraintLeft_toRightOf"</code>
+     * <code>"app:layout_constraintEnd_toStartOf"</code>
+     * <code>"app:layout_constraintRight_toRightOf"</code>
+     * <code>"app:layout_constraintEnd_toEndOf"</code>
+     * <code>"android:layout_alignParentRight"</code>
+     * <code>"android:layout_alignParentEnd"</code>
+     * <code>"android:layout_alignParentStart"</code>
+     * <code>"android:layout_toEndOf"</code>
+     * <code>"android:layout_alignRight"</code>
+     * <code>"android:layout_alignLeft"</code>
+     * <code>"android:layout_alignEnd"</code>
+     * <code>"android:layout_toLeftof"</code>
+     * <code>"android:layout_toRightOf"</code>
+     * <code>"android:layout_toStartOf"</code>
+     * <code>"android:layout_centerInParent"</code>
+     * <code>"android:layout_centerHorizontal"</code>
+     * <code>"android:layout_editor_absoluteX"</code>
+     *
+     * @return totalcross positioning constant
+     */
+    public int getRelativeX() throws InvalidNumberException {
+        attributeValue = getValue("android:layout_alignParentLeft");
+        if (attributeValue != null) {
+            return LEFT;
+        }
+        attributeValue = getValue("app:layout_constraintLeft_toLeftOf");
+        if (attributeValue != null) {
+            if (attributeValue.equals("parent")) {
+                return LEFT;
+            } else {
+                relative = attributeValue;
+                return SAME;
+            }
+        }
+        attributeValue = getValue("app:layout_constraintStart_toStartOf");
 
+        if (attributeValue != null) {
+            if (attributeValue.equals("parent")) {
+                return LEFT;
+            } else {
+                relative = attributeValue;
+                return SAME;
+            }
+        }
+        attributeValue = getValue("app:layout_constraintStart_toEndOf");
+        if (attributeValue != null) {
+            if (attributeValue.equals("parent")) {
+                return LEFT;
+            } else {
+                relative = attributeValue;
+                return SAME;
+            }
+        }
+        attributeValue = getValue("app:layout_constraintLeft_toRightOf");
+        if (attributeValue != null) {
+            relative = attributeValue;
+            return AFTER;
+        }
+        attributeValue = getValue("app:layout_constraintRight_toLeftOf");
+        if (attributeValue != null) {
+            relative = attributeValue;
+            return BEFORE;
+        }
+        attributeValue = getValue("app:layout_constraintEnd_toStartOf");
+        if (attributeValue != null) {
+            relative = attributeValue;
+            return BEFORE;
+        }
+        attributeValue = getValue("app:layout_constraintRight_toRightOf");
+        if (attributeValue != null) {
+            if (attributeValue.equals("parent")) {
+                return RIGHT;
+            } else {
+                relative = attributeValue;
+                return RIGHT_OF;
+            }
+        }
+        attributeValue = getValue("app:layout_constraintEnd_toEndOf");
+        if (attributeValue != null) {
+            if (attributeValue.equals("parent")) {
+                return RIGHT;
+            } else {
+                relative = attributeValue;
+                return RIGHT_OF;
+            }
+        }
+        attributeValue = getValue("android:layout_alignParentRight");
+        if (attributeValue != null) {
+            return RIGHT;
+        }
+        attributeValue = getValue("android:layout_alignParentEnd");
+        if (attributeValue != null) {
+            return RIGHT;
+        }
+        attributeValue = getValue("android:layout_alignParentStart");
+        if (attributeValue != null) {
+            return LEFT;
+        }
+        attributeValue = getValue("android:layout_toEndOf");
+        if (attributeValue != null) {
+            relative = attributeValue;
+            return AFTER;
+        }
+        attributeValue = getValue("android:layout_alignRight");
+        if (attributeValue != null) {
+            relative = attributeValue;
+            return RIGHT_OF;
+        }
+        attributeValue = getValue("android:layout_alignLeft");
+        if (attributeValue != null) {
+            relative = attributeValue;
+            return SAME;
+        }
+        attributeValue = getValue("android:layout_alignLeft");
+        if (attributeValue != null) {
+            relative = attributeValue;
+            return SAME;
+        }
+
+        attributeValue = getValue("android:layout_alignEnd");
+        if (attributeValue != null) {
+            relative = attributeValue;
+            return RIGHT_OF;
+        }
+        attributeValue = getValue("android:layout_toLeftof");
+        if (attributeValue != null) {
+            relative = attributeValue;
+            return BEFORE;
+        }
+        attributeValue = getValue("android:layout_toRightOf");
+        if (attributeValue != null) {
+            relative = attributeValue;
+            return AFTER;
+        }
+        attributeValue = getValue("android:layout_toStartOf");
+        if (attributeValue != null) {
+            relative = attributeValue;
+            return BEFORE;
+        }
+        attributeValue = getValue("android:layout_centerInParent");
+        if (attributeValue != null) {
+            return CENTER;
+        }
+        attributeValue = getValue("android:layout_centerHorizontal");
+        if (attributeValue != null) {
+            return CENTER;
+        }
+        attributeValue = getValue("tools:layout_editor_absoluteX");
+        if (attributeValue == null) {
+            return LEFT;
+        }
+        if (attributeValue.equals("wrap_content")) {
+            return PREFERRED;
+        } else {
+            if (attributeValue.contains("dp")) {
+                attributeValue = attributeValue.replace("dp", "");
+            }
+        }
+        return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue))).multiply(BigDecimal.valueOf(wp)).intValue();
+    }
+    
+    /**
+     * Get the relative positioning of y axis.
+     * Checks the following tags:
+     * <code>"app:layout_constraintTop_toBottomOf"</code>
+     * <code>"app:layout_constraintTop_toTopOf"</code>
+     * <code>"app:constraintBottom_toTopOf"</code>
+     * <code>"app:layout_constraintBottom_toBottomOf"</code>
+     * <code>"app:layout_constraintBaseline_toBaselineOf"</code>
+     * <code>"app:layout_constraintRight_toRightOf"</code>
+     * <code>"android:layout_alignBaseline"</code>
+     * <code>"android:layout_alignTop"</code>
+     * <code>"android:layout_alignBottom"</code>
+     * <code>"android:layout_below"</code>
+     * <code>"android:layout_above"</code>
+     * <code>"android:layout_alignParentTop"</code>
+     * <code>"android:layout_alignParentBottom"</code>
+     * <code>"android:layout_centerVertical"</code>
+     * <code>"android:layout_toRightOf"</code>
+     * <code>"android:layout_toStartOf"</code>
+     * <code>"android:layout_centerInParent"</code>
+     * <code>"tools:layout_editor_absoluteY"</code>
+     *
+     * @return totalcross positioning constant
+     */
+    public int getRelativeY() throws InvalidNumberException {
+        attributeValue = getValue("app:layout_constraintTop_toBottomOf");
+        if (attributeValue != null) {
+            if (attributeValue.equals("parent"))
+                return TOP;
+            relative = attributeValue;
+            return AFTER;
+        }
+
+        attributeValue = getValue("app:layout_constraintTop_toTopOf");
+        if (attributeValue != null) {
+            if (attributeValue.equals("parent"))
+                return TOP;
+            relative = attributeValue;
+            return SAME;
+        }
+
+        attributeValue = getValue("app:constraintBottom_toTopOf");
+        if (attributeValue != null)
+            return BEFORE;
+
+        attributeValue = getValue("app:layout_constraintBottom_toBottomOf");
+        if (attributeValue != null)
+            if (attributeValue.equals("parent"))
+                return BOTTOM;
+            else {
+                relative = attributeValue;
+                return BOTTOM_OF;
+            }
+
+        attributeValue = getValue("layout_constraintBaseline_toBaselineOf");
+        if (attributeValue != null)
+            if (attributeValue.equals("parent"))
+                return CENTER_OF;
+            else {
+                relative = attributeValue;
+                return CENTER_OF;
+            }
+
+        attributeValue = getValue("app:layout_constraintRight_toRightOf");
+        if (attributeValue != null) {
+            if (attributeValue.equals("parent"))
+                return Settings.screenWidth - getW();
+            return RIGHT;
+        }
+        attributeValue = getValue("android:layout_alignBaseline");
+        if (attributeValue != null) {
+            relative = attributeValue;
+            return CENTER_OF;
+        }
+        attributeValue = getValue("android:layout_alignTop");
+        if (attributeValue != null) {
+            relative = attributeValue;
+            return SAME;
+        }
+        attributeValue = getValue("android:layout_alignBottom");
+        if (attributeValue != null) {
+            relative = attributeValue;
+            return BOTTOM_OF;
+        }
+        attributeValue = getValue("android:layout_below");
+        if (attributeValue != null) {
+            relative = attributeValue;
+            return AFTER;
+        }
+        attributeValue = getValue("android:layout_above");
+        if (attributeValue != null) {
+            relative = attributeValue;
+            return BEFORE;
+        }
+        attributeValue = getValue("android:layout_alignParentTop");
+        if (attributeValue != null) {
+            return TOP;
+        }
+        attributeValue = getValue("android:layout_alignParentBottom");
+        if (attributeValue != null) {
+            return BOTTOM;
+        }
+        attributeValue = getValue("android:layout_centerVertical");
+        if (attributeValue != null) {
+            return CENTER;
+        }
+        attributeValue = getValue("android:layout_centerInParent");
+        if (attributeValue != null) {
+            return CENTER;
+        }
+        attributeValue = getValue("tools:layout_editor_absoluteY");
+        if (attributeValue == null) {
+            return TOP;
+        }
+        if (attributeValue.equals("wrap_content")) {
+            return PREFERRED;
+        } else {
+            if (attributeValue.contains("dp")) {
+                attributeValue = attributeValue.replace("dp", "");
+            }
+        }
+
+        return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue))).multiply(BigDecimal.valueOf(hp)).intValue();
+    }
+
+    
+    /**
+     * Get relative position set by <code>getRelativeX()</code> and <code>getRelativeY()</code>
+     *
+     * @return attribute value of tags related to relative positioning
+     */
+    public String getRelative() {
+        if (relative != null && !relative.contains("@+")) {
+            relative = relative.replace("@", "@+");
+        }
+        return relative;
+    }
+    
     /**
      * Set attribute name of a tag
      *

@@ -2,7 +2,9 @@
  * (c) 2020 by TotalCross Global Mobile Platform LTDA
  * SPDX-License-Identifier: LGPL-3.0-only
   *********************************************************************************/
-package com.totalcross.knowcode.parse;
+package com.totalcross.knowcode.ui;
+
+import com.totalcross.knowcode.xml.NodeSax;
 
 import totalcross.sys.InvalidNumberException;
 

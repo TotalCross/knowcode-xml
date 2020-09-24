@@ -2,7 +2,7 @@
  * (c) 2020 by TotalCross Global Mobile Platform LTDA
  * SPDX-License-Identifier: LGPL-3.0-only
   *********************************************************************************/
-package com.totalcross.knowcode.parse;
+package com.totalcross.knowcode.xml;
 
 import totalcross.sys.Vm;
 import totalcross.ui.Container;
@@ -14,6 +14,9 @@ import totalcross.xml.SyntaxException;
 import totalcross.xml.XmlReader;
 
 import java.io.UnsupportedEncodingException;
+
+import com.totalcross.knowcode.ui.CustomInitUI;
+import com.totalcross.knowcode.ui.XmlContainerLayout;
 
 /**
  * XmlContainerFactory is responsible to read the XML file, verify what kind of view group is the layout 

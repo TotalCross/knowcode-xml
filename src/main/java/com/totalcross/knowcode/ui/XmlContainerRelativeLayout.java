@@ -2,7 +2,9 @@
  * (c) 2020 by TotalCross Global Mobile Platform LTDA
  * SPDX-License-Identifier: LGPL-3.0-only
   *********************************************************************************/
-package com.totalcross.knowcode.parse;
+package com.totalcross.knowcode.ui;
+
+import com.totalcross.knowcode.xml.NodeSax;
 
 import totalcross.sys.InvalidNumberException;
 import totalcross.ui.Container;
@@ -11,18 +13,23 @@ import totalcross.ui.gfx.Color;
 import totalcross.ui.image.ImageException;
 
 /**
- * XmlContainerFrameLayout is responsible to parse a FrameLayout Android XML to a Container Totalcross.
+ * XmlContainerRelativeLayout is responsible to parse a RelativeLayout Android XML to a Container Totalcross.
  * <p>
- * This class specialize the super class XmlContainerLayout and it is responsible to create all Controls 
- * from the XML components of a FrameLayout.
+ * This class works together with the abstract class XmlContainerLayout and it's responsible to create all Controls 
+ * from the XML components.
+ * RelativeLayout is a view group that displays child views in relative positions. 
  * <p>
- * XmlContainerFrameLayout is instantiated automatically, the XmlContainerFactory class reads the type of XML layout and 
+ * XmlContainerRelativeLayout is instantiated automatically, the XmlContainerFactory class reads the type of XML layout and 
  * instantiates the corresponding layout class.
  */
-public class XmlContainerFrameLayout extends XmlContainerLayout {
+
+public class XmlContainerRelativeLayout extends XmlContainerLayout {
 	boolean isLayout = true;
 
-	private Container centralContainer = new Container();
+	int xpos = LEFT;
+	int ypos = TOP;
+	int widthPos = PARENTSIZE;
+	int heightPos = PARENTSIZE;
 
 	/**
 	 * Responsible to add all components of a XML file on Container
@@ -32,10 +39,10 @@ public class XmlContainerFrameLayout extends XmlContainerLayout {
 	 * 		a node of a XML file
 	 *  */
 	public void addscreen(NodeSax node) throws totalcross.io.IOException, ImageException, InvalidNumberException {
-		int xLocal = LEFT;
-		int yLocal = TOP;
-		int widLocal = PARENTSIZE;
-		int heiLocal = PARENTSIZE;
+		int xLocal = xpos;
+		int yLocal = ypos;
+		int widLocal = widthPos;
+		int heiLocal = heightPos;
 
 		if (isLayout) {
 			isLayout = false;
@@ -44,6 +51,8 @@ public class XmlContainerFrameLayout extends XmlContainerLayout {
 			yLocal = TOP + node.getPaddingTop();
 			widLocal = FILL - node.getPaddingRight();
 			heiLocal = FILL - node.getPaddingBottom();
+
+			centralContainer = new Container();
 
 			add(centralContainer, xLocal, yLocal, widLocal, heiLocal);
 		} else if (node.getAttributeName().equals("Switch")) {
@@ -65,5 +74,4 @@ public class XmlContainerFrameLayout extends XmlContainerLayout {
 		} else
 			return lastControl;
 	}
-
 }
