@@ -27,14 +27,14 @@ KnowcodeXML is a library that interprets Android XML files and generates Totalcr
 <dependency>
     <groupId>com.totalcross.knowcode</groupId>
     <artifactId>KnowCodeXML</artifactId>
-    <version>1.12</version>
+    <version>1.13</version>
 </dependency>
 ```
 * Put totalcross-maven-plugin version 2.0.1 or higher
 ```xml
 <groupId>com.totalcross</groupId>
 <artifactId>totalcross-maven-plugin</artifactId>
-<version>2.0.1</version>
+<version>2.0.2</version>
 ```
 * So, that's it! Now let's start using it!
 
