@@ -143,10 +143,10 @@ public void initUI() {
 ```
 ## More Samples and Tutorials
 
-* [HelloKnowcode](https://github.com/TotalCross/HelloKnowcode)
+* [HelloKnowcode](https://github.com/TotalCross/embedded-samples/tree/main/hello-knowcode)
 * [HomeApplianceXML](https://github.com/TotalCross/HomeApplianceXML)
-* [KnowcodeSample](https://github.com/TotalCross/KnowcodeSample)
-* [ToradexLauncherSample](https://github.com/TotalCross/ToradexLauncherSample)
+* [KnowcodeSample](https://github.com/TotalCross/embedded-samples/tree/main/knowcode-sample)
+* [ToradexLauncherSample](https://github.com/TotalCross/embedded-samples/tree/main/toradex-launcher-sample)
 * [Android XML + Totalcross = Rich UI/UX on Linux ARM](https://www.youtube.com/watch?v=7o3p14wQPsE)
 * [Creating and using your own external Java library for your TotalCross Applications](https://www.youtube.com/watch?v=Cq5yEPTmZWI)
 
