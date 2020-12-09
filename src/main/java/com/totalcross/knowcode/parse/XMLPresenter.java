@@ -26,7 +26,6 @@ import static java.lang.Character.*;
  * <pre>
  *     public class SampleClass extends XMLPresenter {
  *     public Button ButtonNextScreen;
- *     @Override
  *     public void onPresent() {
  *         navigator.onClick(ButtonNextScreen, NextScreen.class);
  *     }
@@ -84,16 +83,15 @@ public abstract class XMLPresenter {
     * */
    public abstract void onPresent();
    /**
-    * Responsible to refresh
-    * @param clazzName
-    * @return snake case class name
+    * Responsible to refresh navigator
+    * @param navigator
     * */
    public void setNavigator(SlidingNavigator navigator) {
       this.navigator = navigator;
    }
    /**
     * Responsible to converter class name from camel case to snake case
-    * @param clazzName
+    * @param name
     * @return snake case class name
     * */
    private static String snakeCaseFormat(String name) {

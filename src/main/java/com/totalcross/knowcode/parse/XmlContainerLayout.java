@@ -108,7 +108,8 @@ public abstract class XmlContainerLayout extends Container {
 	 * 		node of a XML file
 	 * @return control of id
 	 * @throws totalcross.io.IOException
-	 * @exception ImageException
+	 * @throws totalcross.sys.InvalidNumberException
+	 * @throws ImageException
 	 * */
 	public Control createInstanceOf(NodeSax nodes)
 			throws totalcross.io.IOException, ImageException, InvalidNumberException {
@@ -367,10 +368,11 @@ public abstract class XmlContainerLayout extends Container {
 	}
 
 	/** Get the Control of a given id from a component of XML file
+	 * @param id
 	 * @return Control object of this ID
 	 * */
-	public Control getControlByID(String a) {
-		return componentsMap.get(a);
+	public Control getControlByID(String id) {
+		return componentsMap.get(id);
 	}
 
 	/** Get the TreeMap with all Controls of the XML file

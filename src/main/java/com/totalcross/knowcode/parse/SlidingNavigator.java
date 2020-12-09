@@ -58,8 +58,9 @@ public class SlidingNavigator {
    }
    /**
     * Responsible to instantiate new classes, put them in cache and use animation
-    * @exception InstantiationException,IllegalAccessException
-    * @param Class<? extends XMLPresenter>
+    * @param presenterClass
+    * @throws InstantiationException
+    * @throws IllegalAccessException
     * */
    public void present(Class<? extends XMLPresenter> presenterClass)
          throws InstantiationException, IllegalAccessException {
@@ -97,7 +98,7 @@ public class SlidingNavigator {
    }
    /**
     * Responsible to go return to the last switched container
-    * @param Event
+    * @param e
     * */
    public void back(Event e) {
       if (presenters.size() < 2) {
@@ -123,7 +124,7 @@ public class SlidingNavigator {
    }
    /**
     * Responsible to go return first/home container
-    * @param Event
+    * @param e
     * */
    public void home(Event e) {
       if (presenters.size() < 2) {
@@ -138,7 +139,8 @@ public class SlidingNavigator {
    }
    /**
     * Responsible to control when switch the screen/container which control should do it and which class should go.
-    * @param Control, Class<? extends XMLPresenter> presenterClass
+    * @param presenterClass
+    * @param target
     * */
 
    public void onClick(Control target, Class<? extends XMLPresenter> presenterClass) {

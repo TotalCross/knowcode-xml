@@ -120,8 +120,8 @@ public class NodeSax {
 
     /**
      * Get attribute value of tag <code>"android:textSize"</code>
-     *
      * @return attribute value of tag
+     * @throws totalcross.sys.InvalidNumberException
      */
     public int getTextsize() throws InvalidNumberException {
 
@@ -386,8 +386,8 @@ public class NodeSax {
     /**
      * Get the width value converted to Pixel, checks the following tags <code>"android:layout_width"</code>
      * and <code>"app:layout_constraintWidth_percent"</code>
-     *
      * @return width value converted to Pixel
+     * @throws totalcross.sys.InvalidNumberException
      */
     public int getW() throws InvalidNumberException {
         attributeValue = getValue("app:layout_constraintWidth_percent");
@@ -532,6 +532,7 @@ public class NodeSax {
      * <code>"android:layout_editor_absoluteX"</code>
      *
      * @return totalcross positioning constant
+     * @throws totalcross.sys.InvalidNumberException
      */
     public int getRelativeX() throws InvalidNumberException {
         attributeValue = getValue("android:layout_alignParentLeft");
@@ -698,6 +699,7 @@ public class NodeSax {
      * <code>"tools:layout_editor_absoluteY"</code>
      *
      * @return totalcross positioning constant
+     * @throws InvalidNumberException
      */
     public int getRelativeY() throws InvalidNumberException {
         attributeValue = getValue("app:layout_constraintTop_toBottomOf");
@@ -965,6 +967,7 @@ public class NodeSax {
 
     /**
      * set parameter width to try to resize a predefined screen size
+     * @throws InvalidNumberException
      */
     public void setWp() throws InvalidNumberException {
         attributeValue = getValue("android:layout_width");
@@ -985,6 +988,7 @@ public class NodeSax {
 
     /**
      * set parameter height to try to resize a predefined screen size
+     * @throws InvalidNumberException
      */
     public void setHp() throws InvalidNumberException {
         attributeValue = getValue("android:layout_height");
