@@ -8,10 +8,10 @@ import totalcross.sys.InvalidNumberException;
 import totalcross.sys.Settings;
 import totalcross.ui.Container;
 import totalcross.ui.Control;
-import totalcross.ui.Label;
-import totalcross.ui.Switch;
+import totalcross.ui.ImageControl;
 import totalcross.ui.font.Font;
 import totalcross.ui.gfx.Color;
+import totalcross.ui.image.Image;
 import totalcross.ui.image.ImageException;
 import totalcross.util.BigDecimal;
 
@@ -53,6 +53,9 @@ public class XmlContainerConstraintLayout extends XmlContainerLayout {
 			node.setWp();
 			node.setHp();
 			centralContainer = new Container();
+			String bg = node.getBackgroundImage();
+			if(bg!= null && !bg.contains("#"))
+			add(new ImageControl(new Image(bg).getHwScaledInstance(node.getW(), node.getH())),LEFT,TOP,FILL,FILL);
 			add(centralContainer, xLocal, yLocal, widLocal, heiLocal);
 		} else if (node.getAttributeName().equals("Switch")) {
 			node.setAttributeName("TextView");

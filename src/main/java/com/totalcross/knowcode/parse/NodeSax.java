@@ -137,7 +137,7 @@ public class NodeSax {
                 attributeValue = attributeValue.replace("sp", "");
             }
         }
-        return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue) - 5 + DP)).multiply(BigDecimal.valueOf(hp)).intValue();
+   return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue) - 5 + DP)).multiply(BigDecimal.valueOf(hp)).intValue();
 
     }
 
@@ -189,7 +189,7 @@ public class NodeSax {
     public String getBackgroundImage() {
         attributeValue = getValue("android:background");
         String attributeValue2 = getValue("app:srcCompat");
-        if (attributeValue == null && attributeValue2 == null || "".equals(attributeValue)) {
+        if (attributeValue == null && attributeValue2 == null || "".equals(attributeValue) || attributeValue.contains("#")) {
             return attributeValue;
         } else {
             if (attributeValue == null && attributeValue2 != null) {
@@ -291,7 +291,7 @@ public class NodeSax {
                 }
             }
         }
-        return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue))).multiply(BigDecimal.valueOf(hp)).intValue();
+        return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue)+DP)).multiply(BigDecimal.valueOf(hp)).intValue();
     }
 
     /**
@@ -416,7 +416,7 @@ public class NodeSax {
                 }
             }
         }
-        return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue))).multiply(BigDecimal.valueOf(wp)).intValue();
+        return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue)+DP)).multiply(BigDecimal.valueOf(wp)).intValue();
     }
 
     /**
@@ -671,7 +671,7 @@ public class NodeSax {
                 attributeValue = attributeValue.replace("dp", "");
             }
         }
-        return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue))).multiply(BigDecimal.valueOf(wp)).intValue();
+        return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue)+DP)).multiply(BigDecimal.valueOf(wp)).intValue();
     }
 
 
@@ -797,7 +797,7 @@ public class NodeSax {
             }
         }
 
-        return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue))).multiply(BigDecimal.valueOf(hp)).intValue();
+        return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue)+DP)).multiply(BigDecimal.valueOf(hp)).intValue();
     }
 
     /**

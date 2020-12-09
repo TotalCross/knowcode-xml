@@ -112,7 +112,7 @@ public abstract class XmlContainerLayout extends Container {
 	 * */
 	public Control createInstanceOf(NodeSax nodes)
 			throws totalcross.io.IOException, ImageException, InvalidNumberException {
-		if (nodes.getAttributeName().contains("Button")) {
+		if (nodes.getAttributeName().equals("Button")||nodes.getAttributeName().equals("ImageButton")) {
 			componentsMap.put(nodes.getId(), createButton(nodes));
 			lastControl = componentsMap.get(componentsMap.lastKey());
 			return componentsMap.get(nodes.getId());
@@ -190,15 +190,29 @@ public abstract class XmlContainerLayout extends Container {
 			throws totalcross.io.IOException, ImageException, InvalidNumberException {
 		Button button = null;
 		String background = node.getBackgroundImage();
-		if (background != null && "".equals(background) == false && background.charAt(0)!='#') {
+		if (background != null && !"".equals(background) && background.charAt(0)!='#') {
 			button = new Button(new Image(node.getBackgroundImage()).getHwScaledInstance(node.getW(), node.getH()),Button.BORDER_NONE);
 			button.transparentBackground=true;
-			//button.effect=null;
+			button.effect=null;
 		} else {
 			background = node.getBackgroundColor();
-			button = new Button(node.getText());
-			button.setBackColor(Color.getRGB(background));
-		}
+			String textColor = node.getTextColor();
+			button = new Button(node.getText(), Button.BORDER_NONE);
+			if (textColor == null) {
+				if (background != null)
+					button.setBackColor(Color.getRGB(background));
+				else
+					button.setBackColor(Color.getRGB("FFFFFF"));
+			}
+			else{
+				if (background != null)
+					button.setBackForeColors(Color.getRGB(background),Color.getRGB(textColor));
+				else
+					button.setBackForeColors(Color.getRGB("FFFFFF"),Color.getRGB(textColor));
+			}
+			}
+
+
 
 		return button;
 	}
@@ -218,7 +232,6 @@ public abstract class XmlContainerLayout extends Container {
 		String bg = node.getBackgroundColor();
 		String color = node.getTextColor();
 		boolean txStyleBold = node.getTextStyleBold();
-		txStyleBold = false;
         label.autoSplit = true;
 		label.setBackForeColors(Color.getRGB(bg), Color.getRGB(color));
 		if (bg == null)
@@ -229,8 +242,9 @@ public abstract class XmlContainerLayout extends Container {
 			else
 				label.setFont(Font.getFont(txStyleBold, node.getTextsize()));
 		}
-		else
-			label.setFont(Font.getFont(txStyleBold,label.FONTSIZE));
+		if(txStyleBold) {
+			label.setFont(label.getFont().asBold());
+		}
 		return label;
 
 	}
@@ -310,6 +324,7 @@ public abstract class XmlContainerLayout extends Container {
 			auxNodeSax.reset();
 			AttributeList.Iterator it = atts.new Iterator();
 			while (it.next()) {
+				/*System.out.println(it.getAttributeName()+"  "+it.getAttributeValue());*/
 				auxNodeSax.inserts(it.getAttributeName(), it.getAttributeValue());
 			}
 			try {
@@ -329,9 +344,7 @@ public abstract class XmlContainerLayout extends Container {
 		Handler handler = new Handler();
 		XmlReader rdr = new XmlReader();
 		rdr.setContentHandler(handler);
-
 		byte[] xml = Vm.getFile(getPathXml());
-
 		if (xml != null) {
 			xml = new String(xml, 0, xml.length, "UTF-8").getBytes("ISO-8859-1");
 			try {

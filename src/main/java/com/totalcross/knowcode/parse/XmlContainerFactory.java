@@ -146,7 +146,6 @@ public class XmlContainerFactory {
 				e.printStackTrace();
 			}
 		} else {
-
 			MessageBox mb = new MessageBox("Message", "XML not found.", new String[] { "Close" });
 			mb.popup();
 		}
