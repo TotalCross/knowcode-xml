@@ -47,7 +47,7 @@ public class XmlContainerFactory {
 			XmlContainerFactory xmlScreenFactory = new XmlContainerFactory();
 			xmlScreenFactory.readXml(pathXml);
 			if (xmlScreenFactory.getNameLayout() == null) {
-				throw new Exception("Layout do xml não consta lista dos conhecidos.");
+				throw new Exception("Cant recognize layout of this xml");
 			}
 
 			Class clazz = Class
@@ -116,7 +116,7 @@ public class XmlContainerFactory {
 			auxNodeSax.reset();
 			AttributeList.Iterator it = atts.new Iterator();
 			while (it.next()) {
-				auxNodeSax.inserts(it.getAttributeName(), it.getAttributeValue());
+				auxNodeSax.inserts(it.getAttributeName(), it.getAttributeValue().trim());
 			}
 			if (getNameLayout() == null) {
 				for (int i = 0; i < layouts.length; i++) {

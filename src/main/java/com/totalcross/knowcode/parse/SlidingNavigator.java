@@ -9,12 +9,11 @@ import static totalcross.ui.Control.FILL;
 import static totalcross.ui.Control.LEFT;
 import static totalcross.ui.Control.SCREENSIZE;
 import static totalcross.ui.Control.TOP;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
-
 import totalcross.sys.Settings;
+import totalcross.ui.Container;
 import totalcross.ui.Control;
 import totalcross.ui.Window;
 import totalcross.ui.anim.ControlAnimation;
@@ -136,6 +135,20 @@ public class SlidingNavigator {
       window.removeAll();
       window.add(home.content, LEFT, TOP, SCREENSIZE, SCREENSIZE);
       presenters.setSize(1);
+   }
+   /**
+    * Responsible to get class Container to edit from another class.
+    * @param presenterClass
+    * @return Container
+    * */
+   public Container getClassContainer(Class<? extends XMLPresenter> presenterClass){
+      XMLPresenter aux = null;
+      for(int a=0;a<presenters.size();a++) {
+         aux = presenters.get(a);
+         if(aux.getClass() == presenterClass)
+            return aux.content;
+      }
+      return null;
    }
    /**
     * Responsible to control when switch the screen/container which control should do it and which class should go.

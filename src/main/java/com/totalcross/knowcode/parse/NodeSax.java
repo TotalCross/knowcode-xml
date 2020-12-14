@@ -6,6 +6,7 @@ package com.totalcross.knowcode.parse;
 
 import static totalcross.ui.Control.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -28,6 +29,7 @@ public class NodeSax {
     private String attributeName = new String();
     private String id;
     private String relative;
+    private ArrayList<String> imgExtensions = new ArrayList<String>();
     private float wp = 0, hp = 0;
 
     /**
@@ -198,12 +200,17 @@ public class NodeSax {
             if ('@' == attributeValue.charAt(0)) {
                 attributeValue = attributeValue.substring(1);
             }
-
             if (attributeValue.contains(".png") || attributeValue.contains(".jpg")) {
+                imgExtensions.add(attributeValue);
                 return attributeValue;
-            } else {
-                attributeValue = getImageExtension(attributeValue);
+            } if(imgExtensions.size()!=0){
+                for(int index = 0; index<imgExtensions.size();index++){
+                    if(imgExtensions.get(index).contains(attributeValue))
+                       return imgExtensions.get(index);
+                }
             }
+                attributeValue = getImageExtension(attributeValue);
+
         }
         return attributeValue;
 
@@ -217,10 +224,10 @@ public class NodeSax {
             xml = Vm.getFile(path + extensoes[i]);
 
             if (xml != null) {
+                imgExtensions.add(path+ extensoes[i]);
                 return path + extensoes[i];
             }
         }
-
         return path;
     }
 
@@ -859,8 +866,11 @@ public class NodeSax {
      * @return value of the tag
      */
     public String getText() {
-        return getValue("android:text");
+        if(getValue("android:text")!=null)
+            return getValue("android:text");
+        return "";
     }
+
 
     /**
      * Get text based on tag <code>"android:scaleY"</code>
