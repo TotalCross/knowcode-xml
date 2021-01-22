@@ -7,7 +7,6 @@ package com.totalcross.knowcode.parse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.TreeMap;
-
 import totalcross.sys.InvalidNumberException;
 import totalcross.sys.Settings;
 import totalcross.sys.Vm;
@@ -29,8 +28,6 @@ import totalcross.ui.font.Font;
 import totalcross.ui.gfx.Color;
 import totalcross.ui.image.Image;
 import totalcross.ui.image.ImageException;
-import totalcross.ui.layout.VBox;
-import totalcross.util.UnitsConverter;
 import totalcross.xml.AttributeList;
 import totalcross.xml.ContentHandler;
 import totalcross.xml.SyntaxException;
@@ -56,6 +53,8 @@ import totalcross.xml.XmlReader;
 public abstract class XmlContainerLayout extends Container {
 	int layout = 0;
 	private String pathXml;
+	private boolean landscape;
+	private int h,w;
 
 	/* Treemap that saves the components of the XML file (String id, Control control)*/
 	TreeMap<String, Control> componentsMap = new TreeMap<String, Control>();
@@ -66,6 +65,9 @@ public abstract class XmlContainerLayout extends Container {
 	Container centralContainer;
 
 	CustomInitUI custom = null;
+
+	protected XmlContainerLayout() {
+	}
 
 	/* Init UI after read the XML file and configure all controls and containers*/
 	public void initUI() {
@@ -194,11 +196,12 @@ public abstract class XmlContainerLayout extends Container {
 		if (background != null && !"".equals(background) && background.charAt(0)!='#') {
 			button = new Button(new Image(node.getBackgroundImage()).getHwScaledInstance(node.getW(), node.getH()),Button.BORDER_NONE);
 			button.transparentBackground=true;
-			button.effect=null;
+			button.setDoEffect(false);
 		} else {
 			background = node.getBackgroundColor();
 			String textColor = node.getTextColor();
 			button = new Button(node.getText(), Button.BORDER_NONE);
+			button.setFont(Font.getFont(false, node.getTextsize()));
 			if (textColor == null) {
 				if (background != null)
 					button.setBackColor(Color.getRGB(background));
@@ -261,6 +264,7 @@ public abstract class XmlContainerLayout extends Container {
 			return spinner;
 		}
 	}
+	public abstract void setWidthHeight(NodeSax node,int w,int h);
 
 	private Control createCheck(NodeSax node) {
 		return new Check(node.getText());
@@ -268,8 +272,7 @@ public abstract class XmlContainerLayout extends Container {
 
 	private Control createEdit(NodeSax node) {
 		Edit edit = new Edit();
-
-		if (node.getText() != null) {
+		if (node.getText() != null&&!"".equals(node.getText())) {
 			edit.caption = node.getText();
 		} else if (node.getHint() != null) {
 			edit.caption = node.getHint();
@@ -280,6 +283,14 @@ public abstract class XmlContainerLayout extends Container {
 
 	private Control createRadio(NodeSax node) {
 		return new Radio(node.getText());
+	}
+
+	public void setH(int h) {
+		this.h = h;
+	}
+
+	public void setW(int w) {
+		this.w = w;
 	}
 
 	private class Handler extends ContentHandler {
@@ -323,6 +334,7 @@ public abstract class XmlContainerLayout extends Container {
 		public void tagName(int a,String arg0,AttributeList atts) {
 			auxNodeSax.setAttributeName(arg0);
 			auxNodeSax.reset();
+			auxNodeSax.islandscape(landscape);
 			AttributeList.Iterator it = atts.new Iterator();
 			while (it.next()) {
 				/*System.out.println(it.getAttributeName()+"  "+it.getAttributeValue());*/
@@ -347,9 +359,11 @@ public abstract class XmlContainerLayout extends Container {
 		rdr.setContentHandler(handler);
 		byte[] xml = Vm.getFile(getPathXml());
 		if (xml != null) {
-			xml = new String(xml, 0, xml.length, "UTF-8").getBytes("ISO-8859-1");
+		/*	xml = new String(xml, 0, xml.length, "UTF-8").getBytes("ISO-8859-1");*/
+			char[] temporaryXml = new String(xml, 0, xml.length, "UTF-8").toCharArray();
 			try {
-				rdr.parse(xml, 0, xml.length);
+	/*			rdr.parse(xml, 0, xml.length);*/
+				rdr.parse(temporaryXml, 0, temporaryXml.length);
 			} catch (SyntaxException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -388,6 +402,9 @@ public abstract class XmlContainerLayout extends Container {
 	 * */
 	public void setPathXml(String pathXml) {
 		this.pathXml = pathXml;
+	}
+	public void setLandscape(boolean landscape){
+		this.landscape = landscape;
 	}
 
 }

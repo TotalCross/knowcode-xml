@@ -28,6 +28,7 @@ public class NodeSax {
     private String attributeValue;
     private String attributeName = new String();
     private String id;
+    private boolean landscape = false;
     private String relative;
     private ArrayList<String> imgExtensions = new ArrayList<String>();
     private float wp = 0, hp = 0;
@@ -130,7 +131,7 @@ public class NodeSax {
         attributeValue = getValue("android:textSize");
 
         if (attributeValue == null || "".equals(attributeValue)) {
-            return 0;
+            return 14;
         } else {
             if (attributeValue.contains("dp")) {
                 attributeValue = attributeValue.replace("dp", "");
@@ -184,12 +185,14 @@ public class NodeSax {
     }
 
     /**
-     * Get attribute value of tag <code>"android:background"</code> to image background
+     * Get attribute value of tags <code>"android:background"</code> and <code>"tools:background"</code> to image background
      *
      * @return attribute value of tag
      */
     public String getBackgroundImage() {
         attributeValue = getValue("android:background");
+        if(attributeValue==null)
+            attributeValue = getValue("tools:background");
         String attributeValue2 = getValue("app:srcCompat");
         if (attributeValue == null && attributeValue2 == null || "".equals(attributeValue) || attributeValue.contains("#")) {
             return attributeValue;
@@ -824,12 +827,14 @@ public class NodeSax {
     }
 
     /**
-     * Get gravity based on tag <code>"android:gravity"</code>
+     * Get gravity based on tags <code>"android:gravity"</code> and <code>"android:textAlignment"</code>
      *
      * @return constant of position
      */
     public int getGravity() {
         attributeValue = getValue("android:gravity");
+        if(attributeValue==null)
+            attributeValue = getValue("android:textAlignment");
         if (attributeValue != null) {
             if (attributeValue.equals("left")) {
                 return FILL;
@@ -992,7 +997,10 @@ public class NodeSax {
             }
 
         }
-        wp = Settings.screenWidth / wp;
+        if(landscape&&Settings.screenHeight>Settings.screenWidth)
+            wp = Settings.screenHeight / wp;
+        else
+             wp = Settings.screenWidth / wp;
 
     }
 
@@ -1014,9 +1022,25 @@ public class NodeSax {
 
 
         }
-        hp = Settings.screenHeight / hp;
+        if(landscape&&Settings.screenHeight>Settings.screenWidth)
+        hp = Settings.screenWidth / hp;
+        else
+            hp = Settings.screenHeight / hp;
+
+    }
+    /**
+     * set parameter width to try to resize a defined screen size
+     */
+    public void setWp(float w)  {
+        hp = Settings.screenHeight/w;
     }
 
+    /**
+     * set parameter height to try to resize a defined screen size
+     */
+    public void setHp(float h)  {
+        hp = Settings.screenHeight/h;
+    }
     /**
      * Set attribute name of a tag
      *
@@ -1036,6 +1060,9 @@ public class NodeSax {
             if (chave != null)
                 System.out.println("Key: " + chave + " Attribute: " + attributesMap.get(chave));
         }
+    }
+    public void islandscape(boolean landscape){
+        this.landscape = landscape;
     }
 
 }

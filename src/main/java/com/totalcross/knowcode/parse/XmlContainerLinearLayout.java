@@ -82,4 +82,10 @@ public class XmlContainerLinearLayout extends XmlContainerLayout {
 			centralContainer.add(createInstanceOf(node), xpos, ypos, widthPos, heightPos, lastControl);
 		}
 	}
+
+	@Override
+	public void setWidthHeight(NodeSax node,int w,int h){
+		node.setHp(h);
+		node.setWp(w);
+	}
 }

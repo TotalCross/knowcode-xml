@@ -59,6 +59,12 @@ public class XmlContainerFrameLayout extends XmlContainerLayout {
 		}
 	}
 
+	@Override
+	public void setWidthHeight(NodeSax node,int w,int h){
+		node.setHp(h);
+		node.setWp(w);
+	}
+
 	private Control getRelativeControl(NodeSax node) {
 		if (node.getRelative() != null) {
 			return getControlByID(node.getRelative());

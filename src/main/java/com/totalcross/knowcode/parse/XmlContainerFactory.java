@@ -42,7 +42,7 @@ public class XmlContainerFactory {
 	 * 		CustomInitUI object
 	 * @return container of the layout
 	 *  */
-	public static Container create(String pathXml, CustomInitUI cust) {
+	public static Container create(String pathXml, CustomInitUI cust,Boolean landscape,int h,int w) {
 		try {
 			XmlContainerFactory xmlScreenFactory = new XmlContainerFactory();
 			xmlScreenFactory.readXml(pathXml);
@@ -54,6 +54,7 @@ public class XmlContainerFactory {
 					.forName("com.totalcross.knowcode.parse.XmlContainer" + xmlScreenFactory.getNameLayout());
 
 			XmlContainerLayout container = (XmlContainerLayout) clazz.newInstance();
+			container.setLandscape(landscape);
 			container.setPathXml(pathXml);
 			container.setCustomInitUI(cust);
 			return container;
@@ -71,7 +72,10 @@ public class XmlContainerFactory {
 	 * @return container of the layout
 	 *  */
 	public static Container create(String pathXml) {
-		return create(pathXml, null);
+		return create(pathXml,null,false,0,0);
+	}
+	public static Container create(String pathXml,boolean landscape) {
+		return create(pathXml,null,landscape,0,0);
 	}
 
 	private class Handler extends ContentHandler {
@@ -138,9 +142,11 @@ public class XmlContainerFactory {
 		byte[] xml = Vm.getFile(pathXml);
 
 		if (xml != null) {
-			xml = new String(xml, 0, xml.length, "UTF-8").getBytes("ISO-8859-1");
+			/*xml = new String(xml, 0, xml.length, "UTF-8").getBytes("ISO-8859-1");*/
+			char[] temporaryXml = new String(xml, 0, xml.length, "UTF-8").toCharArray();
 			try {
-				rdr.parse(xml, 0, xml.length);
+			/*	rdr.parse(xml, 0, xml.length);*/
+				rdr.parse(temporaryXml, 0, temporaryXml.length);
 			} catch (SyntaxException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

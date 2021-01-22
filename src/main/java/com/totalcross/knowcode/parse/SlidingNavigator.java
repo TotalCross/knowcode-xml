@@ -43,17 +43,33 @@ import totalcross.ui.event.Event;
 public class SlidingNavigator {
 
    Window window;
-   int totaltimeAnimation;
+   int totaltimeAnimation,tox1,fromx2,toy1,fromy2;
    Stack<XMLPresenter> presenters = new Stack<>();
    Map<Class<? extends XMLPresenter>, XMLPresenter> cache = new HashMap<>();
 
    public SlidingNavigator(Window window) {
       this.window = window;
       totaltimeAnimation = 1000;
+      this.tox1=-Settings.screenWidth;
+      this.fromx2=0;
+      this.toy1=0;
+      this.fromy2=0;
    }
    public SlidingNavigator(Window window,int totaltimeAnimation) {
       this.window = window;
       this.totaltimeAnimation = totaltimeAnimation;
+      this.tox1=-Settings.screenWidth;
+      this.fromx2=Settings.screenWidth;
+      this.toy1=0;
+      this.fromy2=0;
+   }
+   public SlidingNavigator(Window window,int totaltimeAnimation,int tox1,int toy1,int fromx2,int fromy2) {
+      this.window = window;
+      this.totaltimeAnimation = totaltimeAnimation;
+      this.tox1=tox1;
+      this.fromx2=fromx2;
+      this.toy1=toy1;
+      this.fromy2=fromy2;
    }
    /**
     * Responsible to instantiate new classes, put them in cache and use animation
@@ -74,8 +90,8 @@ public class SlidingNavigator {
       } else {
          XMLPresenter previous = presenters.lastElement();
 
-         window.add(presenter.content, AFTER, TOP, SCREENSIZE, SCREENSIZE, previous.content);
-         PathAnimation.create(previous.content, -Settings.screenWidth, 0, new ControlAnimation.AnimationFinished() {
+         window.add(presenter.content, fromx2, fromy2, SCREENSIZE, SCREENSIZE, previous.content);
+         PathAnimation.create(previous.content, tox1, toy1, new ControlAnimation.AnimationFinished() {
             @Override
             public void onAnimationFinished(ControlAnimation anim) {
                window.remove(previous.content);
@@ -108,8 +124,8 @@ public class SlidingNavigator {
       XMLPresenter current = presenters.pop();
       XMLPresenter previous = presenters.lastElement();
 
-      window.add(previous.content, -Settings.screenWidth, TOP, SCREENSIZE, SCREENSIZE);
-      PathAnimation.create(current.content, Settings.screenWidth, 0, new ControlAnimation.AnimationFinished() {
+      window.add(previous.content, fromx2*(-1), fromy2*(-1), SCREENSIZE, SCREENSIZE);
+      PathAnimation.create(current.content, tox1*(-1), toy1*(-1), new ControlAnimation.AnimationFinished() {
          @Override
          public void onAnimationFinished(ControlAnimation anim) {
             window.remove(current.content);
@@ -147,6 +163,20 @@ public class SlidingNavigator {
          aux = presenters.get(a);
          if(aux.getClass() == presenterClass)
             return aux.content;
+      }
+      return null;
+   }
+   /**
+    * Responsible to get class to able to edit from another class.
+    * @param presenterClass
+    * @return Container
+    * */
+   public XMLPresenter getClass(Class<? extends XMLPresenter> presenterClass){
+      XMLPresenter aux = null;
+      for(int a=0;a<presenters.size();a++) {
+         aux = presenters.get(a);
+         if(aux.getClass() == presenterClass)
+            return aux;
       }
       return null;
    }
