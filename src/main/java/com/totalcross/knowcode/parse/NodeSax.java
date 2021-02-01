@@ -193,13 +193,11 @@ public class NodeSax {
         attributeValue = getValue("android:background");
         if(attributeValue==null)
             attributeValue = getValue("tools:background");
-        String attributeValue2 = getValue("app:srcCompat");
-        if (attributeValue == null && attributeValue2 == null || "".equals(attributeValue) || attributeValue.contains("#")) {
+        if(attributeValue==null)
+            attributeValue = getValue("app:srcCompat");
+        if (attributeValue == null || "".equals(attributeValue) || attributeValue.contains("#")) {
             return attributeValue;
         } else {
-            if (attributeValue == null && attributeValue2 != null) {
-                attributeValue = attributeValue2;
-            }
             if ('@' == attributeValue.charAt(0)) {
                 attributeValue = attributeValue.substring(1);
             }
@@ -208,7 +206,7 @@ public class NodeSax {
                 return attributeValue;
             } if(imgExtensions.size()!=0){
                 for(int index = 0; index<imgExtensions.size();index++){
-                    if(imgExtensions.get(index).contains(attributeValue))
+                    if(imgExtensions.get(index).contains(attributeValue)&&attributeValue.length()==imgExtensions.get(index).length())
                        return imgExtensions.get(index);
                 }
             }

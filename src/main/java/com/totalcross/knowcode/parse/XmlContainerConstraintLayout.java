@@ -57,19 +57,6 @@ public class XmlContainerConstraintLayout extends XmlContainerLayout {
 			if(bg!= null && !bg.contains("#"))
 			add(new ImageControl(new Image(bg).getHwScaledInstance(node.getW(), node.getH())),LEFT,TOP,FILL,FILL);
 			add(centralContainer, xLocal, yLocal, widLocal, heiLocal);
-		} else if (node.getAttributeName().equals("Switch")) {
-			node.setAttributeName("TextView");
-			Control s = createInstanceOf(node);
-			centralContainer.add(s, node.getRelativeX(), node.getRelativeY()+(node.getH()/2)-6, PREFERRED, PREFERRED);
-			if(!node.getScaleX().equals("1") && !node.getScaleY().equals("1")) {
-				s.setRect(node.getRelativeX() - ((int) ((((float) 0.255*node.getW()) * ((float)  Float.parseFloat(node.getScaleY()))*node.getWp()))), CENTER_OF, ((int) ((((float) 40) * Float.parseFloat(node.getScaleY()))*node.getHp())) , ((int) ((((float) 24) * Float.parseFloat(node.getScaleY()))*node.getHp())));
-				s.setFont(Font.getFont(node.getTextStyleBold(), ((int)((float)14*Float.parseFloat(node.getScaleY())))));
-				}
-			node.setAttributeName("Switch");
-			s =  createInstanceOf(node);
-			centralContainer.add(s, node.getRelativeX()+node.getW()-((int) (((float)48)*node.getWp())), CENTER_OF, ((int) (((float)42)*node.getWp())), ((int) (((float)24)*node.getHp())));
-			if(!node.getScaleX().equals("1") && !node.getScaleY().equals("1"))
-				s.setRect(node.getRelativeX()+node.getW()-(int)(((float)48+( (((float)8)*(Float.parseFloat(node.getScaleY())/(float)2))))*node.getWp()), CENTER_OF, ((int) ((((float)40)*Float.parseFloat(node.getScaleY()))*node.getWp())), ((int) ((((float)24)*Float.parseFloat(node.getScaleY()))*node.getHp())));
 		} else if (node.getAttributeName().equals("ProgressBar")&& node.getStyle() == null || node.getStyle().contains("Horizontal")) {
 
 			centralContainer.add(createInstanceOf(node), node.getRelativeX(), new BigDecimal(node.getRelativeY()).add(BigDecimal.valueOf(((float)node.getH()/2.0-((((float)Settings.screenHeight/200.0))*Float.parseFloat(node.getScaleY()))))).intValue (), node.getW(), (int) ((((float)Settings.screenHeight/100.0)) *Float.parseFloat(node.getScaleY())), getRelativeControl(node));

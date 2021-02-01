@@ -386,7 +386,18 @@ public abstract class XmlContainerLayout extends Container {
 	 * @return Control object of this ID
 	 * */
 	public Control getControlByID(String id) {
-		return componentsMap.get(id);
+		Control	temp = componentsMap.get(id);
+		 if(temp==null)
+			 throw new NullPointerException("ERROR: can't find control id: "+id);
+		return temp;
+	}
+	/** Get the Control of a given field from a component of XML file
+	 * @param field
+	 * @return Control object of this field
+	 * */
+	public Control getVariabletoPresenter(String field) {
+		Control	temp = componentsMap.get(field);
+		return temp;
 	}
 
 	/** Get the TreeMap with all Controls of the XML file

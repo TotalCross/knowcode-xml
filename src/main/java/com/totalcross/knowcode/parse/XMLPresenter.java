@@ -65,7 +65,7 @@ public abstract class XMLPresenter {
    public void bind2() {
       Field[] fields = this.getClass().getDeclaredFields();
       for (Field field : fields) {
-         Control c = ((XmlContainerLayout) content).getControlByID("@+id/" + field.getName());
+         Control c = ((XmlContainerLayout) content).getVariabletoPresenter("@+id/" + field.getName());
          if (c != null && field.getType().isAssignableFrom(c.getClass())) {
             try {
                // field.setAccessible(true);

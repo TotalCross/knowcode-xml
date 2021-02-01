@@ -49,9 +49,9 @@ public class SlidingNavigator {
 
    public SlidingNavigator(Window window) {
       this.window = window;
-      totaltimeAnimation = 1000;
+      totaltimeAnimation = 600;
       this.tox1=-Settings.screenWidth;
-      this.fromx2=0;
+      this.fromx2=Settings.screenWidth;
       this.toy1=0;
       this.fromy2=0;
    }
