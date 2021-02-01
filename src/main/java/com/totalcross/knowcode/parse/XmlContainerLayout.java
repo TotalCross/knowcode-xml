@@ -7,7 +7,6 @@ package com.totalcross.knowcode.parse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.TreeMap;
-
 import totalcross.sys.InvalidNumberException;
 import totalcross.sys.Settings;
 import totalcross.sys.Vm;
@@ -29,8 +28,6 @@ import totalcross.ui.font.Font;
 import totalcross.ui.gfx.Color;
 import totalcross.ui.image.Image;
 import totalcross.ui.image.ImageException;
-import totalcross.ui.layout.VBox;
-import totalcross.util.UnitsConverter;
 import totalcross.xml.AttributeList;
 import totalcross.xml.ContentHandler;
 import totalcross.xml.SyntaxException;
@@ -56,6 +53,8 @@ import totalcross.xml.XmlReader;
 public abstract class XmlContainerLayout extends Container {
 	int layout = 0;
 	private String pathXml;
+	private boolean landscape;
+	private int h,w;
 
 	/* Treemap that saves the components of the XML file (String id, Control control)*/
 	TreeMap<String, Control> componentsMap = new TreeMap<String, Control>();
@@ -66,6 +65,9 @@ public abstract class XmlContainerLayout extends Container {
 	Container centralContainer;
 
 	CustomInitUI custom = null;
+
+	protected XmlContainerLayout() {
+	}
 
 	/* Init UI after read the XML file and configure all controls and containers*/
 	public void initUI() {
@@ -108,11 +110,12 @@ public abstract class XmlContainerLayout extends Container {
 	 * 		node of a XML file
 	 * @return control of id
 	 * @throws totalcross.io.IOException
-	 * @exception ImageException
+	 * @throws totalcross.sys.InvalidNumberException
+	 * @throws ImageException
 	 * */
 	public Control createInstanceOf(NodeSax nodes)
 			throws totalcross.io.IOException, ImageException, InvalidNumberException {
-		if (nodes.getAttributeName().contains("Button")) {
+		if (nodes.getAttributeName().equals("Button")||nodes.getAttributeName().equals("ImageButton")) {
 			componentsMap.put(nodes.getId(), createButton(nodes));
 			lastControl = componentsMap.get(componentsMap.lastKey());
 			return componentsMap.get(nodes.getId());
@@ -190,15 +193,30 @@ public abstract class XmlContainerLayout extends Container {
 			throws totalcross.io.IOException, ImageException, InvalidNumberException {
 		Button button = null;
 		String background = node.getBackgroundImage();
-		if (background != null && "".equals(background) == false && background.charAt(0)!='#') {
+		if (background != null && !"".equals(background) && background.charAt(0)!='#') {
 			button = new Button(new Image(node.getBackgroundImage()).getHwScaledInstance(node.getW(), node.getH()),Button.BORDER_NONE);
 			button.transparentBackground=true;
-			//button.effect=null;
+			button.setDoEffect(false);
 		} else {
 			background = node.getBackgroundColor();
-			button = new Button(node.getText());
-			button.setBackColor(Color.getRGB(background));
-		}
+			String textColor = node.getTextColor();
+			button = new Button(node.getText(), Button.BORDER_NONE);
+			button.setFont(Font.getFont(false, node.getTextsize()));
+			if (textColor == null) {
+				if (background != null)
+					button.setBackColor(Color.getRGB(background));
+				else
+					button.setBackColor(Color.getRGB("FFFFFF"));
+			}
+			else{
+				if (background != null)
+					button.setBackForeColors(Color.getRGB(background),Color.getRGB(textColor));
+				else
+					button.setBackForeColors(Color.getRGB("FFFFFF"),Color.getRGB(textColor));
+			}
+			}
+
+
 
 		return button;
 	}
@@ -218,7 +236,6 @@ public abstract class XmlContainerLayout extends Container {
 		String bg = node.getBackgroundColor();
 		String color = node.getTextColor();
 		boolean txStyleBold = node.getTextStyleBold();
-		txStyleBold = false;
         label.autoSplit = true;
 		label.setBackForeColors(Color.getRGB(bg), Color.getRGB(color));
 		if (bg == null)
@@ -229,8 +246,9 @@ public abstract class XmlContainerLayout extends Container {
 			else
 				label.setFont(Font.getFont(txStyleBold, node.getTextsize()));
 		}
-		else
-			label.setFont(Font.getFont(txStyleBold,label.FONTSIZE));
+		if(txStyleBold) {
+			label.setFont(label.getFont().asBold());
+		}
 		return label;
 
 	}
@@ -246,6 +264,7 @@ public abstract class XmlContainerLayout extends Container {
 			return spinner;
 		}
 	}
+	public abstract void setWidthHeight(NodeSax node,int w,int h);
 
 	private Control createCheck(NodeSax node) {
 		return new Check(node.getText());
@@ -253,8 +272,7 @@ public abstract class XmlContainerLayout extends Container {
 
 	private Control createEdit(NodeSax node) {
 		Edit edit = new Edit();
-
-		if (node.getText() != null) {
+		if (node.getText() != null&&!"".equals(node.getText())) {
 			edit.caption = node.getText();
 		} else if (node.getHint() != null) {
 			edit.caption = node.getHint();
@@ -265,6 +283,14 @@ public abstract class XmlContainerLayout extends Container {
 
 	private Control createRadio(NodeSax node) {
 		return new Radio(node.getText());
+	}
+
+	public void setH(int h) {
+		this.h = h;
+	}
+
+	public void setW(int w) {
+		this.w = w;
 	}
 
 	private class Handler extends ContentHandler {
@@ -308,8 +334,10 @@ public abstract class XmlContainerLayout extends Container {
 		public void tagName(int a,String arg0,AttributeList atts) {
 			auxNodeSax.setAttributeName(arg0);
 			auxNodeSax.reset();
+			auxNodeSax.islandscape(landscape);
 			AttributeList.Iterator it = atts.new Iterator();
 			while (it.next()) {
+				/*System.out.println(it.getAttributeName()+"  "+it.getAttributeValue());*/
 				auxNodeSax.inserts(it.getAttributeName(), it.getAttributeValue());
 			}
 			try {
@@ -329,9 +357,7 @@ public abstract class XmlContainerLayout extends Container {
 		Handler handler = new Handler();
 		XmlReader rdr = new XmlReader();
 		rdr.setContentHandler(handler);
-
 		byte[] xml = Vm.getFile(getPathXml());
-
 		if (xml != null) {
 			char[] temporaryXml = new String(xml, 0, xml.length, "UTF-8").toCharArray();
 			try {
@@ -354,10 +380,22 @@ public abstract class XmlContainerLayout extends Container {
 	}
 
 	/** Get the Control of a given id from a component of XML file
+	 * @param id
 	 * @return Control object of this ID
 	 * */
-	public Control getControlByID(String a) {
-		return componentsMap.get(a);
+	public Control getControlByID(String id) {
+		Control	temp = componentsMap.get(id);
+		 if(temp==null)
+			 throw new NullPointerException("ERROR: can't find control id: "+id);
+		return temp;
+	}
+	/** Get the Control of a given field from a component of XML file
+	 * @param field
+	 * @return Control object of this field
+	 * */
+	public Control getVariabletoPresenter(String field) {
+		Control	temp = componentsMap.get(field);
+		return temp;
 	}
 
 	/** Get the TreeMap with all Controls of the XML file
@@ -373,6 +411,9 @@ public abstract class XmlContainerLayout extends Container {
 	 * */
 	public void setPathXml(String pathXml) {
 		this.pathXml = pathXml;
+	}
+	public void setLandscape(boolean landscape){
+		this.landscape = landscape;
 	}
 
 }

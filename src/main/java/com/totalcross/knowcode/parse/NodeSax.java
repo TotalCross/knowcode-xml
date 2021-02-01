@@ -6,6 +6,7 @@ package com.totalcross.knowcode.parse;
 
 import static totalcross.ui.Control.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -27,7 +28,9 @@ public class NodeSax {
     private String attributeValue;
     private String attributeName = new String();
     private String id;
+    private boolean landscape = false;
     private String relative;
+    private ArrayList<String> imgExtensions = new ArrayList<String>();
     private float wp = 0, hp = 0;
 
     /**
@@ -120,15 +123,15 @@ public class NodeSax {
 
     /**
      * Get attribute value of tag <code>"android:textSize"</code>
-     *
      * @return attribute value of tag
+     * @throws totalcross.sys.InvalidNumberException
      */
     public int getTextsize() throws InvalidNumberException {
 
         attributeValue = getValue("android:textSize");
 
         if (attributeValue == null || "".equals(attributeValue)) {
-            return 0;
+            return 14;
         } else {
             if (attributeValue.contains("dp")) {
                 attributeValue = attributeValue.replace("dp", "");
@@ -137,7 +140,7 @@ public class NodeSax {
                 attributeValue = attributeValue.replace("sp", "");
             }
         }
-        return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue) - 5 + DP)).multiply(BigDecimal.valueOf(hp)).intValue();
+   return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue) - 5 + DP)).multiply(BigDecimal.valueOf(hp)).intValue();
 
     }
 
@@ -182,28 +185,33 @@ public class NodeSax {
     }
 
     /**
-     * Get attribute value of tag <code>"android:background"</code> to image background
+     * Get attribute value of tags <code>"android:background"</code> and <code>"tools:background"</code> to image background
      *
      * @return attribute value of tag
      */
     public String getBackgroundImage() {
         attributeValue = getValue("android:background");
-        String attributeValue2 = getValue("app:srcCompat");
-        if (attributeValue == null && attributeValue2 == null || "".equals(attributeValue)) {
+        if(attributeValue==null)
+            attributeValue = getValue("tools:background");
+        if(attributeValue==null)
+            attributeValue = getValue("app:srcCompat");
+        if (attributeValue == null || "".equals(attributeValue) || attributeValue.contains("#")) {
             return attributeValue;
         } else {
-            if (attributeValue == null && attributeValue2 != null) {
-                attributeValue = attributeValue2;
-            }
             if ('@' == attributeValue.charAt(0)) {
                 attributeValue = attributeValue.substring(1);
             }
-
             if (attributeValue.contains(".png") || attributeValue.contains(".jpg")) {
+                imgExtensions.add(attributeValue);
                 return attributeValue;
-            } else {
-                attributeValue = getImageExtension(attributeValue);
+            } if(imgExtensions.size()!=0){
+                for(int index = 0; index<imgExtensions.size();index++){
+                    if(imgExtensions.get(index).contains(attributeValue)&&attributeValue.length()==imgExtensions.get(index).length())
+                       return imgExtensions.get(index);
+                }
             }
+                attributeValue = getImageExtension(attributeValue);
+
         }
         return attributeValue;
 
@@ -217,10 +225,10 @@ public class NodeSax {
             xml = Vm.getFile(path + extensoes[i]);
 
             if (xml != null) {
+                imgExtensions.add(path+ extensoes[i]);
                 return path + extensoes[i];
             }
         }
-
         return path;
     }
 
@@ -291,7 +299,7 @@ public class NodeSax {
                 }
             }
         }
-        return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue))).multiply(BigDecimal.valueOf(hp)).intValue();
+        return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue)+DP)).multiply(BigDecimal.valueOf(hp)).intValue();
     }
 
     /**
@@ -386,8 +394,8 @@ public class NodeSax {
     /**
      * Get the width value converted to Pixel, checks the following tags <code>"android:layout_width"</code>
      * and <code>"app:layout_constraintWidth_percent"</code>
-     *
      * @return width value converted to Pixel
+     * @throws totalcross.sys.InvalidNumberException
      */
     public int getW() throws InvalidNumberException {
         attributeValue = getValue("app:layout_constraintWidth_percent");
@@ -416,7 +424,7 @@ public class NodeSax {
                 }
             }
         }
-        return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue))).multiply(BigDecimal.valueOf(wp)).intValue();
+        return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue)+DP)).multiply(BigDecimal.valueOf(wp)).intValue();
     }
 
     /**
@@ -532,6 +540,7 @@ public class NodeSax {
      * <code>"android:layout_editor_absoluteX"</code>
      *
      * @return totalcross positioning constant
+     * @throws totalcross.sys.InvalidNumberException
      */
     public int getRelativeX() throws InvalidNumberException {
         attributeValue = getValue("android:layout_alignParentLeft");
@@ -671,7 +680,7 @@ public class NodeSax {
                 attributeValue = attributeValue.replace("dp", "");
             }
         }
-        return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue))).multiply(BigDecimal.valueOf(wp)).intValue();
+        return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue)+DP)).multiply(BigDecimal.valueOf(wp)).intValue();
     }
 
 
@@ -698,6 +707,7 @@ public class NodeSax {
      * <code>"tools:layout_editor_absoluteY"</code>
      *
      * @return totalcross positioning constant
+     * @throws InvalidNumberException
      */
     public int getRelativeY() throws InvalidNumberException {
         attributeValue = getValue("app:layout_constraintTop_toBottomOf");
@@ -797,7 +807,7 @@ public class NodeSax {
             }
         }
 
-        return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue))).multiply(BigDecimal.valueOf(hp)).intValue();
+        return new BigDecimal(UnitsConverter.toPixels(Integer.parseInt(attributeValue)+DP)).multiply(BigDecimal.valueOf(hp)).intValue();
     }
 
     /**
@@ -815,12 +825,14 @@ public class NodeSax {
     }
 
     /**
-     * Get gravity based on tag <code>"android:gravity"</code>
+     * Get gravity based on tags <code>"android:gravity"</code> and <code>"android:textAlignment"</code>
      *
      * @return constant of position
      */
     public int getGravity() {
         attributeValue = getValue("android:gravity");
+        if(attributeValue==null)
+            attributeValue = getValue("android:textAlignment");
         if (attributeValue != null) {
             if (attributeValue.equals("left")) {
                 return FILL;
@@ -857,8 +869,11 @@ public class NodeSax {
      * @return value of the tag
      */
     public String getText() {
-        return getValue("android:text");
+        if(getValue("android:text")!=null)
+            return getValue("android:text");
+        return "";
     }
+
 
     /**
      * Get text based on tag <code>"android:scaleY"</code>
@@ -965,6 +980,7 @@ public class NodeSax {
 
     /**
      * set parameter width to try to resize a predefined screen size
+     * @throws InvalidNumberException
      */
     public void setWp() throws InvalidNumberException {
         attributeValue = getValue("android:layout_width");
@@ -979,12 +995,16 @@ public class NodeSax {
             }
 
         }
-        wp = Settings.screenWidth / wp;
+        if(landscape&&Settings.screenHeight>Settings.screenWidth)
+            wp = Settings.screenHeight / wp;
+        else
+             wp = Settings.screenWidth / wp;
 
     }
 
     /**
      * set parameter height to try to resize a predefined screen size
+     * @throws InvalidNumberException
      */
     public void setHp() throws InvalidNumberException {
         attributeValue = getValue("android:layout_height");
@@ -1000,9 +1020,25 @@ public class NodeSax {
 
 
         }
-        hp = Settings.screenHeight / hp;
+        if(landscape&&Settings.screenHeight>Settings.screenWidth)
+        hp = Settings.screenWidth / hp;
+        else
+            hp = Settings.screenHeight / hp;
+
+    }
+    /**
+     * set parameter width to try to resize a defined screen size
+     */
+    public void setWp(float w)  {
+        hp = Settings.screenHeight/w;
     }
 
+    /**
+     * set parameter height to try to resize a defined screen size
+     */
+    public void setHp(float h)  {
+        hp = Settings.screenHeight/h;
+    }
     /**
      * Set attribute name of a tag
      *
@@ -1022,6 +1058,9 @@ public class NodeSax {
             if (chave != null)
                 System.out.println("Key: " + chave + " Attribute: " + attributesMap.get(chave));
         }
+    }
+    public void islandscape(boolean landscape){
+        this.landscape = landscape;
     }
 
 }

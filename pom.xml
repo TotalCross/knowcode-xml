@@ -13,7 +13,7 @@
         <dependency>
             <groupId>com.totalcross</groupId>
             <artifactId>totalcross-sdk</artifactId>
-            <version>6.1.0</version>
+            <version>7.0.0</version>
         </dependency>
         <dependency>
             <groupId>net.harawata</groupId>
@@ -27,12 +27,7 @@
            </dependency>
     </dependencies>
 	
-	<repositories>
-        <repository>
-            <id>totalcross-nightly</id>
-            <name>ip-172-31-40-140-releases</name>
-            <url>http://maven.totalcross.com/artifactory/nightly</url>
-        </repository>
+  <repositories>
         <repository>
             <id>totalcross-repo</id>
             <name>ip-172-31-40-140-releases</name>
@@ -47,8 +42,8 @@
             <url>http://maven.totalcross.com/artifactory/repo1</url>
         </pluginRepository>
     </pluginRepositories>
-    
-	<build>
+
+    <build>
         <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
@@ -63,15 +58,18 @@
             <plugin>
                 <groupId>com.totalcross</groupId>
                 <artifactId>totalcross-maven-plugin</artifactId>
-                <version>1.1.6</version>
+                <version>2.0.2</version>
                 <configuration>
-                    <name>KnowcodeLib</name>
+                    <name>${project.name}</name>
                     <platforms>
-                        <!-- <platform>-android</platform> -->
-						<!-- <platform>-ios</platform>-->
-						<!-- <platform>-linux_arm</platform>-->
+                        <platform>-win32</platform>
+                        <platform>-android</platform>
+                        <platform>-linux_arm</platform>
                     </platforms>
                     <activationKey>${totalcross.activation_key}</activationKey>
+                    <!--                    For version 4.4.2 and 5.1.4 or later, Apple certificates are no longer required. -->
+                    <!--                    <certificates>${totalcross.applecertificate}</certificates>-->
+                    <!--                    <totalcrossHome>~/TotalCross/6.1.0</totalcrossHome>-->
                 </configuration>
                 <executions>
                     <execution>
