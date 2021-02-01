@@ -139,8 +139,9 @@ public class XmlContainerFactory {
 
 		if (xml != null) {
 			xml = new String(xml, 0, xml.length, "UTF-8").getBytes("ISO-8859-1");
+			char[] temporaryXml = new String(xml, 0, xml.length, "UTF-8").toCharArray();
 			try {
-				rdr.parse(xml, 0, xml.length);
+				rdr.parse(temporaryXml, 0, temporaryXml.length);
 			} catch (SyntaxException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
